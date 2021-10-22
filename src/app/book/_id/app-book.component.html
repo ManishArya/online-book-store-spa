@@ -1,0 +1,20 @@
+<div>
+  <app-spinner [isWaiting]="isWaiting"></app-spinner>
+  <ng-container *ngIf="book">
+    <div class="flex"></div>
+    <div>
+      <b> {{ book.name }} </b>
+    </div>
+    <div>{{ book.releaseDate | date }} | {{ book.generes | appCommaSeparator }}</div>
+    <hr />
+    <div *ngIf="!isAdded; else check">
+      <button type="button" class="btn btn-default" (click)="addToMyList()">
+        <i class="fa fa-plus-circle"></i> My List
+      </button>
+    </div>
+    <div>
+      {{ book.description }}
+    </div>
+  </ng-container>
+</div>
+<ng-template #check> <i class="fa fa-check"></i> Added </ng-template>

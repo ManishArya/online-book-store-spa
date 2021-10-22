@@ -1,1 +1,48 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import '../src/assets/scss/spacing';
+@import '../src/assets/scss/flex';
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: center;
+}
+
+.required::after {
+  content: ' *';
+  color: red;
+}
+
+.resize-none {
+  resize: none;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.ng-invalid.error {
+  background-color: #ffd2d2;
+}
+
+.error-label {
+  color: #d8000c;
+}
+
+.d-none {
+  display: none !important;
+}
+
+img, a {
+  cursor: pointer;
+}

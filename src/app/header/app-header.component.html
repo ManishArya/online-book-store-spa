@@ -1,0 +1,28 @@
+<nav class="navbar navbar-expand-lg navbar-inverse">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="nav navbar-nav mr-auto">
+      <li class="nav-item">
+        <a  (click)="navigateToDashboard()">Dashboard</a>
+      </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li class="nav-item">
+        <img [src]="safeResourceUrl" class="profile-photo" [matMenuTriggerFor]="menu" />
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>
+            <a (click)="navigateToProfilePage()">Edit Profile</a>
+          </button>
+          <button mat-menu-item>
+            <a (click)="navigateToChangePasswoardPage()">Change Password</a>
+          </button>
+          <button mat-menu-item>
+            <app-delete-account></app-delete-account>
+          </button>
+          <button mat-menu-item>
+            <app-log-out></app-log-out>
+          </button>
+        </mat-menu>
+      </li>
+    </ul>
+  </div>
+</nav>

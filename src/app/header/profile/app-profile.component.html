@@ -1,0 +1,40 @@
+<div>
+  <app-spinner [isWaiting]="isWaiting"></app-spinner>
+  <ng-container *ngIf="!isWaiting">
+    <div class="image-container">
+      <div>
+        <img [src]="safeResourceUrl" class="profile-photo" (click)="changePhoto()" />
+        <div class="mt-sm">
+          <input #photo type="file" class="d-none" (change)="uploadPhoto($event)" />
+          <div class="mt-sm">
+            <button type="button" class="btn btn-default" (click)="removePhoto()" *ngIf="isRemoveButtonShow">
+              <i class="fa fa-trash"></i> Remove
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <form>
+      <div class="form-group">
+        <label for="name" class="required">Name</label>
+        <input type="text" name="name" class="form-control" id="name" [(ngModel)]="userProfile.name" />
+        <app-error-display fieldName="name" [error]="error"></app-error-display>
+      </div>
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" name="username" class="form-control" id="username" readonly [value]="userProfile.username" />
+      </div>
+      <div class="form-group">
+        <label for="email" class="required">Email</label>
+        <input type="email" name="email" class="form-control" id="email" [(ngModel)]="userProfile.email" />
+        <app-error-display fieldName="email" [error]="error"></app-error-display>
+      </div>
+      <div class="form-group">
+        <label for="mobile">Mobile</label>
+        <input type="tel" name="mobile" class="form-control" id="mobile" [(ngModel)]="userProfile.mobile" />
+        <app-error-display fieldName="mobile" [error]="error"></app-error-display>
+      </div>
+      <button type="submit" class="btn btn-default" (click)="update()">Update</button>
+    </form>
+  </ng-container>
+</div>

@@ -1,0 +1,17 @@
+<div>
+  <app-spinner [isWaiting]="isWaiting"></app-spinner>
+  <div class="mt-sm display-flex">
+    <ng-container *ngFor="let list of myList">
+      <ng-container *ngIf="list.books.length > 0">
+        <div class="mt-sm mr-sm pointer" [routerLink]="['/movie', list.books[0].id]">
+          <img src="data:image/jpg;base64,{{ list.books[0].poster }}" height="200" width="200" />
+        </div>
+        <div>
+          <button type="button" class="btn btn-default" (click)="remove(list.books[0].id)">
+            <i class="fa fa-trash-o"></i> Remove
+          </button>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>

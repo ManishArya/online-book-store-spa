@@ -1,0 +1,44 @@
+<button class="btn btn-link pull-right" mat-button mat-dialog-close>X</button>
+<h2 mat-dialog-title>Add Book</h2>
+<mat-dialog-content>
+  <app-spinner [isWaiting]="isWaiting"></app-spinner>
+  <form>
+    <div class="form-group">
+      <label for="name" class="required">Name</label>
+      <input type="text" name="name" class="form-control" id="name" [(ngModel)]="name" />
+      <!-- <div *ngIf="getFieldError('name')">{{ getFieldError('name') }}</div> -->
+    </div>
+    <div class="form-group">
+      <label for="description" class="required">Description</label>
+      <textarea
+        name="description"
+        class="form-control resize-none"
+        id="description"
+        maxlength="250"
+        rows="3"
+        [(ngModel)]="description"
+      ></textarea>
+      <!-- <div *ngIf="getFieldError('name')">{{ getFieldError('name') }}</div> -->
+    </div>
+    <div class="form-group">
+      <label for="date" class="required">Release Date</label>
+      <input class="form-control" name="date" id="date" matInput [matDatepicker]="picker" [(ngModel)]="date" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </div>
+    <div class="form-group">
+      <label for="genre" class="required">Select Genre</label>
+      <mat-select multiple [(ngModel)]="genres" name="genres">
+        <mat-option *ngFor="let genre of genreOptions" [value]="genre.name">{{ genre.name }}</mat-option>
+      </mat-select>
+    </div>
+    <div class="form-group">
+      <label class="required" for="photo">Select Poster</label>
+      <input type="file" name="photo" class="form-control" id="photo" #photo />
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button type="button" class="btn btn-primary" (click)="addBook()">Save</button>
+  <button class="btn btn-link" mat-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>

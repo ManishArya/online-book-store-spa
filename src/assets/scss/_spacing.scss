@@ -1,0 +1,59 @@
+/*
+ t -> top
+ b -> bottom
+ r-> right
+ l -> left
+ x -> left and right
+ y -> top and bottom
+*/
+.mt-xs,
+.my-xs {
+  margin-top: 5px !important;
+}
+
+.mt-sm,
+.my-sm {
+  margin-top: 10px !important;
+}
+
+.mt-md,
+.my-md {
+  margin-top: 15px !important;
+}
+
+.mt-lg,
+.my-lg {
+  margin-top: 20px !important;
+}
+
+.mr-xs {
+  margin-right: 5px !important;
+}
+
+.mr-sm {
+  margin-right: 10px !important;
+}
+
+.mr-md {
+  margin-right: 15px !important;
+}
+
+.mr-lg {
+  margin-right: 20px !important;
+}
+
+.w-25 {
+  width: 25% !important;
+}
+
+.w-50 {
+  width: 50% !important;
+}
+
+.w-75 {
+  width: 75% !important;
+}
+
+.w-100 {
+  width: 100% !important;
+}

@@ -1,0 +1,34 @@
+<form [formGroup]="formGroup">
+  <app-spinner [isWaiting]="isWaiting"></app-spinner>
+  <div class="form-group">
+    <label for="name" class="required">Name</label>
+    <input type="text" name="name" class="form-control error" id="name" formControlName="name" />
+    <app-error-display fieldName="name" [error]="error" [formGroup]="formGroup"></app-error-display>
+  </div>
+  <div class="form-group">
+    <label for="username" class="required">Username</label>
+    <input type="text" name="username" class="form-control error" id="username" formControlName="username" />
+    <app-error-display fieldName="username" [error]="error" [formGroup]="formGroup"></app-error-display>
+  </div>
+  <div class="form-group">
+    <label for="email" class="required">Email</label>
+    <input type="email" name="email" class="form-control error" id="email" formControlName="email" />
+    <app-error-display fieldName="email" [error]="error" [formGroup]="formGroup"></app-error-display>
+  </div>
+  <div class="form-group">
+    <label for="mobile">Mobile</label>
+    <input type="tel" name="mobile" class="form-control error" id="mobile" formControlName="mobile" />
+    <app-error-display fieldName="mobile" [error]="error" [formGroup]="formGroup"></app-error-display>
+  </div>
+  <div class="form-group">
+    <label for="password" class="required">Password</label>
+    <input type="password" name="password" class="form-control error" id="password" formControlName="password" />
+    <app-error-display fieldName="password" [error]="error" [formGroup]="formGroup"></app-error-display>
+  </div>
+  <div class="form-group">
+    <label for="photo">Photo</label>
+    <input type="file" name="photo" class="form-control" id="photo" #photo />
+  </div>
+  <button type="submit" class="btn btn-default" (click)="addUser()">Submit</button>
+  <button type="button" class="btn btn-link" (click)="cancel()">Cancel</button>
+</form>

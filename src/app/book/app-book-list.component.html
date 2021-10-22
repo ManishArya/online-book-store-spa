@@ -1,0 +1,20 @@
+<button type="button" class="btn btn-default" (click)="openBookModal()">
+  <i class="fa fa-plus-circle"></i> Add Book
+</button>
+<a routerLink="myList">My List</a>
+<button type="button" class="btn btn-default"><i class="fa fa-filter" aria-hidden="true"></i> Filter</button>
+<div>
+  <app-spinner [isWaiting]="isWaiting"></app-spinner>
+  <div class="mt-sm display-flex">
+    <ng-container *ngFor="let book of books">
+      <div class="mt-sm mr-sm pointer">
+        <div (click)="openBook(book.id)">
+          <img src="data:image/jpg;base64,{{ book.poster }}" height="200" width="200" />
+        </div>
+        <div (click)="removeBook(book.id)">
+          <button class="btn btn-default">Remove</button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
