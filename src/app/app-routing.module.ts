@@ -7,6 +7,7 @@ import { AppHomeComponent } from './app-home.component';
 import { AppChangePasswordComponent } from './header/change-password/app-change-password.component';
 import { AppProfileComponent } from './header/profile/app-profile.component';
 import { LoginGuard } from './services/login.guard';
+import { AppNotFoundComponent } from './shared/app-not-found/app-not-found.component';
 
 const routes: Routes = [
   { path: 'login', component: AppLoginComponent },
@@ -37,6 +38,10 @@ const routes: Routes = [
   {
     path: 'newUser',
     component: AppNewUserComponent
+  },
+  {
+    path: '**',
+    component: AppNotFoundComponent
   }
 ];
 

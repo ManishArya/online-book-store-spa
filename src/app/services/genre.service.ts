@@ -9,6 +9,6 @@ export class GenreService {
   constructor(private http: HttpClient) {}
 
   public getGenres(): Observable<IGenre[]> {
-    return this.http.get<IGenre[]>(`${environment.bookApiEndPoint}/Genere`);
+    return this.http.get<IGenre[]>(`${environment.bookApiEndPoint}/Genre`);
   }
 }

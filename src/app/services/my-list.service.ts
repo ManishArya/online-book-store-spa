@@ -16,10 +16,10 @@ export class MyListService {
   }
 
   public addToMyList(id: string) {
-    return this.http.post(`${environment.bookApiEndPoint}/MyList?movieId=${id}`, {});
+    return this.http.post(`${environment.bookApiEndPoint}/MyList?itemId=${id}`, {});
   }
 
   public removeFromMyList(id: string) {
-    return this.http.delete(`${environment.bookApiEndPoint}/MyList/?id=${id}`);
+    return this.http.delete(`${environment.bookApiEndPoint}/MyList/?itemId=${id}`);
   }
 }
