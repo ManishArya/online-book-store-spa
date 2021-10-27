@@ -1,6 +1,4 @@
 export class TokenService {
-  private static _token: string;
-
   public static get Token(): string | null {
     return localStorage.getItem('token');
   }

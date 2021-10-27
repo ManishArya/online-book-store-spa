@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { StatusCode } from './../enums/status-code';
@@ -11,12 +11,18 @@ import { TokenService } from './../services/token.service';
 @Component({
   templateUrl: './app-login.component.html'
 })
-export class AppLoginComponent {
+export class AppLoginComponent implements OnInit {
   public userName: string;
   public password: string;
   public isWaiting: boolean;
 
   constructor(private router: Router, private _loginService: LoginService, private toast: ToastService) {}
+
+  public ngOnInit(): void {
+    if (TokenService.Token) {
+      this.router.navigateByUrl('');
+    }
+  }
 
   public signIn(): void {
     this.isWaiting = true;

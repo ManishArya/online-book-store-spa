@@ -28,6 +28,10 @@ const routes: Routes = [
       {
         path: 'profile',
         component: AppProfileComponent
+      },
+      {
+        path: '**',
+        component: AppNotFoundComponent
       }
     ]
   },
@@ -38,10 +42,6 @@ const routes: Routes = [
   {
     path: 'newUser',
     component: AppNewUserComponent
-  },
-  {
-    path: '**',
-    component: AppNotFoundComponent
   }
 ];
 
