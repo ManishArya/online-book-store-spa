@@ -32,7 +32,7 @@ export class AppAddBookModalComponent implements OnInit {
       name: this.name,
       description: this.description,
       releaseDate: this.date,
-      generes: this.genres
+      genres: this.genres
     };
     const formData = new FormData();
     formData.set('poster', this.photo.nativeElement.files[0]);

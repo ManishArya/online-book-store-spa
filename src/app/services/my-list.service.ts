@@ -22,4 +22,8 @@ export class MyListService {
   public removeFromMyList(id: string) {
     return this.http.delete(`${environment.bookApiEndPoint}/MyList/?itemId=${id}`);
   }
+
+  public checkItemInMyList(id: string): Observable<boolean> {
+    return this.http.get<boolean>(`${environment.bookApiEndPoint}/MyList/checckiteminmylist/?itemId=${id}`);
+  }
 }
