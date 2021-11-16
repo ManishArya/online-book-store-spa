@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import { filter, finalize, switchMap, tap } from 'rxjs/operators';
 import { IBook } from '../models/book';
 import { BookService } from '../services/book.service';
 import { AppTitleService } from '../services/title.service';
+import { UserService } from '../services/user.service';
 import { AppAddBookModalComponent } from './app-add-book-modal.component';
 
 @Component({
@@ -14,17 +15,23 @@ import { AppAddBookModalComponent } from './app-add-book-modal.component';
 export class AppBookListComponent implements OnInit {
   public books: IBook[] = [];
   public isWaiting: boolean;
+  public hasPermission: boolean;
 
   constructor(
     private bookService: BookService,
     private dialog: MatDialog,
     private router: Router,
-    private title: AppTitleService
+    private title: AppTitleService,
+    private userService: UserService
   ) {}
 
   public ngOnInit(): void {
     this.title.setTitle();
-    this.getBooks().subscribe();
+    combineLatest([this.getBooks(), this.userService.userProfile$])
+      .pipe(finalize(() => (this.isWaiting = false)))
+      .subscribe(([book, userProfile]) => {
+        this.hasPermission = userProfile.isAdmin;
+      });
   }
 
   public openBookModal(): void {

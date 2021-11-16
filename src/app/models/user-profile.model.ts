@@ -5,4 +5,5 @@ export class UserProfile {
   name: string = '';
   password: string = '';
   photo: string;
+  isAdmin: boolean;
 }

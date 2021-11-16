@@ -11,6 +11,8 @@ import { UserProfile } from '../models/user-profile.model';
   providedIn: 'root'
 })
 export class UserService {
+  private userProfileSubject: Subject<UserProfile> = new Subject<UserProfile>();
+  public userProfile$: Observable<UserProfile> = this.userProfileSubject.asObservable();
   private profilePicSubject: Subject<string> = new Subject<string>();
   public profilePic$: Observable<string> = this.profilePicSubject.asObservable();
 
@@ -46,5 +48,9 @@ export class UserService {
 
   public updateProfilePhoto(photoUrl: string): void {
     this.profilePicSubject.next(photoUrl);
+  }
+
+  public updateUserProfile(userProfile: UserProfile): void {
+    this.userProfileSubject.next(userProfile);
   }
 }

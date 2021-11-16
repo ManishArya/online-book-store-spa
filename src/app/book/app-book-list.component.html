@@ -1,4 +1,4 @@
-<button type="button" class="btn btn-default" (click)="openBookModal()">
+<button type="button" class="btn btn-default" (click)="openBookModal()" *ngIf="hasPermission">
   <i class="fa fa-plus-circle"></i> Add Book
 </button>
 <a routerLink="myList">My List</a>
@@ -11,7 +11,7 @@
         <div (click)="openBook(book.id)">
           <img src="data:image/jpg;base64,{{ book.poster }}" height="200" width="200" />
         </div>
-        <div (click)="removeBook(book.id)">
+        <div (click)="removeBook(book.id)" *ngIf="hasPermission">
           <button class="btn btn-default">Remove</button>
         </div>
       </div>

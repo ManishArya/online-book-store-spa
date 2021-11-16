@@ -17,8 +17,8 @@ export class AppHeaderComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private userService: UserService, private _sanitizer: DomSanitizer) {}
 
   public ngOnInit(): void {
-    this.userService.getProfile().subscribe((res) => {
-      const photo = res.data.photo;
+    this.userService.userProfile$.subscribe((res) => {
+      const photo = res.photo;
       this.safeResourceUrl = photo
         ? this._sanitizer.bypassSecurityTrustUrl(`data:image/jpg;base64,${photo}`)
         : './assets/images/avatar.png';
