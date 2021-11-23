@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { combineLatest, Observable } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { filter, finalize, switchMap, tap } from 'rxjs/operators';
 import { IBook } from '../models/book';
 import { BookService } from '../services/book.service';
@@ -27,11 +27,10 @@ export class AppBookListComponent implements OnInit {
 
   public ngOnInit(): void {
     this.title.setTitle();
-    combineLatest([this.getBooks(), this.userService.userProfile$])
-      .pipe(finalize(() => (this.isWaiting = false)))
-      .subscribe(([book, userProfile]) => {
-        this.hasPermission = userProfile.isAdmin;
-      });
+    forkJoin([
+      this.getBooks(),
+      this.userService.userProfile$.pipe(tap((res) => (this.hasPermission = res.isAdmin)))
+    ]).subscribe();
   }
 
   public openBookModal(): void {
@@ -61,7 +60,9 @@ export class AppBookListComponent implements OnInit {
   private getBooks(): Observable<IBook[]> {
     this.isWaiting = true;
     return this.bookService.getBooks().pipe(
-      tap((res) => (this.books = res)),
+      tap((res) => {
+        this.books = res;
+      }),
       finalize(() => (this.isWaiting = false))
     );
   }

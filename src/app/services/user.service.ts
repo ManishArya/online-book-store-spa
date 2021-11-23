@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IApiDataResponse } from '../models/api-data-response.model';
 import { IApiResponse } from '../models/api-response.model';
@@ -11,7 +11,7 @@ import { UserProfile } from '../models/user-profile.model';
   providedIn: 'root'
 })
 export class UserService {
-  private userProfileSubject: Subject<UserProfile> = new Subject<UserProfile>();
+  private userProfileSubject: Subject<UserProfile> = new BehaviorSubject<UserProfile>({} as UserProfile);
   public userProfile$: Observable<UserProfile> = this.userProfileSubject.asObservable();
   private profilePicSubject: Subject<string> = new Subject<string>();
   public profilePic$: Observable<string> = this.profilePicSubject.asObservable();
