@@ -12,6 +12,14 @@ import { AppNotFoundComponent } from './shared/app-not-found/app-not-found.compo
 const routes: Routes = [
   { path: 'login', component: AppLoginComponent },
   {
+    path: 'forgetPassword',
+    component: AppForgetPasswordComponent
+  },
+  {
+    path: 'newUser',
+    component: AppNewUserComponent
+  },
+  {
     path: '',
     component: AppHomeComponent,
     canActivate: [LoginGuard],
@@ -34,14 +42,6 @@ const routes: Routes = [
         component: AppNotFoundComponent
       }
     ]
-  },
-  {
-    path: 'forgetPassword',
-    component: AppForgetPasswordComponent
-  },
-  {
-    path: 'newUser',
-    component: AppNewUserComponent
   }
 ];
 

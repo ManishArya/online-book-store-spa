@@ -32,9 +32,8 @@ export class AppLoginComponent implements OnInit {
       .subscribe(
         (res) => {
           if (res.code === StatusCode.Success) {
-            TokenService.Token = res.data.token;
             this.toast.dismiss();
-            this.router.navigateByUrl('');
+            this._loginService.login(res.data.token);
             return;
           }
           this.toast.open(res.message);

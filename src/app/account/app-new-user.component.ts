@@ -3,9 +3,9 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
+import { LoginService } from '../services/login.service';
 import { StatusCode } from './../enums/status-code';
 import { IApiErrorResponse } from './../models/api-error-response.model';
-import { TokenService } from './../services/token.service';
 import { UserService } from './../services/user.service';
 
 @Component({
@@ -17,7 +17,12 @@ export class AppNewUserComponent implements OnInit {
   public isWaiting: boolean;
   public formGroup: FormGroup;
 
-  constructor(private userService: UserService, private router: Router, private fb: FormBuilder) {}
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private fb: FormBuilder,
+    private loginService: LoginService
+  ) {}
 
   public ngOnInit(): void {
     this.formGroup = this.fb.group({
@@ -45,8 +50,7 @@ export class AppNewUserComponent implements OnInit {
       .subscribe(
         (res) => {
           if (res.code === StatusCode.Success) {
-            TokenService.Token = res.data.token;
-            this.router.navigateByUrl('');
+            this.loginService.login(res.data.token);
           }
         },
         (err: HttpErrorResponse) => {
@@ -56,6 +60,6 @@ export class AppNewUserComponent implements OnInit {
   }
 
   public cancel(): void {
-    this.router.navigateByUrl('');
+    this.router.navigateByUrl('/login');
   }
 }
