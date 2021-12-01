@@ -3,17 +3,23 @@
   <div class="flex-container">
     <div>
       <div class="form-group">
-        <label for="username">Username</label>
-        <input type="username" class="form-control" id="username" [(ngModel)]="userName" />
+        <label for="usernameOrEmail">Username/Email</label>
+        <input type="usernameOrEmail" class="form-control" id="usernameOrEmail" [(ngModel)]="usernameOrEmail" />
       </div>
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" class="form-control" id="password" [(ngModel)]="password" />
-      </div>
-      <div>
-        <button type="button" class="btn btn-default" (click)="signIn()">Log In</button>
-        <button type="button" class="btn btn-link" (click)="redirectToForgetPasswordPage()">Forget Password</button>
-        <button type="button" class="btn btn-link" (click)="redirectToNewUserPage()">New User</button>
+        <input [type]="showPassword ? 'text' : 'password'" class="form-control" id="password" [(ngModel)]="password" />
+        <span
+          class="fa p-viewer"
+          [ngClass]="{ 'fa-eye': showPassword, 'fa-eye-slash': !showPassword }"
+          id="togglePassword"
+          (click)="togglePassword()"
+        ></span>
+        <div>
+          <button type="button" class="btn btn-default" (click)="signIn()">Log In</button>
+          <button type="button" class="btn btn-link" (click)="redirectToForgetPasswordPage()">Forget Password</button>
+          <button type="button" class="btn btn-link" (click)="redirectToNewUserPage()">New User</button>
+        </div>
       </div>
     </div>
   </div>
