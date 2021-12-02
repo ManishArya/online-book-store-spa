@@ -1,6 +1,6 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { LogOutService } from './log-out.service';
 import { TokenService } from './token.service';
@@ -23,7 +23,7 @@ export class TokenInterceptor implements HttpInterceptor {
             this.logoutService.signOut();
           }
         }
-        return of(err);
+        return throwError(err);
       })
     );
   }

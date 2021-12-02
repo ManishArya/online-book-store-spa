@@ -9,14 +9,12 @@ import { ToastService } from './../services/toast.service';
 import { TokenService } from './../services/token.service';
 
 @Component({
-  templateUrl: './app-login.component.html',
-  styleUrls: ['./app-login.component.scss']
+  templateUrl: './app-login.component.html'
 })
 export class AppLoginComponent implements OnInit {
   public usernameOrEmail: string;
   public password: string;
   public isWaiting: boolean;
-  public showPassword: boolean = false;
 
   constructor(private router: Router, private _loginService: LoginService, private toast: ToastService) {}
 
@@ -24,10 +22,6 @@ export class AppLoginComponent implements OnInit {
     if (TokenService.Token) {
       this.router.navigateByUrl('');
     }
-  }
-
-  public togglePassword(): void {
-    this.showPassword = !this.showPassword;
   }
 
   public signIn(): void {
@@ -45,6 +39,7 @@ export class AppLoginComponent implements OnInit {
           this.toast.open(res.message);
         },
         (err: HttpErrorResponse) => {
+          console.log(err);
           this.toast.open((err.error as IApiErrorResponse).errorMessages?.[0] ?? err.error.message);
         }
       );

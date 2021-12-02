@@ -20,11 +20,9 @@
     <input type="tel" name="mobile" class="form-control error" id="mobile" formControlName="mobile" />
     <app-error-display fieldName="mobile" [error]="error" [formGroup]="formGroup"></app-error-display>
   </div>
-  <div class="form-group">
-    <label for="password" class="required">Password</label>
-    <input type="password" name="password" class="form-control error" id="password" formControlName="password" />
+  <app-password-viewer label="Password" inputClass="form-control error" [isRequired]="true" formControlName="password">
     <app-error-display fieldName="password" [error]="error" [formGroup]="formGroup"></app-error-display>
-  </div>
+  </app-password-viewer>
   <div class="form-group">
     <label for="photo">Photo</label>
     <input type="file" name="photo" class="form-control" id="photo" #photo />
