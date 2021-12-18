@@ -3,9 +3,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { filter, finalize, switchMap, tap } from 'rxjs/operators';
-import { StatusCode } from 'src/app/enums/status-code';
-import { IApiDataResponse } from 'src/app/models/api-data-response.model';
-import { IApiErrorResponse } from 'src/app/models/api-error-response.model';
+import { IApiResponse } from 'src/app/models/api-response.model';
 import { UserProfile } from 'src/app/models/user-profile.model';
 import { AppTitleService } from 'src/app/services/title.service';
 import { ToastService } from 'src/app/services/toast.service';
@@ -19,7 +17,7 @@ export class AppProfileComponent implements OnInit {
   public userProfile: UserProfile;
   public safeResourceUrl: SafeResourceUrl;
   public isWaiting: boolean;
-  public error: IApiErrorResponse | undefined;
+  public error: IApiResponse<{ [key: string]: string }> | undefined;
   public isRemoveButtonShow: boolean;
   @ViewChild('photo') public photo: ElementRef;
 
@@ -64,7 +62,7 @@ export class AppProfileComponent implements OnInit {
       this.userService
         .updatePhoto(formData)
         .pipe(
-          filter((res) => res.code === StatusCode.Success),
+          filter((res) => res.isSuccess),
           switchMap(() => this.getProfile())
         )
         .subscribe();
@@ -78,12 +76,12 @@ export class AppProfileComponent implements OnInit {
       .subscribe();
   }
 
-  private getProfile(): Observable<IApiDataResponse<UserProfile>> {
+  private getProfile(): Observable<IApiResponse<UserProfile>> {
     this.isWaiting = true;
     return this.userService.getProfile().pipe(
       tap((res) => {
-        this.userProfile = res.data;
-        const photo = res.data.photo;
+        this.userProfile = res.content;
+        const photo = res.content.photo;
         if (photo) {
           this.isRemoveButtonShow = true;
           this.safeResourceUrl = this._sanitizer.bypassSecurityTrustResourceUrl(`data:image/jpg;base64,${photo}`);

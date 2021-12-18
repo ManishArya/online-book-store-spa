@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { finalize, switchMap, tap } from 'rxjs/operators';
-import { IApiDataResponse } from 'src/app/models/api-data-response.model';
+import { IApiResponse } from 'src/app/models/api-response.model';
 import { IMyList } from '../../models/my-list';
 import { MyListService } from '../../services/my-list.service';
 
@@ -26,10 +26,10 @@ export class MyListComponent implements OnInit {
       .subscribe();
   }
 
-  private getMyList(): Observable<IApiDataResponse<IMyList[]>> {
+  private getMyList(): Observable<IApiResponse<IMyList[]>> {
     this.isWaiting = true;
     return this.myListService.getMyList().pipe(
-      tap((res) => (this.myList = res.data)),
+      tap((res) => (this.myList = res.content)),
       finalize(() => (this.isWaiting = false))
     );
   }

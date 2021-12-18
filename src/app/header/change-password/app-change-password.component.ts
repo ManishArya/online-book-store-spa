@@ -2,8 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
-import { StatusCode } from 'src/app/enums/status-code';
-import { IApiErrorResponse } from 'src/app/models/api-error-response.model';
+import { IApiResponse } from 'src/app/models/api-response.model';
 import { LoginService } from 'src/app/services/login.service';
 import { AppTitleService } from 'src/app/services/title.service';
 import { ToastService } from 'src/app/services/toast.service';
@@ -35,17 +34,13 @@ export class AppChangePasswordComponent implements OnInit {
       .pipe(finalize(() => (this.isWaiting = false)))
       .subscribe(
         (res) => {
-          if (res.code === StatusCode.Success) {
+          if (res.isSuccess) {
             this.router.navigateByUrl('');
           }
         },
         (err: HttpErrorResponse) => {
-          if (err.status === 400) {
-            this.toastService.open(err.error.message);
-          } else {
-            const error = err.error as IApiErrorResponse;
-            this.toastService.open(error.errorMessages['password']);
-          }
+          const error = err.error as IApiResponse<string>;
+          this.toastService.open(error.content);
         }
       );
   }

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { finalize } from 'rxjs/operators';
-import { StatusCode } from 'src/app/enums/status-code';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -19,12 +18,15 @@ export class AppDeleteAccountModalComponent {
     this.userService
       .deleteUserAccount(this.password)
       .pipe(finalize(() => (this.isWaiting = false)))
-      .subscribe((res) => {
-        if (res.code === StatusCode.Success) {
-          this.dialogRef.close(true);
-        } else if (res.code === StatusCode.BadRequest) {
-          this.errorMessage = res.message;
+      .subscribe(
+        (res) => {
+          if (res.isSuccess) {
+            this.dialogRef.close(true);
+          }
+        },
+        (err) => {
+          this.errorMessage = err.error.content;
         }
-      });
+      );
   }
 }

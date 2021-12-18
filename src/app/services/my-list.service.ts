@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { IApiDataResponse } from '../models/api-data-response.model';
+import { IApiResponse } from '../models/api-response.model';
 import { IMyList } from '../models/my-list';
 
 @Injectable({
@@ -11,19 +11,21 @@ import { IMyList } from '../models/my-list';
 export class MyListService {
   constructor(private http: HttpClient) {}
 
-  public getMyList(): Observable<IApiDataResponse<IMyList[]>> {
-    return this.http.get<IApiDataResponse<IMyList[]>>(`${environment.bookApiEndPoint}/MyList`);
+  public getMyList(): Observable<IApiResponse<IMyList[]>> {
+    return this.http.get<IApiResponse<IMyList[]>>(`${environment.bookApiEndPoint}/MyList`);
   }
 
-  public addToMyList(id: string) {
-    return this.http.post(`${environment.bookApiEndPoint}/MyList?itemId=${id}`, {});
+  public addToMyList(id: string): Observable<IApiResponse<string>> {
+    return this.http.post<IApiResponse<string>>(`${environment.bookApiEndPoint}/MyList?itemId=${id}`, {});
   }
 
-  public removeFromMyList(id: string) {
-    return this.http.delete(`${environment.bookApiEndPoint}/MyList/?itemId=${id}`);
+  public removeFromMyList(id: string): Observable<IApiResponse<string>> {
+    return this.http.delete<IApiResponse<string>>(`${environment.bookApiEndPoint}/MyList/?itemId=${id}`);
   }
 
-  public checkItemInMyList(id: string): Observable<boolean> {
-    return this.http.get<boolean>(`${environment.bookApiEndPoint}/MyList/checckiteminmylist/?itemId=${id}`);
+  public checkItemInMyList(id: string): Observable<IApiResponse<boolean>> {
+    return this.http.get<IApiResponse<boolean>>(
+      `${environment.bookApiEndPoint}/MyList/checckiteminmylist/?itemId=${id}`
+    );
   }
 }

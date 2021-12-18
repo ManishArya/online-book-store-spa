@@ -8,6 +8,6 @@ export class AppHomeComponent implements OnInit {
   constructor(private userService: UserService) {}
 
   public ngOnInit(): void {
-    this.userService.getProfile().subscribe((res) => this.userService.updateUserProfile(res.data));
+    this.userService.getProfile().subscribe((res) => this.userService.updateUserProfile(res.content));
   }
 }

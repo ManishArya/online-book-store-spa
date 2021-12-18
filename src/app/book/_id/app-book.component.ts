@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { finalize, switchMap } from 'rxjs/operators';
+import { IApiResponse } from 'src/app/models/api-response.model';
 import { IBook } from 'src/app/models/book';
 import { BookService } from 'src/app/services/book.service';
 import { MyListService } from 'src/app/services/my-list.service';
@@ -33,13 +34,13 @@ export class AppBookComponent implements OnInit {
           )
         )
       )
-      .subscribe(([book, isExistsInMyList]) => ((this.book = book), (this.isAdded = isExistsInMyList)));
+      .subscribe(([book, isExistsInMyList]) => ((this.book = book.content), (this.isAdded = isExistsInMyList.content)));
   }
 
   public addToMyList(): void {
     this.myListService.addToMyList(this.book.id).subscribe(
       () => (this.isAdded = true),
-      (err) => this.toast.open(err.error)
+      (err) => this.toast.open((err.error as IApiResponse<string>).errorDescription)
     );
   }
 }

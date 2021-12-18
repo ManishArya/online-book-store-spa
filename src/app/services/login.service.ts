@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { IApiDataResponse } from '../models/api-data-response.model';
 import { IApiResponse } from '../models/api-response.model';
 import { ILogin } from '../models/login';
 import { IToken } from '../models/token';
@@ -15,16 +14,16 @@ import { TokenService } from './token.service';
 export class LoginService {
   constructor(private http: HttpClient, private router: Router) {}
 
-  public getToken(login: ILogin): Observable<IApiDataResponse<IToken>> {
-    return this.http.post<IApiDataResponse<IToken>>(`${environment.authApiEndPoint}/token`, login);
+  public getToken(login: ILogin): Observable<IApiResponse<IToken>> {
+    return this.http.post<IApiResponse<IToken>>(`${environment.authApiEndPoint}/token`, login);
   }
 
-  public checkUserNameExists(username: string): Observable<IApiResponse> {
-    return this.http.post<IApiResponse>(`${environment.authApiEndPoint}/forgetPassword`, { username });
+  public checkUserNameExists(username: string): Observable<IApiResponse<string>> {
+    return this.http.post<IApiResponse<string>>(`${environment.authApiEndPoint}/forgetPassword`, { username });
   }
 
-  public changePassword(passwordModel: any): Observable<IApiResponse> {
-    return this.http.post<IApiResponse>(`${environment.authApiEndPoint}/changePassword`, passwordModel);
+  public changePassword(passwordModel: any): Observable<IApiResponse<string>> {
+    return this.http.post<IApiResponse<string>>(`${environment.authApiEndPoint}/changePassword`, passwordModel);
   }
 
   public login(token: string): void {

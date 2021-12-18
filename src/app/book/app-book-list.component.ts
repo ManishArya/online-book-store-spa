@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
 import { filter, finalize, switchMap, tap } from 'rxjs/operators';
+import { IApiResponse } from '../models/api-response.model';
 import { IBook } from '../models/book';
 import { BookService } from '../services/book.service';
 import { AppTitleService } from '../services/title.service';
@@ -43,7 +44,7 @@ export class AppBookListComponent implements OnInit {
         filter((res) => !!res),
         switchMap(() => this.getBooks())
       )
-      .subscribe((res) => (this.books = res));
+      .subscribe((res) => (this.books = res.content));
   }
 
   public openBook(id: string) {
@@ -57,11 +58,11 @@ export class AppBookListComponent implements OnInit {
       .subscribe();
   }
 
-  private getBooks(): Observable<IBook[]> {
+  private getBooks(): Observable<IApiResponse<IBook[]>> {
     this.isWaiting = true;
     return this.bookService.getBooks().pipe(
       tap((res) => {
-        this.books = res;
+        this.books = res.content;
       }),
       finalize(() => (this.isWaiting = false))
     );

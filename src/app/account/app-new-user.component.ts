@@ -3,9 +3,8 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
+import { IApiResponse } from '../models/api-response.model';
 import { LoginService } from '../services/login.service';
-import { StatusCode } from './../enums/status-code';
-import { IApiErrorResponse } from './../models/api-error-response.model';
 import { UserService } from './../services/user.service';
 
 @Component({
@@ -13,7 +12,7 @@ import { UserService } from './../services/user.service';
 })
 export class AppNewUserComponent implements OnInit {
   @ViewChild('photo') private photo: ElementRef;
-  public error: IApiErrorResponse;
+  public error: IApiResponse<any>;
   public isWaiting: boolean;
   public formGroup: FormGroup;
 
@@ -49,8 +48,8 @@ export class AppNewUserComponent implements OnInit {
       .pipe(finalize(() => (this.isWaiting = false)))
       .subscribe(
         (res) => {
-          if (res.code === StatusCode.Success) {
-            this.loginService.login(res.data.token);
+          if (res.isSuccess) {
+            this.loginService.login(res.content.token);
           }
         },
         (err: HttpErrorResponse) => {

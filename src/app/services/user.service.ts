@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { IApiDataResponse } from '../models/api-data-response.model';
 import { IApiResponse } from '../models/api-response.model';
 import { IToken } from '../models/token';
 import { UserProfile } from '../models/user-profile.model';
@@ -18,32 +17,34 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  public getProfile(): Observable<IApiDataResponse<UserProfile>> {
-    return this.http.get<IApiDataResponse<UserProfile>>(`${environment.authApiEndPoint}/user`);
+  public getProfile(): Observable<IApiResponse<UserProfile>> {
+    return this.http.get<IApiResponse<UserProfile>>(`${environment.authApiEndPoint}/user`);
   }
 
-  public addNewUser(formData: FormData): Observable<IApiDataResponse<IToken>> {
-    return this.http.post<IApiDataResponse<IToken>>(`${environment.authApiEndPoint}/user`, formData);
+  public addNewUser(formData: FormData): Observable<IApiResponse<IToken>> {
+    return this.http.post<IApiResponse<IToken>>(`${environment.authApiEndPoint}/user`, formData);
   }
 
-  public deleteUser(): Observable<IApiResponse> {
-    return this.http.delete<IApiResponse>(`${environment.authApiEndPoint}/manage/user`);
+  public deleteUser(): Observable<IApiResponse<string>> {
+    return this.http.delete<IApiResponse<string>>(`${environment.authApiEndPoint}/manage/user`);
   }
 
-  public deleteUserAccount(password: string): Observable<IApiResponse> {
-    return this.http.post<IApiResponse>(`${environment.authApiEndPoint}/manage/user/deleteUserAccount`, { password });
+  public deleteUserAccount(password: string): Observable<IApiResponse<string>> {
+    return this.http.post<IApiResponse<string>>(`${environment.authApiEndPoint}/manage/user/deleteUserAccount`, {
+      password
+    });
   }
 
-  public updateUser(profile: UserProfile) {
-    return this.http.put(`${environment.authApiEndPoint}/user`, profile);
+  public updateUser(profile: UserProfile): Observable<IApiResponse<UserProfile>> {
+    return this.http.put<IApiResponse<UserProfile>>(`${environment.authApiEndPoint}/user`, profile);
   }
 
-  public updatePhoto(formData: FormData): Observable<IApiResponse> {
-    return this.http.put<IApiResponse>(`${environment.authApiEndPoint}/user/uploadPhoto`, formData);
+  public updatePhoto(formData: FormData): Observable<IApiResponse<UserProfile>> {
+    return this.http.put<IApiResponse<UserProfile>>(`${environment.authApiEndPoint}/user/uploadPhoto`, formData);
   }
 
-  public removePhoto(): Observable<IApiResponse> {
-    return this.http.delete<IApiResponse>(`${environment.authApiEndPoint}/user/removePhoto`);
+  public removePhoto(): Observable<IApiResponse<UserProfile>> {
+    return this.http.delete<IApiResponse<UserProfile>>(`${environment.authApiEndPoint}/user/removePhoto`);
   }
 
   public updateProfilePhoto(photoUrl: string): void {

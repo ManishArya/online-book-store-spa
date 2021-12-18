@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { IApiErrorResponse } from 'src/app/models/api-error-response.model';
+import { IApiResponse } from 'src/app/models/api-response.model';
 
 @Component({
   selector: 'app-error-display',
@@ -9,7 +9,7 @@ import { IApiErrorResponse } from 'src/app/models/api-error-response.model';
 })
 export class AppErrorDisplayComponent implements OnChanges {
   @Input() public fieldName: string;
-  @Input() public error: IApiErrorResponse | undefined;
+  @Input() public error: IApiResponse<{ [key: string]: string }> | undefined;
   @Input() public formGroup: FormGroup;
   public isError: boolean;
   public errorMessage: string | undefined;
@@ -29,7 +29,7 @@ export class AppErrorDisplayComponent implements OnChanges {
   }
 
   private getErrorMessage(): string | undefined {
-    const errorMessage = this.error?.errorMessages;
+    const errorMessage = this.error?.content;
     if (errorMessage) {
       return errorMessage[this.fieldName];
     }

@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { IApiErrorResponse } from './../models/api-error-response.model';
+import { IApiResponse } from '../models/api-response.model';
 import { LoginService } from './../services/login.service';
 import { ToastService } from './../services/toast.service';
 
@@ -15,10 +15,10 @@ export class AppForgetPasswordComponent {
   public checkUserName(): void {
     this._loginService.checkUserNameExists(this.userName).subscribe(
       (res) => {
-        this.toast.open(res.message);
+        this.toast.open(res.content);
       },
       (err: HttpErrorResponse) => {
-        this.toast.open((err.error as IApiErrorResponse).errorMessages['error']);
+        this.toast.open((err.error as IApiResponse<string>).content);
       }
     );
   }
