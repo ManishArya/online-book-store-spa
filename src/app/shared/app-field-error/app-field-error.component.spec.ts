@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AppErrorDisplayComponent } from './app-error-display.component';
+import { AppFieldErrorComponent } from './app-field-error.component';
 
-describe('AppErrorDisplayComponent', () => {
-  let component: AppErrorDisplayComponent;
-  let fixture: ComponentFixture<AppErrorDisplayComponent>;
+describe('AppFieldErrorComponent', () => {
+  let component: AppFieldErrorComponent;
+  let fixture: ComponentFixture<AppFieldErrorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AppErrorDisplayComponent ]
+      declarations: [ AppFieldErrorComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AppErrorDisplayComponent);
+    fixture = TestBed.createComponent(AppFieldErrorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

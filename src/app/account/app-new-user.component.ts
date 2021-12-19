@@ -12,7 +12,7 @@ import { UserService } from './../services/user.service';
 })
 export class AppNewUserComponent implements OnInit {
   @ViewChild('photo') private photo: ElementRef;
-  public error: IApiResponse<any>;
+  public validations: { [key: string]: string };
   public isWaiting: boolean;
   public formGroup: FormGroup;
 
@@ -53,7 +53,7 @@ export class AppNewUserComponent implements OnInit {
           }
         },
         (err: HttpErrorResponse) => {
-          this.error = err.error;
+          this.validations = (err.error as IApiResponse<{ [key: string]: string }>).content;
         }
       );
   }

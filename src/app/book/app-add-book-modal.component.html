@@ -6,7 +6,7 @@
     <div class="form-group">
       <label for="name" class="required">Name</label>
       <input type="text" name="name" class="form-control" id="name" [(ngModel)]="name" />
-      <!-- <div *ngIf="getFieldError('name')">{{ getFieldError('name') }}</div> -->
+      <app-field-error [validations]="validations" fieldName="name"></app-field-error>
     </div>
     <div class="form-group">
       <label for="description" class="required">Description</label>
@@ -18,23 +18,26 @@
         rows="3"
         [(ngModel)]="description"
       ></textarea>
-      <!-- <div *ngIf="getFieldError('name')">{{ getFieldError('name') }}</div> -->
+      <app-field-error [validations]="validations" fieldName="description"></app-field-error>
     </div>
     <div class="form-group">
       <label for="date" class="required">Release Date</label>
       <input class="form-control" name="date" id="date" matInput [matDatepicker]="picker" [(ngModel)]="date" />
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
+      <app-field-error [validations]="validations" fieldName="date"></app-field-error>
     </div>
     <div class="form-group">
       <label for="genre" class="required">Select Genre</label>
       <mat-select multiple [(ngModel)]="genres" name="genres">
         <mat-option *ngFor="let genre of genreOptions" [value]="genre.name">{{ genre.name }}</mat-option>
       </mat-select>
+      <app-field-error [validations]="validations" fieldName="genres"></app-field-error>
     </div>
     <div class="form-group">
       <label class="required" for="photo">Select Poster</label>
-      <input type="file" name="photo" class="form-control" id="photo" #photo />
+      <input type="file" name="poster" class="form-control" id="poster" #photo />
+      <app-field-error [validations]="validations" fieldName="poster"></app-field-error>
     </div>
   </form>
 </mat-dialog-content>

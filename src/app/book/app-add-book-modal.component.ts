@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { finalize } from 'rxjs/operators';
+import { IApiResponse } from '../models/api-response.model';
 import { IGenre } from '../models/genre';
 import { BookService } from '../services/book.service';
 import { GenreService } from '../services/genre.service';
@@ -16,6 +17,7 @@ export class AppAddBookModalComponent implements OnInit {
   public genres: string[];
   public description: string;
   public isWaiting: boolean;
+  public validations: { [key: string]: string };
 
   constructor(
     private bookService: BookService,
@@ -42,8 +44,11 @@ export class AppAddBookModalComponent implements OnInit {
     this.bookService
       .addBook(formData)
       .pipe(finalize(() => (this.isWaiting = false)))
-      .subscribe((res) => {
-        this.matDialogRef.close(true);
-      });
+      .subscribe(
+        (res) => {
+          this.matDialogRef.close(true);
+        },
+        (err: any) => (this.validations = (err.error as IApiResponse<{ [key: string]: string }>).content)
+      );
   }
 }

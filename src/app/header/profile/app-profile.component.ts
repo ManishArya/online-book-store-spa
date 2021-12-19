@@ -17,7 +17,7 @@ export class AppProfileComponent implements OnInit {
   public userProfile: UserProfile;
   public safeResourceUrl: SafeResourceUrl;
   public isWaiting: boolean;
-  public error: IApiResponse<{ [key: string]: string }> | undefined;
+  public validations: { [key: string]: string };
   public isRemoveButtonShow: boolean;
   @ViewChild('photo') public photo: ElementRef;
 
@@ -34,7 +34,7 @@ export class AppProfileComponent implements OnInit {
   }
 
   public update(): void {
-    this.error = undefined;
+    this.validations = {};
     this.isWaiting = true;
     const updatedProfile = { ...this.userProfile, photo: undefined as any };
     this.userService
@@ -44,7 +44,7 @@ export class AppProfileComponent implements OnInit {
         () => {
           this.toastService.open('Profile Updated Successfully');
         },
-        (err: HttpErrorResponse) => (this.error = err.error)
+        (err: HttpErrorResponse) => (this.validations = (err.error as IApiResponse<{ [key: string]: string }>).content)
       );
   }
 

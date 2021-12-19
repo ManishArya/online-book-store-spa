@@ -3,25 +3,25 @@
   <div class="form-group">
     <label for="name" class="required">Name</label>
     <input type="text" name="name" class="form-control error" id="name" formControlName="name" />
-    <app-error-display fieldName="name" [error]="error" [formGroup]="formGroup"></app-error-display>
+    <app-field-error fieldName="name" [validations]="validations"></app-field-error>
   </div>
   <div class="form-group">
     <label for="username" class="required">Username</label>
     <input type="text" name="username" class="form-control error" id="username" formControlName="username" />
-    <app-error-display fieldName="username" [error]="error" [formGroup]="formGroup"></app-error-display>
+    <app-field-error fieldName="username" [validations]="validations"></app-field-error>
   </div>
   <div class="form-group">
     <label for="email" class="required">Email</label>
     <input type="email" name="email" class="form-control error" id="email" formControlName="email" />
-    <app-error-display fieldName="email" [error]="error" [formGroup]="formGroup"></app-error-display>
+    <app-field-error fieldName="email" [validations]="validations"></app-field-error>
   </div>
   <div class="form-group">
     <label for="mobile">Mobile</label>
     <input type="tel" name="mobile" class="form-control error" id="mobile" formControlName="mobile" />
-    <app-error-display fieldName="mobile" [error]="error" [formGroup]="formGroup"></app-error-display>
+    <app-field-error fieldName="mobile" [validations]="validations"></app-field-error>
   </div>
   <app-password-viewer label="Password" inputClass="form-control error" [isRequired]="true" formControlName="password">
-    <app-error-display fieldName="password" [error]="error" [formGroup]="formGroup"></app-error-display>
+    <app-field-error fieldName="password" [validations]="validations"></app-field-error>
   </app-password-viewer>
   <div class="form-group">
     <label for="photo">Photo</label>
