@@ -5,7 +5,7 @@
     <div>
       <b> {{ book.name }} </b>
     </div>
-    <div>{{ book.releaseDate | date }} | {{ book.generes | appCommaSeparator }}</div>
+    <div>{{ book.releaseDate | date }} | {{ book.genres | appCommaSeparator }}</div>
     <hr />
     <div *ngIf="!isAdded; else check">
       <button type="button" class="btn btn-default" (click)="addToMyList()">
