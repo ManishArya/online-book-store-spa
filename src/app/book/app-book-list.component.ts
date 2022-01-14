@@ -8,6 +8,7 @@ import { IBook } from '../models/book';
 import { BookService } from '../services/book.service';
 import { AppTitleService } from '../services/title.service';
 import { UserService } from '../services/user.service';
+import { DialogService } from '../shared/app-confirmation-dialog/dialog.service';
 import { AppAddBookModalComponent } from './app-add-book-modal.component';
 
 @Component({
@@ -23,7 +24,8 @@ export class AppBookListComponent implements OnInit {
     private dialog: MatDialog,
     private router: Router,
     private title: AppTitleService,
-    private userService: UserService
+    private userService: UserService,
+    private dialogService: DialogService
   ) {}
 
   public ngOnInit(): void {
@@ -52,8 +54,18 @@ export class AppBookListComponent implements OnInit {
   }
 
   public removeBook(id: string): void {
-    this.bookService
-      .removeBook(id)
+    const name = this.books.find((b) => b.id === id)?.name;
+
+    this.dialogService
+      .openConfirmationDialog({
+        header: 'Delete a Book',
+        body: `Do you want to delete the ${name} ?`
+      })
+      .afterClosed()
+      .pipe(
+        filter((x) => !!x),
+        switchMap(() => this.bookService.removeBook(id))
+      )
       .pipe(switchMap(() => this.getBooks()))
       .subscribe();
   }
