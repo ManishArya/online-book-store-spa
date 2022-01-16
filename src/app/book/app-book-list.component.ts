@@ -18,7 +18,12 @@ export class AppBookListComponent implements OnInit, OnDestroy {
   public books: IBook[] = [];
   public isWaiting: boolean;
   public hasPermission: boolean;
+  private bookIds: string[] = [];
   private ngUnsubscribe = new Subject<void>();
+
+  public get isDeleteDisabled(): boolean {
+    return this.bookIds.length === 0;
+  }
 
   constructor(
     private bookService: BookService,
@@ -54,24 +59,40 @@ export class AppBookListComponent implements OnInit, OnDestroy {
     this.router.navigate(['book', id]);
   }
 
-  public removeBook(id: string): void {
-    const name = this.books.find((b) => b.id === id)?.name;
+  public selectBook(event: any, id: string): void {
+    const index = this.bookIds.findIndex((b) => b === id);
+    const isChecked = event.target.checked;
+
+    if (isChecked) {
+      if (index === -1) {
+        this.bookIds.push(id);
+      }
+    } else {
+      if (index !== -1) {
+        this.bookIds.splice(index, 1);
+      }
+    }
+  }
+
+  public deleteBook(): void {
+    const selectedBooksCount = this.bookIds.length;
 
     this.dialogService
       .openConfirmationDialog({
-        header: 'Delete a Book',
-        body: `Do you want to delete the ${name} ?`
+        header: 'Delete the Books',
+        body: `Do you want to delete the selected ${selectedBooksCount} books ?`
       })
       .afterClosed()
       .pipe(
         filter((x) => !!x),
-        switchMap(() => this.bookService.removeBook(id))
+        switchMap(() => this.bookService.removeBook(this.bookIds))
       )
       .pipe(switchMap(() => this.getBooks()))
       .subscribe();
   }
 
   public refreshBookList(): void {
+    this.bookIds = [];
     this.bookService.refreshBookList();
   }
 

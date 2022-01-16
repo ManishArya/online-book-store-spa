@@ -1,6 +1,15 @@
 <button type="button" class="btn btn-default mr-xs" (click)="openBookModal()" *ngIf="hasPermission">
   <i class="fa fa-plus-circle"></i> Add Book
 </button>
+<button
+  type="button"
+  class="btn btn-default mr-xs"
+  [disabled]="isDeleteDisabled"
+  (click)="deleteBook()"
+  *ngIf="hasPermission"
+>
+  <i class="fa fa-trash"></i> Delete
+</button>
 <a class="mr-xs" routerLink="myList">My List</a>
 <button type="button" class="btn btn-default mr-xs"><i class="fa fa-filter" aria-hidden="true"></i> Filter</button>
 <button type="button" class="btn btn-link" title="refresh" (click)="refreshBookList()">
@@ -11,11 +20,9 @@
   <div class="mt-sm display-flex">
     <ng-container *ngFor="let book of books">
       <div class="mt-sm mr-sm pointer">
+        <input type="checkbox" (change)="selectBook($event, book.id)" />
         <div (click)="openBook(book.id)">
           <img src="data:image/jpg;base64,{{ book.poster }}" height="200" width="200" />
-        </div>
-        <div (click)="removeBook(book.id)" *ngIf="hasPermission">
-          <button class="btn btn-default">Remove</button>
         </div>
       </div>
     </ng-container>

@@ -28,8 +28,8 @@ export class BookService {
     return this.http.post<IApiResponse<string>>(`${environment.bookApiEndPoint}/${CONTROLLER_NAME}`, formData);
   }
 
-  public removeBook(id: string): Observable<IApiResponse<string>> {
-    return this.http.delete<IApiResponse<string>>(`${environment.bookApiEndPoint}/${CONTROLLER_NAME}?id=${id}`);
+  public removeBook(ids: string[]): Observable<IApiResponse<string>> {
+    return this.http.post<IApiResponse<string>>(`${environment.bookApiEndPoint}/${CONTROLLER_NAME}/delete`, ids);
   }
 
   public refreshBookList(): void {
