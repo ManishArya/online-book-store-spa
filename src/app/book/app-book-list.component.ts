@@ -71,6 +71,10 @@ export class AppBookListComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
+  public refreshBookList(): void {
+    this.bookService.refreshBookList();
+  }
+
   private getBooks(): Observable<IApiResponse<IBook[]>> {
     this.isWaiting = true;
     return this.bookService.getBooks().pipe(
