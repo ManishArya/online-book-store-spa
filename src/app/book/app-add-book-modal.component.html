@@ -42,6 +42,7 @@
   </form>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button type="button" class="btn btn-primary" (click)="addBook()">Save</button>
+  <button type="button" class="btn btn-primary mr-xs" (click)="addBook(false)">Save And New</button>
+  <button type="button" class="btn btn-primary" (click)="addBook(true)">Save And Close</button>
   <button class="btn btn-link" mat-button mat-dialog-close>Cancel</button>
 </mat-dialog-actions>

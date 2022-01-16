@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { forkJoin, Observable } from 'rxjs';
-import { filter, finalize, switchMap, tap } from 'rxjs/operators';
+import { forkJoin, Observable, Subject } from 'rxjs';
+import { filter, finalize, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { IApiResponse } from '../models/api-response.model';
 import { IBook } from '../models/book';
 import { BookService } from '../services/book.service';
@@ -14,10 +14,11 @@ import { AppAddBookModalComponent } from './app-add-book-modal.component';
 @Component({
   templateUrl: './app-book-list.component.html'
 })
-export class AppBookListComponent implements OnInit {
+export class AppBookListComponent implements OnInit, OnDestroy {
   public books: IBook[] = [];
   public isWaiting: boolean;
   public hasPermission: boolean;
+  private ngUnsubscribe = new Subject<void>();
 
   constructor(
     private bookService: BookService,
@@ -34,19 +35,19 @@ export class AppBookListComponent implements OnInit {
       this.getBooks(),
       this.userService.userProfile$.pipe(tap((res) => (this.hasPermission = res.isAdmin)))
     ]).subscribe();
+
+    this.listenToRefreshBookList();
+  }
+
+  public ngOnDestroy(): void {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   public openBookModal(): void {
-    this.dialog
-      .open(AppAddBookModalComponent, {
-        width: '600px'
-      })
-      .afterClosed()
-      .pipe(
-        filter((res) => !!res),
-        switchMap(() => this.getBooks())
-      )
-      .subscribe((res) => (this.books = res.content));
+    this.dialog.open(AppAddBookModalComponent, {
+      width: '600px'
+    });
   }
 
   public openBook(id: string) {
@@ -78,5 +79,14 @@ export class AppBookListComponent implements OnInit {
       }),
       finalize(() => (this.isWaiting = false))
     );
+  }
+
+  private listenToRefreshBookList(): void {
+    this.bookService.bookListRefresh$
+      .pipe(
+        takeUntil(this.ngUnsubscribe),
+        switchMap(() => this.getBooks())
+      )
+      .subscribe();
   }
 }

@@ -29,16 +29,17 @@ export class AppAddBookModalComponent implements OnInit {
     this.genreService.getGenres().subscribe((g) => (this.genreOptions = g.content));
   }
 
-  public addBook(): void {
+  public addBook(closed: boolean): void {
+    const formData = new FormData();
+    formData.set('poster', this.photo.nativeElement.files[0]);
     const book = {
       name: this.name,
       description: this.description,
       releaseDate: this.date,
       genres: this.genres
     };
-    const formData = new FormData();
-    formData.set('poster', this.photo.nativeElement.files[0]);
     formData.set('bookString', JSON.stringify(book));
+
     this.isWaiting = true;
 
     this.bookService
@@ -46,9 +47,21 @@ export class AppAddBookModalComponent implements OnInit {
       .pipe(finalize(() => (this.isWaiting = false)))
       .subscribe(
         (res) => {
-          this.matDialogRef.close(true);
+          this.resetValues();
+          this.bookService.refreshBookList();
+          if (closed) {
+            this.matDialogRef.close(true);
+          }
         },
         (err: any) => (this.validations = (err.error as IApiResponse<{ [key: string]: string }>).content)
       );
+  }
+
+  private resetValues(): void {
+    this.name = undefined as any;
+    this.description = undefined as any;
+    this.date = undefined;
+    this.genres = undefined as any;
+    this.photo.nativeElement.value = '';
   }
 }
