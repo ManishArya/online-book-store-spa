@@ -5,4 +5,5 @@ export interface IBook {
   genres: string[];
   poster: string;
   releaseDate: Date;
+  isChecked: boolean;
 }

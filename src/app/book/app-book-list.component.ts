@@ -18,11 +18,14 @@ export class AppBookListComponent implements OnInit, OnDestroy {
   public books: IBook[] = [];
   public isWaiting: boolean;
   public hasPermission: boolean;
-  private bookIds: string[] = [];
   private ngUnsubscribe = new Subject<void>();
 
-  public get isDeleteDisabled(): boolean {
+  public get disabled(): boolean {
     return this.bookIds.length === 0;
+  }
+
+  private get bookIds(): string[] {
+    return this.books.filter((b) => b.isChecked).map((b) => b.id);
   }
 
   constructor(
@@ -49,6 +52,14 @@ export class AppBookListComponent implements OnInit, OnDestroy {
     this.ngUnsubscribe.complete();
   }
 
+  public selectAll(): void {
+    this.setIsChecked(true);
+  }
+
+  public clearAll(): void {
+    this.setIsChecked(false);
+  }
+
   public openBookModal(): void {
     this.dialog.open(AppAddBookModalComponent, {
       width: '600px'
@@ -57,21 +68,6 @@ export class AppBookListComponent implements OnInit, OnDestroy {
 
   public openBook(id: string) {
     this.router.navigate(['book', id]);
-  }
-
-  public selectBook(event: any, id: string): void {
-    const index = this.bookIds.findIndex((b) => b === id);
-    const isChecked = event.target.checked;
-
-    if (isChecked) {
-      if (index === -1) {
-        this.bookIds.push(id);
-      }
-    } else {
-      if (index !== -1) {
-        this.bookIds.splice(index, 1);
-      }
-    }
   }
 
   public deleteBook(): void {
@@ -92,8 +88,11 @@ export class AppBookListComponent implements OnInit, OnDestroy {
   }
 
   public refreshBookList(): void {
-    this.bookIds = [];
     this.bookService.refreshBookList();
+  }
+
+  private setIsChecked(isChecked: boolean): void {
+    this.books.forEach((b) => (b.isChecked = isChecked));
   }
 
   private getBooks(): Observable<IApiResponse<IBook[]>> {
