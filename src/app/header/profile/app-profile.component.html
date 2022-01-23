@@ -1,7 +1,8 @@
 <div>
   <app-spinner [isWaiting]="isWaiting"></app-spinner>
   <ng-container *ngIf="!isWaiting">
-    <div class="image-container">
+    <app-avatar [imageSrc]="imageSrc" [name]="name"></app-avatar>
+    <!-- <div class="image-container">
       <div>
         <img [src]="safeResourceUrl" class="profile-photo" (click)="changePhoto()" />
         <div class="mt-sm">
@@ -13,7 +14,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <form>
       <div class="form-group">
         <label for="name" class="required">Name</label>

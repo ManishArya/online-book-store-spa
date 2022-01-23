@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -11,17 +10,16 @@ import { UserService } from '../services/user.service';
   styleUrls: ['./app-header.component.scss']
 })
 export class AppHeaderComponent implements OnInit, OnDestroy {
-  public safeResourceUrl: SafeResourceUrl;
+  public imageSrc: string;
+  public name: string;
   private ngUnSubscribe: Subject<void> = new Subject<void>();
 
-  constructor(private router: Router, private userService: UserService, private _sanitizer: DomSanitizer) {}
+  constructor(private router: Router, private userService: UserService) {}
 
   public ngOnInit(): void {
     this.userService.userProfile$.subscribe((res) => {
-      const photo = res.photo;
-      this.safeResourceUrl = photo
-        ? this._sanitizer.bypassSecurityTrustUrl(`data:image/jpg;base64,${photo}`)
-        : './assets/images/avatar.png';
+      this.imageSrc = res.photo;
+      this.name = res.name;
     });
 
     this.listenToProfilePictureChange();
@@ -45,8 +43,6 @@ export class AppHeaderComponent implements OnInit, OnDestroy {
   }
 
   private listenToProfilePictureChange(): void {
-    this.userService.profilePic$
-      .pipe(takeUntil(this.ngUnSubscribe))
-      .subscribe((picture) => (this.safeResourceUrl = picture));
+    this.userService.profilePic$.pipe(takeUntil(this.ngUnSubscribe)).subscribe((picture) => (this.imageSrc = picture));
   }
 }
