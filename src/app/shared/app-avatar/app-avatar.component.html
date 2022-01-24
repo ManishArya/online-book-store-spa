@@ -1,3 +1,11 @@
 <img [src]="safeResourceUrl" />
-
-<div>{{ _name }}</div>
+<div (click)="changePhoto()">
+  <input #photo type="file" class="d-none" (change)="uploadPhoto($event)" />
+  <div class="avatar-wrapper shodow">
+    <div class="avatar-initials palette-multi-2">
+      <div class="avatar-initials-inner">
+        {{ initials }}
+      </div>
+    </div>
+  </div>
+</div>

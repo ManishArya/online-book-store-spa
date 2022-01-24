@@ -22,7 +22,7 @@ export class AppHeaderComponent implements OnInit, OnDestroy {
       this.name = res.name;
     });
 
-    this.listenToProfilePictureChange();
+    this.listenToProfileChange();
   }
 
   public ngOnDestroy(): void {
@@ -42,7 +42,10 @@ export class AppHeaderComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('');
   }
 
-  private listenToProfilePictureChange(): void {
-    this.userService.profilePic$.pipe(takeUntil(this.ngUnSubscribe)).subscribe((picture) => (this.imageSrc = picture));
+  private listenToProfileChange(): void {
+    this.userService.userProfile$.pipe(takeUntil(this.ngUnSubscribe)).subscribe((profile) => {
+      this.imageSrc = profile.photo;
+      this.name = profile.name;
+    });
   }
 }

@@ -7,9 +7,10 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   styleUrls: ['./app-avatar.component.scss']
 })
 export class AppAvatarComponent implements OnChanges {
-  @Input() public imageSrc: string;
-  public _name: string;
   public safeResourceUrl: SafeResourceUrl;
+  @Input() public imageSrc: string;
+  public initials: string;
+  private _name: string;
 
   constructor(private _sanitizer: DomSanitizer) {}
 
@@ -27,6 +28,25 @@ export class AppAvatarComponent implements OnChanges {
       this.safeResourceUrl = this._sanitizer.bypassSecurityTrustResourceUrl(`data:image/jpg;base64,${this.imageSrc}`);
     }
 
-    console.log(changes);
+    this.initials = this.getInitials();
+  }
+
+  public changePhoto(): void {}
+
+  public uploadPhoto(event: any): void {}
+
+  private getInitials(): string {
+    if (this._name) {
+      const splitNames = this._name.trim().split(' ');
+      const capitalFirstLetter = this.capitalFirstLetter(splitNames[0]);
+      const lastName = splitNames[splitNames.length - 1];
+      const capitalLastLetter = this.capitalFirstLetter(lastName);
+      return `${capitalFirstLetter}${capitalLastLetter}`;
+    }
+    return '';
+  }
+
+  private capitalFirstLetter(word: string): string {
+    return word.charAt(0).toUpperCase();
   }
 }

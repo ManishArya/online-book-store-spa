@@ -34,9 +34,12 @@ export class AppProfileComponent implements OnInit {
     const updatedProfile = { ...this.userProfile, photo: undefined as any };
     this.userService
       .updateUser(updatedProfile)
-      .pipe(finalize(() => (this.isWaiting = false)))
+      .pipe(
+        finalize(() => (this.isWaiting = false)),
+        switchMap((res) => this.getProfile())
+      )
       .subscribe(
-        () => {
+        (res) => {
           this.toastService.open('Profile Updated Successfully');
         },
         (err: HttpErrorResponse) => (this.validations = (err.error as IApiResponse<{ [key: string]: string }>).content)
@@ -77,9 +80,9 @@ export class AppProfileComponent implements OnInit {
       tap((res) => {
         this.userProfile = res.content;
         this.imageSrc = res.content.photo;
-        this.name = this.userProfile.name;
+        this.name = res.content.name;
         this.isRemoveButtonShow = !!this.imageSrc;
-        this.userService.updateProfilePhoto(this.imageSrc);
+        this.userService.updateUserProfile(this.userProfile);
       }),
       finalize(() => (this.isWaiting = false))
     );
