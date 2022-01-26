@@ -16,7 +16,7 @@
   <div class="mt-sm display-flex">
     <ng-container *ngFor="let book of books">
       <div class="mt-sm mr-sm pointer">
-        <input type="checkbox" [(ngModel)]="book.isChecked" />
+        <input type="checkbox" *ngIf="hasPermission" [(ngModel)]="book.isChecked" />
         <div (click)="openBook(book.id)">
           <img src="data:image/jpg;base64,{{ book.poster }}" height="200" width="200" />
         </div>

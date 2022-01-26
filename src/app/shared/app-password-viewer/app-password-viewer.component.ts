@@ -14,11 +14,12 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ]
 })
 export class AppPasswordViewerComponent implements ControlValueAccessor {
+  public showPassword: boolean = false;
+  public password: string;
+  public showPasswordViewer: boolean;
   @Input() public label: string = 'Password';
   @Input() public isRequired: boolean = false;
   @Input() public inputClass: string;
-  public showPassword: boolean = false;
-  public password: string;
   public onChange = (value: string) => {};
   public onTouched = () => {};
 
@@ -38,6 +39,7 @@ export class AppPasswordViewerComponent implements ControlValueAccessor {
   }
 
   public modelChange(value: string): void {
+    this.showPasswordViewer = !!value;
     this.onChange(value);
   }
 
