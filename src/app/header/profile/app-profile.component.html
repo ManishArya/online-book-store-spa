@@ -1,20 +1,14 @@
 <div>
   <app-spinner [isWaiting]="isWaiting"></app-spinner>
-  <ng-container *ngIf="!isWaiting">
-    <app-avatar [imageSrc]="imageSrc" [name]="name"></app-avatar>
-    <!-- <div class="image-container">
-      <div>
-        <img [src]="safeResourceUrl" class="profile-photo" (click)="changePhoto()" />
-        <div class="mt-sm">
-          <input #photo type="file" class="d-none" (change)="uploadPhoto($event)" />
-          <div class="mt-sm">
-            <button type="button" class="btn btn-default" (click)="removePhoto()" *ngIf="isRemoveButtonShow">
-              <i class="fa fa-trash"></i> Remove
-            </button>
-          </div>
-        </div>
-      </div>
-    </div> -->
+  <ng-container *ngIf="userProfile">
+    <app-avatar
+      alignType="center"
+      [imageSrc]="imageSrc"
+      [name]="name"
+      [isRemoveEnable]="!!imageSrc"
+      (avatarChanged)="photoChanged($event)"
+      (avatarRemoved)="removePhoto()"
+    ></app-avatar>
     <form>
       <div class="form-group">
         <label for="name" class="required">Name</label>

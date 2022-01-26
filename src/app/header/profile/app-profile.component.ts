@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { filter, finalize, switchMap, tap } from 'rxjs/operators';
 import { IApiResponse } from 'src/app/models/api-response.model';
@@ -9,8 +9,7 @@ import { ToastService } from 'src/app/services/toast.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  templateUrl: './app-profile.component.html',
-  styleUrls: ['./app-profile.component.scss']
+  templateUrl: './app-profile.component.html'
 })
 export class AppProfileComponent implements OnInit {
   public userProfile: UserProfile;
@@ -18,8 +17,6 @@ export class AppProfileComponent implements OnInit {
   public imageSrc: string;
   public name: string;
   public validations: { [key: string]: string };
-  public isRemoveButtonShow: boolean;
-  @ViewChild('photo') public photo: ElementRef;
 
   constructor(private userService: UserService, private title: AppTitleService, private toastService: ToastService) {}
 
@@ -46,14 +43,7 @@ export class AppProfileComponent implements OnInit {
       );
   }
 
-  public changePhoto(): void {
-    if (this.photo) {
-      this.photo.nativeElement.click();
-    }
-  }
-
-  public uploadPhoto(event: any): void {
-    const file = event.target.files[0];
+  public photoChanged(file: any): void {
     if (file) {
       const formData = new FormData();
       formData.set('photo', file);
@@ -81,7 +71,6 @@ export class AppProfileComponent implements OnInit {
         this.userProfile = res.content;
         this.imageSrc = res.content.photo;
         this.name = res.content.name;
-        this.isRemoveButtonShow = !!this.imageSrc;
         this.userService.updateUserProfile(this.userProfile);
       }),
       finalize(() => (this.isWaiting = false))

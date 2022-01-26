@@ -6,8 +6,7 @@ import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-header',
-  templateUrl: './app-header.component.html',
-  styleUrls: ['./app-header.component.scss']
+  templateUrl: './app-header.component.html'
 })
 export class AppHeaderComponent implements OnInit, OnDestroy {
   public imageSrc: string;
