@@ -1,0 +1,59 @@
+.avatar-initials,
+.avatar-image {
+  height: 150px;
+  width: 100px;
+  background-position: 50%;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-initials {
+  height: 100px;
+}
+
+.avatar-initials {
+  font-size: 50px;
+}
+
+.avatar-initials-inner {
+  color: #fff;
+  cursor: default;
+  user-select: none;
+}
+
+.avatar-wrapper {
+  height: 104px;
+  width: 104px;
+  border: solid 2px transparent;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  top: -2px;
+  left: -2px;
+}
+
+.avatar-wrapper-small {
+  height: 40px;
+  width: 40px;
+
+  .avatar-initials,
+  .avatar-image {
+    height: 60px;
+    width: 40px;
+  }
+  .avatar-initials {
+    font-size: 15px;
+    height: 40px;
+  }
+}
+
+.avatar-center {
+  display: flex;
+  justify-content: center;
+}
+
+.z-index {
+  z-index: 1;
+}

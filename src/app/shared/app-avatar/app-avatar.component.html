@@ -1,0 +1,14 @@
+<div class="pointer z-index" [class]="'avatar-' + alignType" (click)="changeAvatar()">
+  <input #avatar type="file" class="d-none" />
+  <div [class]="'shodow avatar-wrapper avatar-wrapper-' + size">
+    <div class="avatar-image" *ngIf="imageSrc" [ngStyle]="{ 'background-image': getImage() }"></div>
+    <div [class]="'avatar-initials palette-multi-' + colorIndex" *ngIf="!imageSrc">
+      <div class="avatar-initials-inner">
+        {{ initials }}
+      </div>
+    </div>
+  </div>
+</div>
+<div [class]="'avatar-' + alignType" *ngIf="isRemoveEnable">
+  <button type="button" class="btn btn-default" (click)="onAvatarRemoved()"><i class="fa fa-trash"></i> Remove</button>
+</div>
