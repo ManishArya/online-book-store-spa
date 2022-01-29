@@ -21,8 +21,8 @@ export class UserService {
     return this.http.get<IApiResponse<UserProfile>>(`${environment.authApiEndPoint}/user`);
   }
 
-  public addNewUser(formData: FormData): Observable<IApiResponse<IToken>> {
-    return this.http.post<IApiResponse<IToken>>(`${environment.authApiEndPoint}/user`, formData);
+  public addNewUser(user: UserProfile): Observable<IApiResponse<IToken>> {
+    return this.http.post<IApiResponse<IToken>>(`${environment.authApiEndPoint}/user`, user);
   }
 
   public deleteUser(): Observable<IApiResponse<string>> {
@@ -39,16 +39,16 @@ export class UserService {
     return this.http.put<IApiResponse<UserProfile>>(`${environment.authApiEndPoint}/user`, profile);
   }
 
-  public updatePhoto(formData: FormData): Observable<IApiResponse<UserProfile>> {
-    return this.http.put<IApiResponse<UserProfile>>(`${environment.authApiEndPoint}/user/uploadPhoto`, formData);
+  public updateAvatar(formData: FormData): Observable<IApiResponse<UserProfile>> {
+    return this.http.put<IApiResponse<UserProfile>>(`${environment.authApiEndPoint}/user/uploadAvatar`, formData);
   }
 
-  public removePhoto(): Observable<IApiResponse<UserProfile>> {
-    return this.http.delete<IApiResponse<UserProfile>>(`${environment.authApiEndPoint}/user/removePhoto`);
+  public removeAvatar(): Observable<IApiResponse<UserProfile>> {
+    return this.http.delete<IApiResponse<UserProfile>>(`${environment.authApiEndPoint}/user/removeAvatar`);
   }
 
-  public updateProfilePhoto(photoUrl: string): void {
-    this.profilePicSubject.next(photoUrl);
+  public updateProfileAvatar(url: string): void {
+    this.profilePicSubject.next(url);
   }
 
   public updateUserProfile(userProfile: UserProfile): void {

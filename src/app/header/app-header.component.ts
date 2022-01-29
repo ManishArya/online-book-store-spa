@@ -17,7 +17,7 @@ export class AppHeaderComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.userService.userProfile$.subscribe((res) => {
-      this.imageSrc = res.photo;
+      this.imageSrc = res.avatar;
       this.name = res.name;
     });
 
@@ -43,7 +43,7 @@ export class AppHeaderComponent implements OnInit, OnDestroy {
 
   private listenToProfileChange(): void {
     this.userService.userProfile$.pipe(takeUntil(this.ngUnSubscribe)).subscribe((profile) => {
-      this.imageSrc = profile.photo;
+      this.imageSrc = profile.avatar;
       this.name = profile.name;
     });
   }

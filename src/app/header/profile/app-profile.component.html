@@ -6,8 +6,8 @@
       [imageSrc]="imageSrc"
       [name]="name"
       [isRemoveEnable]="!!imageSrc"
-      (avatarChanged)="photoChanged($event)"
-      (avatarRemoved)="removePhoto()"
+      (avatarChanged)="avatarChanged($event)"
+      (avatarRemoved)="removeAvatar()"
     ></app-avatar>
     <form>
       <div class="form-group">

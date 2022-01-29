@@ -1,9 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { IApiResponse } from '../models/api-response.model';
+import { UserProfile } from '../models/user-profile.model';
 import { LoginService } from '../services/login.service';
 import { UserService } from './../services/user.service';
 
@@ -11,7 +12,6 @@ import { UserService } from './../services/user.service';
   templateUrl: './app-new-user.component.html'
 })
 export class AppNewUserComponent implements OnInit {
-  @ViewChild('photo') private photo: ElementRef;
   public validations: { [key: string]: string };
   public isWaiting: boolean;
   public formGroup: FormGroup;
@@ -34,17 +34,18 @@ export class AppNewUserComponent implements OnInit {
   }
 
   public addUser(): void {
-    const formData = new FormData();
-    formData.set('name', this.formGroup.get('name')?.value);
-    formData.set('username', this.formGroup.get('username')?.value);
-    formData.set('mobile', this.formGroup.get('mobile')?.value);
-    formData.set('email', this.formGroup.get('email')?.value);
-    formData.set('password', this.formGroup.get('password')?.value);
-    formData.set('photo', this.photo.nativeElement.files[0]);
+    const user = {
+      name: this.formGroup.get('name')?.value,
+      username: this.formGroup.get('username')?.value,
+      mobile: this.formGroup.get('mobile')?.value,
+      email: this.formGroup.get('email')?.value,
+      password: this.formGroup.get('password')?.value
+    } as UserProfile;
+
     this.isWaiting = true;
 
     this.userService
-      .addNewUser(formData)
+      .addNewUser(user)
       .pipe(finalize(() => (this.isWaiting = false)))
       .subscribe(
         (res) => {

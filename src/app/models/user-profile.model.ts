@@ -4,6 +4,6 @@ export class UserProfile {
   mobile: string;
   name: string = '';
   password: string = '';
-  photo: string;
+  avatar: string;
   isAdmin: boolean;
 }

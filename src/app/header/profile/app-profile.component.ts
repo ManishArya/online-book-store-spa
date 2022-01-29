@@ -28,7 +28,7 @@ export class AppProfileComponent implements OnInit {
   public update(): void {
     this.validations = {};
     this.isWaiting = true;
-    const updatedProfile = { ...this.userProfile, photo: undefined as any };
+    const updatedProfile = { ...this.userProfile, avatar: undefined as any };
     this.userService
       .updateUser(updatedProfile)
       .pipe(
@@ -43,12 +43,12 @@ export class AppProfileComponent implements OnInit {
       );
   }
 
-  public photoChanged(file: any): void {
+  public avatarChanged(file: any): void {
     if (file) {
       const formData = new FormData();
-      formData.set('photo', file);
+      formData.set('avatar', file);
       this.userService
-        .updatePhoto(formData)
+        .updateAvatar(formData)
         .pipe(
           filter((res) => res.isSuccess),
           switchMap(() => this.getProfile())
@@ -57,9 +57,9 @@ export class AppProfileComponent implements OnInit {
     }
   }
 
-  public removePhoto(): void {
+  public removeAvatar(): void {
     this.userService
-      .removePhoto()
+      .removeAvatar()
       .pipe(switchMap(() => this.getProfile()))
       .subscribe();
   }
@@ -69,7 +69,7 @@ export class AppProfileComponent implements OnInit {
     return this.userService.getProfile().pipe(
       tap((res) => {
         this.userProfile = res.content;
-        this.imageSrc = res.content.photo;
+        this.imageSrc = res.content.avatar;
         this.name = res.content.name;
         this.userService.updateUserProfile(this.userProfile);
       }),

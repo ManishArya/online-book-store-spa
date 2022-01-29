@@ -1,4 +1,4 @@
-<form [formGroup]="formGroup">
+<form autocomplete="off" [formGroup]="formGroup">
   <app-spinner [isWaiting]="isWaiting"></app-spinner>
   <div class="form-group">
     <label for="name" class="required">Name</label>
@@ -15,17 +15,13 @@
     <input type="email" name="email" class="form-control error" id="email" formControlName="email" />
     <app-field-error fieldName="email" [validations]="validations"></app-field-error>
   </div>
-  <div class="form-group">
-    <label for="mobile">Mobile</label>
-    <input type="tel" name="mobile" class="form-control error" id="mobile" formControlName="mobile" />
-    <app-field-error fieldName="mobile" [validations]="validations"></app-field-error>
-  </div>
   <app-password-viewer label="Password" inputClass="form-control error" [isRequired]="true" formControlName="password">
     <app-field-error fieldName="password" [validations]="validations"></app-field-error>
   </app-password-viewer>
   <div class="form-group">
-    <label for="photo">Photo</label>
-    <input type="file" name="photo" class="form-control" id="photo" #photo />
+    <label for="mobile">Mobile</label>
+    <input type="tel" name="mobile" class="form-control error" id="mobile" formControlName="mobile" />
+    <app-field-error fieldName="mobile" [validations]="validations"></app-field-error>
   </div>
   <button type="submit" class="btn btn-default" (click)="addUser()">Submit</button>
   <button type="button" class="btn btn-link" (click)="cancel()">Cancel</button>
