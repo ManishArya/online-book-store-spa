@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { combineLatest, Subject } from 'rxjs';
+import { MyListService } from '../services/my-list.service';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -11,17 +11,17 @@ import { UserService } from '../services/user.service';
 export class AppHeaderComponent implements OnInit, OnDestroy {
   public imageSrc: string;
   public name: string;
+  public listCount: number = 0;
   private ngUnSubscribe: Subject<void> = new Subject<void>();
 
-  constructor(private router: Router, private userService: UserService) {}
+  constructor(private router: Router, private userService: UserService, private myListService: MyListService) {}
 
   public ngOnInit(): void {
-    this.userService.userProfile$.subscribe((res) => {
-      this.imageSrc = res.avatar;
-      this.name = res.name;
+    combineLatest([this.userService.userProfile$, this.myListService.getListCounts()]).subscribe((res) => {
+      this.imageSrc = res[0].avatar;
+      this.name = res[0].name;
+      this.listCount = res[1].content;
     });
-
-    this.listenToProfileChange();
   }
 
   public ngOnDestroy(): void {
@@ -41,10 +41,7 @@ export class AppHeaderComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('');
   }
 
-  private listenToProfileChange(): void {
-    this.userService.userProfile$.pipe(takeUntil(this.ngUnSubscribe)).subscribe((profile) => {
-      this.imageSrc = profile.avatar;
-      this.name = profile.name;
-    });
+  public navigateToMyListPage(): void {
+    this.router.navigateByUrl('myList');
   }
 }

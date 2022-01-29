@@ -28,4 +28,8 @@ export class MyListService {
       `${environment.bookApiEndPoint}/MyList/checckiteminmylist/?itemId=${id}`
     );
   }
+
+  public getListCounts(): Observable<IApiResponse<number>> {
+    return this.http.get<IApiResponse<number>>(`${environment.bookApiEndPoint}/MyList/counts`);
+  }
 }
