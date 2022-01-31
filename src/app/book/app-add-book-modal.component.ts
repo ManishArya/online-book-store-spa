@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { finalize } from 'rxjs/operators';
@@ -5,6 +6,7 @@ import { IApiResponse } from '../models/api-response.model';
 import { IGenre } from '../models/genre';
 import { BookService } from '../services/book.service';
 import { GenreService } from '../services/genre.service';
+import { ToastService } from '../services/toast.service';
 
 @Component({
   templateUrl: './app-add-book-modal.component.html'
@@ -22,7 +24,8 @@ export class AppAddBookModalComponent implements OnInit {
   constructor(
     private bookService: BookService,
     private matDialogRef: MatDialogRef<AppAddBookModalComponent>,
-    private genreService: GenreService
+    private genreService: GenreService,
+    private toastService: ToastService
   ) {}
 
   public ngOnInit(): void {
@@ -53,7 +56,13 @@ export class AppAddBookModalComponent implements OnInit {
             this.matDialogRef.close(true);
           }
         },
-        (err: any) => (this.validations = (err.error as IApiResponse<{ [key: string]: string }>).content)
+        (err: HttpErrorResponse) => {
+          if (err.status === 400) {
+            this.validations = (err.error as IApiResponse<{ [key: string]: string }>).content;
+          } else {
+            this.toastService.open((err.error as IApiResponse<string>).errorDescription);
+          }
+        }
       );
   }
 

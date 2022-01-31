@@ -22,6 +22,8 @@ export class AppHeaderComponent implements OnInit, OnDestroy {
       this.name = res[0].name;
       this.listCount = res[1].content;
     });
+
+    this.myListService.myListCountsRefresh$.subscribe((count) => (this.listCount = this.listCount + count));
   }
 
   public ngOnDestroy(): void {

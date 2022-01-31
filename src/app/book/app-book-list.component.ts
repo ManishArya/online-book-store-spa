@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -7,6 +8,7 @@ import { IApiResponse } from '../models/api-response.model';
 import { IBook } from '../models/book';
 import { BookService } from '../services/book.service';
 import { AppTitleService } from '../services/title.service';
+import { ToastService } from '../services/toast.service';
 import { UserService } from '../services/user.service';
 import { DialogService } from '../shared/app-confirmation-dialog/dialog.service';
 import { AppAddBookModalComponent } from './app-add-book-modal.component';
@@ -34,7 +36,8 @@ export class AppBookListComponent implements OnInit, OnDestroy {
     private router: Router,
     private title: AppTitleService,
     private userService: UserService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private toastService: ToastService
   ) {}
 
   public ngOnInit(): void {
@@ -62,7 +65,7 @@ export class AppBookListComponent implements OnInit, OnDestroy {
 
   public openBookModal(): void {
     this.dialog.open(AppAddBookModalComponent, {
-      width: '600px'
+      width: '1000px'
     });
   }
 
@@ -81,10 +84,19 @@ export class AppBookListComponent implements OnInit, OnDestroy {
       .afterClosed()
       .pipe(
         filter((x) => !!x),
-        switchMap(() => this.bookService.removeBook(this.bookIds))
+        switchMap(() => {
+          this.isWaiting = true;
+          return this.bookService.removeBook(this.bookIds);
+        })
       )
       .pipe(switchMap(() => this.getBooks()))
-      .subscribe();
+      .subscribe(
+        () => {},
+        (err: HttpErrorResponse) => {
+          this.isWaiting = false;
+          this.toastService.open((err.error as IApiResponse<string>).errorDescription);
+        }
+      );
   }
 
   public refreshBookList(): void {

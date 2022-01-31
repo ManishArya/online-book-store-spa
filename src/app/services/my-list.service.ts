@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IApiResponse } from '../models/api-response.model';
 import { IMyList } from '../models/my-list';
@@ -9,6 +9,9 @@ import { IMyList } from '../models/my-list';
   providedIn: 'root'
 })
 export class MyListService {
+  private myListCountsRefreshSubject = new Subject<number>();
+  public myListCountsRefresh$ = this.myListCountsRefreshSubject.asObservable();
+
   constructor(private http: HttpClient) {}
 
   public getMyList(): Observable<IApiResponse<IMyList[]>> {
@@ -31,5 +34,9 @@ export class MyListService {
 
   public getListCounts(): Observable<IApiResponse<number>> {
     return this.http.get<IApiResponse<number>>(`${environment.bookApiEndPoint}/MyList/counts`);
+  }
+
+  public refreshListCounts(count: number): void {
+    this.myListCountsRefreshSubject.next(count);
   }
 }

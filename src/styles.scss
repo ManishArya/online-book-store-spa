@@ -1,8 +1,8 @@
-/* You can add global styles to this file, and also import other style files */
-
 @import '../src/assets/scss/spacing';
 @import '../src/assets/scss/flex';
 @import '../src/assets/scss/text';
+@import '../src/assets/scss/color';
+@import '../src/assets/scss/variable';
 
 html,
 body {
@@ -12,6 +12,8 @@ body {
 body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
+  background-color: #eeeeef;
+  color: #212327;
 }
 
 .flex-container {
@@ -21,7 +23,7 @@ body {
 
 .required::after {
   content: ' *';
-  color: red;
+  color: $red;
 }
 
 .resize-none {
@@ -37,11 +39,7 @@ body {
 }
 
 .error-label {
-  color: #d8000c;
-}
-
-.d-none {
-  display: none !important;
+  color: $red;
 }
 
 img,
@@ -62,78 +60,6 @@ body.recaptcha .grecaptcha-badge {
   box-shadow: 0px 0px 5px 0 rgb(0 0 0 / 30%);
 }
 
-.palette-multi-1 {
-  background-color: #08c0ff;
-}
-
-.palette-multi-2 {
-  background-color: #fbb94c;
-}
-
-.palette-multi-3 {
-  background-color: #7dc453;
-}
-
-.palette-multi-4 {
-  background-color: #ae9abc;
-}
-
-.palette-multi-5 {
-  background-color: #00d1aa;
-}
-
-.palette-multi-6 {
-  background-color: #f1575a;
-}
-
-.palette-multi-7 {
-  background-color: #91959c;
-}
-
-.palette-multi-8 {
-  background-color: #73dcff;
-}
-
-.palette-multi-9 {
-  background-color: #fdd189;
-}
-
-.palette-multi-10 {
-  background-color: #b6de9e;
-}
-
-.palette-multi-11 {
-  background-color: #cfc3d7;
-}
-
-.palette-multi-12 {
-  background-color: #55ffdf;
-}
-
-.palette-multi-13 {
-  background-color: #f69093;
-}
-
-.palette-multi-14 {
-  background-color: #b0b2b7;
-}
-
-.palette-mono-1 {
-  background-color: #0087b5;
-}
-
-.palette-mono-2 {
-  background-color: #00b4f1;
-}
-
-.palette-mono-3 {
-  background-color: #35ccff;
-}
-
-.palette-mono-4 {
-  background-color: #79ddff;
-}
-
-.palette-mono-5 {
-  background-color: #bceeff;
+.d-none {
+  display: none !important;
 }
