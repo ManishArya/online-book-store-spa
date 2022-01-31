@@ -4,6 +4,7 @@ import { AppForgetPasswordComponent } from './account/app-forget-password.compon
 import { AppLoginComponent } from './account/app-login.component';
 import { AppNewUserComponent } from './account/app-new-user.component';
 import { AppHomeComponent } from './app-home.component';
+import { MyListComponent } from './book/my-list/my-list.component';
 import { AppChangePasswordComponent } from './header/change-password/app-change-password.component';
 import { AppProfileComponent } from './header/profile/app-profile.component';
 import { LoginGuard } from './services/login.guard';
@@ -28,6 +29,10 @@ const routes: Routes = [
         path: '',
         canLoad: [LoginGuard],
         loadChildren: () => import('./book/app-book.module').then((b) => b.AppBookModule)
+      },
+      {
+        path: 'myList',
+        component: MyListComponent
       },
       {
         path: 'change-password',

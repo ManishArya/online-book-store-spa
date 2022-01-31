@@ -23,7 +23,7 @@ export class MyListComponent implements OnInit {
     this.myListService
       .removeFromMyList(id)
       .pipe(switchMap(() => this.getMyList()))
-      .subscribe();
+      .subscribe(() => this.myListService.refreshListCounts(-1));
   }
 
   private getMyList(): Observable<IApiResponse<IMyList[]>> {

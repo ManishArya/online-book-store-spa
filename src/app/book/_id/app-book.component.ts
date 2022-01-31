@@ -39,7 +39,10 @@ export class AppBookComponent implements OnInit {
 
   public addToMyList(): void {
     this.myListService.addToMyList(this.book.id).subscribe(
-      () => (this.isAdded = true),
+      () => {
+        this.isAdded = true;
+        this.myListService.refreshListCounts(1);
+      },
       (err) => this.toast.open((err.error as IApiResponse<string>).errorDescription)
     );
   }
