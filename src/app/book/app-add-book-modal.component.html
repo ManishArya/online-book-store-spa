@@ -1,5 +1,5 @@
 <button class="btn btn-link pull-right" mat-button mat-dialog-close>X</button>
-<h2 mat-dialog-title>Add Book</h2>
+<h2 mat-dialog-title>Add a Book</h2>
 <mat-dialog-content>
   <app-spinner [isWaiting]="isWaiting"></app-spinner>
   <form>
@@ -14,35 +14,45 @@
         name="description"
         class="form-control resize-none"
         id="description"
-        maxlength="250"
-        rows="3"
+        maxlength="1000"
+        rows="5"
+        wrap="soft"
         [(ngModel)]="description"
       ></textarea>
       <app-field-error [validations]="validations" fieldName="description"></app-field-error>
     </div>
     <div class="form-group">
-      <label for="date" class="required">Release Date</label>
-      <input class="form-control" name="date" id="date" matInput [matDatepicker]="picker" [(ngModel)]="date" />
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <label for="date" class="required">Publication Date</label>
+      <input
+        name="date"
+        id="date"
+        class="form-control"
+        autocomplete="off"
+        matInput
+        [matDatepicker]="picker"
+        [(ngModel)]="date"
+        (click)="picker.open()"
+      />
+      <mat-datepicker-toggle class="calender-position" matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
       <app-field-error [validations]="validations" fieldName="date"></app-field-error>
     </div>
     <div class="form-group">
-      <label for="genre" class="required">Select Genre</label>
-      <mat-select multiple [(ngModel)]="genres" name="genres">
+      <label for="genre" class="required">Genres</label>
+      <mat-select class="form-control" multiple [(ngModel)]="genres" name="genres">
         <mat-option *ngFor="let genre of genreOptions" [value]="genre.name">{{ genre.name }}</mat-option>
       </mat-select>
       <app-field-error [validations]="validations" fieldName="genres"></app-field-error>
     </div>
     <div class="form-group">
-      <label class="required" for="photo">Select Poster</label>
-      <input type="file" name="poster" class="form-control" id="poster" #photo />
+      <label class="required" for="poster">Poster</label>
+      <input type="file" name="poster" id="poster" #poster />
       <app-field-error [validations]="validations" fieldName="poster"></app-field-error>
     </div>
   </form>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button type="button" class="btn btn-primary mr-xs" (click)="addBook(false)">Save And New</button>
-  <button type="button" class="btn btn-primary" (click)="addBook(true)">Save And Close</button>
+  <button type="button" mat-raised-button color="primary" class="mr-xs" (click)="addBook(false)">Add Another</button>
+  <button type="button" mat-raised-button color="primary" (click)="addBook(true)">Save And Close</button>
   <button class="btn btn-link" mat-button mat-dialog-close>Cancel</button>
 </mat-dialog-actions>

@@ -12,7 +12,6 @@ import { ToastService } from '../services/toast.service';
   templateUrl: './app-add-book-modal.component.html'
 })
 export class AppAddBookModalComponent implements OnInit {
-  @ViewChild('photo') photo: ElementRef;
   public name: string;
   public genreOptions: IGenre[] = [];
   public date: any;
@@ -20,10 +19,11 @@ export class AppAddBookModalComponent implements OnInit {
   public description: string;
   public isWaiting: boolean;
   public validations: { [key: string]: string };
+  @ViewChild('poster') public poster: ElementRef;
 
   constructor(
-    private bookService: BookService,
     private matDialogRef: MatDialogRef<AppAddBookModalComponent>,
+    private bookService: BookService,
     private genreService: GenreService,
     private toastService: ToastService
   ) {}
@@ -33,15 +33,16 @@ export class AppAddBookModalComponent implements OnInit {
   }
 
   public addBook(closed: boolean): void {
-    const formData = new FormData();
-    formData.set('poster', this.photo.nativeElement.files[0]);
     const book = {
       name: this.name,
       description: this.description,
       releaseDate: this.date,
       genres: this.genres
     };
-    formData.set('bookString', JSON.stringify(book));
+
+    const formData = new FormData();
+    formData.set('content', JSON.stringify(book));
+    formData.set('poster', this.poster.nativeElement.files[0]);
 
     this.isWaiting = true;
 
@@ -50,7 +51,7 @@ export class AppAddBookModalComponent implements OnInit {
       .pipe(finalize(() => (this.isWaiting = false)))
       .subscribe(
         (res) => {
-          this.resetValues();
+          this.resetBookForm();
           this.bookService.refreshBookList();
           if (closed) {
             this.matDialogRef.close(true);
@@ -66,11 +67,11 @@ export class AppAddBookModalComponent implements OnInit {
       );
   }
 
-  private resetValues(): void {
+  private resetBookForm(): void {
     this.name = undefined as any;
     this.description = undefined as any;
     this.date = undefined;
     this.genres = undefined as any;
-    this.photo.nativeElement.value = '';
+    this.poster.nativeElement.value = '';
   }
 }

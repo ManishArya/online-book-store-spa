@@ -6,8 +6,7 @@ import { IMyList } from '../../models/my-list';
 import { MyListService } from '../../services/my-list.service';
 
 @Component({
-  templateUrl: './my-list.component.html',
-  styleUrls: ['./my-list.component.scss']
+  templateUrl: './my-list.component.html'
 })
 export class MyListComponent implements OnInit {
   public myList: IMyList[];
