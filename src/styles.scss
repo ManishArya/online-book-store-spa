@@ -21,6 +21,23 @@ body {
   justify-content: center;
 }
 
+.form-btn {
+  display: flex;
+  flex-direction: column;
+}
+
+.container-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.inner-container {
+  border: 1px solid;
+  background-color: #fff;
+}
+
 .required::after {
   content: ' *';
   color: $red;
