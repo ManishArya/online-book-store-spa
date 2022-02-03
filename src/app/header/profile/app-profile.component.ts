@@ -53,7 +53,10 @@ export class AppProfileComponent implements OnInit {
           filter((res) => res.isSuccess),
           switchMap(() => this.getProfile())
         )
-        .subscribe();
+        .subscribe(
+          () => {},
+          (err: HttpErrorResponse) => this.toastService.open((err.error as IApiResponse<string>).content)
+        );
     }
   }
 

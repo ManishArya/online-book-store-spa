@@ -78,6 +78,7 @@ export class AppAvatarComponent implements OnChanges, AfterViewInit, OnDestroy {
   private uploadAvatar(event: any): void {
     const file = event.target.files[0];
     this.avatarChanged.emit(file);
+    this.avatar.nativeElement.value = '';
   }
 
   private getInitials(): string {
