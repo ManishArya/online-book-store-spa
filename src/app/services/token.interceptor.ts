@@ -20,6 +20,7 @@ export class TokenInterceptor implements HttpInterceptor {
       catchError((err) => {
         if (err instanceof HttpErrorResponse && err.status === 401) {
           this.logoutService.signOut();
+          window.location.reload();
         }
         return throwError(err);
       })
