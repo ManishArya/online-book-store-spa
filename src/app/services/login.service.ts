@@ -18,8 +18,8 @@ export class LoginService {
     return this.http.post<IApiResponse<IToken>>(`${environment.authApiEndPoint}/token`, login);
   }
 
-  public checkUserNameExists(username: string): Observable<IApiResponse<string>> {
-    return this.http.post<IApiResponse<string>>(`${environment.authApiEndPoint}/forgetPassword`, { username });
+  public checkUserNameOrEmailExists(usernameOrEmail: string): Observable<IApiResponse<string>> {
+    return this.http.post<IApiResponse<string>>(`${environment.authApiEndPoint}/forgetPassword`, { usernameOrEmail });
   }
 
   public changePassword(passwordModel: any): Observable<IApiResponse<string>> {

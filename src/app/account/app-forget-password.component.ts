@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { IApiResponse } from '../models/api-response.model';
 import { LoginService } from './../services/login.service';
 import { ToastService } from './../services/toast.service';
@@ -8,12 +9,12 @@ import { ToastService } from './../services/toast.service';
   templateUrl: './app-forget-password.component.html'
 })
 export class AppForgetPasswordComponent {
-  public userName: string;
+  public userNameOrEmail: string;
 
-  constructor(private _loginService: LoginService, private toast: ToastService) {}
+  constructor(private _loginService: LoginService, private toast: ToastService, private router: Router) {}
 
-  public checkUserName(): void {
-    this._loginService.checkUserNameExists(this.userName).subscribe(
+  public checkUserNameOrEmail(): void {
+    this._loginService.checkUserNameOrEmailExists(this.userNameOrEmail).subscribe(
       (res) => {
         this.toast.open(res.content);
       },
@@ -21,5 +22,9 @@ export class AppForgetPasswordComponent {
         this.toast.open((err.error as IApiResponse<string>).content);
       }
     );
+  }
+
+  public cancel(): void {
+    this.router.navigateByUrl('/login');
   }
 }

@@ -29,9 +29,9 @@
       <input type="tel" name="mobile" class="form-control error" id="mobile" formControlName="mobile" />
       <app-field-error fieldName="mobile" [validations]="validations"></app-field-error>
     </div>
-    <div class="form-btn">
-      <button type="submit" mat-raised-button color="primary" (click)="addUser()">Sign Up</button>
+    <div class="d-flex">
+      <button type="submit" mat-raised-button color="primary" class="flex-grow-3" (click)="addUser()">Sign Up</button>
+      <button type="button" class="btn btn-link" (click)="cancel()">Cancel</button>
     </div>
-    <button type="button" class="btn btn-link" (click)="cancel()">Cancel</button>
   </form>
 </div>

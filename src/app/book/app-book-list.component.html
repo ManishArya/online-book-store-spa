@@ -12,7 +12,7 @@
 </button>
 <div>
   <app-spinner [isWaiting]="isWaiting"></app-spinner>
-  <div class="mt-sm display-flex">
+  <div class="mt-sm d-flex f-wrap">
     <ng-container *ngFor="let book of books">
       <div class="mt-sm mr-sm pointer">
         <input type="checkbox" *ngIf="hasPermission" [(ngModel)]="book.isChecked" />

@@ -1,13 +1,13 @@
-.display-flex {
-  display: flex;
-  flex-wrap: wrap;
-  align-content: space-between;
-}
-
-.d-flex {
-  flex: display !important;
-}
-
-.flex-wrap {
+.f-wrap {
   flex-wrap: wrap !important;
+}
+
+.flex-grow-3 {
+  flex-grow: 3;
+}
+
+@each $dir in row, column {
+  .flex-direction-#{$dir} {
+    flex-direction: $dir !important;
+  }
 }

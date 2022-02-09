@@ -6,11 +6,11 @@
       <input type="usernameOrEmail" class="form-control" id="usernameOrEmail" [(ngModel)]="usernameOrEmail" />
     </div>
     <app-password-viewer label="Password" inputClass="form-control" [(ngModel)]="password"></app-password-viewer>
-    <div class="form-btn">
+    <div class="d-flex flex-direction-column">
       <button type="button" mat-raised-button color="primary" (click)="signIn()">Log In</button>
     </div>
     <div>
-      <button type="button" class="btn btn-link" (click)="redirectToForgetPasswordPage()">Forget Password</button>
+      <button type="button" class="btn btn-link" (click)="redirectToForgetPasswordPage()">Forget Password?</button>
       <button type="button" class="btn btn-link" (click)="redirectToNewUserPage()">New User</button>
     </div>
   </div>

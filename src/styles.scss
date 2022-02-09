@@ -13,17 +13,7 @@ body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
   background-color: #eeeeef;
-  color: #212327;
-}
-
-.flex-container {
-  display: flex;
-  justify-content: center;
-}
-
-.form-btn {
-  display: flex;
-  flex-direction: column;
+  color: $black;
 }
 
 .container-center {
@@ -35,7 +25,7 @@ body {
 
 .inner-container {
   border: 1px solid;
-  background-color: #fff;
+  background-color: $white;
 }
 
 .required::after {
@@ -64,7 +54,6 @@ a {
   cursor: pointer;
 }
 
-/* hide recaptcha badge*/
 .grecaptcha-badge {
   visibility: hidden;
 }
@@ -77,12 +66,21 @@ body.recaptcha .grecaptcha-badge {
   box-shadow: 0px 0px 5px 0 rgb(0 0 0 / 30%);
 }
 
-.d-none {
-  display: none !important;
+@each $a in none, flex {
+  .d-#{$a} {
+    display: $a !important;
+  }
 }
 
 .calender-position {
   position: relative;
   float: right;
   bottom: 36px;
+}
+
+.error-icon::before {
+  content: '\f071';
+  font-family: FontAwesome, serif;
+  color: $red;
+  padding-right: 5px;
 }

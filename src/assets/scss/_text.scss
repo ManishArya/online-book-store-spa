@@ -1,6 +1,4 @@
-$align: center, end, left, right, justify;
-
-@each $a in $align {
+@each $a in center, end, left, right, justify {
   .text-align-#{$a} {
     text-align: $a !important;
   }

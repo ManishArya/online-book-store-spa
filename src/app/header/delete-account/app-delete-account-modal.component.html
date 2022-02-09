@@ -6,7 +6,7 @@
     <div class="form-group">
       <label for="password" class="required">Password</label>
       <input type="password" class="form-control" name="password" id="password" [(ngModel)]="password" />
-      <div>
+      <div class="error-label" [ngClass]="{ 'error-icon': errorMessage }">
         {{ errorMessage }}
       </div>
     </div>

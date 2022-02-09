@@ -2,8 +2,7 @@ import { Component, Input, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'app-field-error',
-  templateUrl: './app-field-error.component.html',
-  styleUrls: ['./app-field-error.component.scss']
+  templateUrl: './app-field-error.component.html'
 })
 export class AppFieldErrorComponent implements OnChanges {
   public validationMessage: string;
