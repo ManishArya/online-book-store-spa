@@ -20,6 +20,12 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.container-center-height {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 100%;
 }
 
@@ -83,4 +89,10 @@ body.recaptcha .grecaptcha-badge {
   font-family: FontAwesome, serif;
   color: $red;
   padding-right: 5px;
+}
+
+@each $a in 25, 50, 75, 100 {
+  .w-#{$a} {
+    width: $a '%' !important;
+  }
 }

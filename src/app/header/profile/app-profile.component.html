@@ -1,35 +1,46 @@
 <div>
   <app-spinner [isWaiting]="isWaiting"></app-spinner>
   <ng-container *ngIf="userProfile">
-    <app-avatar
-      alignType="center"
-      [imageSrc]="imageSrc"
-      [name]="name"
-      [isRemoveEnable]="!!imageSrc"
-      (avatarChanged)="avatarChanged($event)"
-      (avatarRemoved)="removeAvatar()"
-    ></app-avatar>
-    <form>
-      <div class="form-group">
-        <label for="name" class="required">Name</label>
-        <input type="text" name="name" class="form-control" id="name" [(ngModel)]="userProfile.name" />
-        <app-field-error fieldName="name" [validations]="validations"></app-field-error>
+    <div class="d-flex">
+      <div class="container-center flex-grow-1">
+        <app-avatar
+          alignType="center"
+          [imageSrc]="imageSrc"
+          [name]="name"
+          [isRemoveEnable]="!!imageSrc"
+          (avatarChanged)="avatarChanged($event)"
+          (avatarRemoved)="removeAvatar()"
+        ></app-avatar>
       </div>
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" name="username" class="form-control" id="username" readonly [value]="userProfile.username" />
-      </div>
-      <div class="form-group">
-        <label for="email" class="required">Email</label>
-        <input type="email" name="email" class="form-control" id="email" [(ngModel)]="userProfile.email" />
-        <app-field-error fieldName="email" [validations]="validations"></app-field-error>
-      </div>
-      <div class="form-group">
-        <label for="mobile">Mobile</label>
-        <input type="tel" name="mobile" class="form-control" id="mobile" [(ngModel)]="userProfile.mobile" />
-        <app-field-error fieldName="mobile" [validations]="validations"></app-field-error>
-      </div>
-      <button type="submit" class="btn btn-default" (click)="update()">Update</button>
-    </form>
+      <form class="flex-grow-5">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input
+            type="text"
+            name="username"
+            class="form-control"
+            id="username"
+            readonly
+            [value]="userProfile.username"
+          />
+        </div>
+        <div class="form-group">
+          <label for="name" class="required">Name</label>
+          <input type="text" name="name" class="form-control" id="name" [(ngModel)]="userProfile.name" />
+          <app-field-error fieldName="name" [validations]="validations"></app-field-error>
+        </div>
+        <div class="form-group">
+          <label for="email" class="required">Email</label>
+          <input type="email" name="email" class="form-control" id="email" [(ngModel)]="userProfile.email" />
+          <app-field-error fieldName="email" [validations]="validations"></app-field-error>
+        </div>
+        <div class="form-group">
+          <label for="mobile">Mobile</label>
+          <input type="tel" name="mobile" class="form-control" id="mobile" [(ngModel)]="userProfile.mobile" />
+          <app-field-error fieldName="mobile" [validations]="validations"></app-field-error>
+        </div>
+        <button type="submit" mat-raised-button color="primary" (click)="update()">Update</button>
+      </form>
+    </div>
   </ng-container>
 </div>

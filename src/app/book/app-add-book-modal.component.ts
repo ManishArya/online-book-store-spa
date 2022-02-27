@@ -29,7 +29,7 @@ export class AppAddBookModalComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.genreService.getGenres().subscribe((g) => (this.genreOptions = g.content));
+    this.genreService.getGenres().subscribe((genres) => (this.genreOptions = genres));
   }
 
   public addBook(closed: boolean): void {
