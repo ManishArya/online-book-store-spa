@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { filter, finalize, switchMap, tap } from 'rxjs/operators';
 import { IApiResponse } from 'src/app/models/api-response.model';
@@ -7,6 +8,7 @@ import { UserProfile } from 'src/app/models/user-profile.model';
 import { AppTitleService } from 'src/app/services/title.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { UserService } from 'src/app/services/user.service';
+import { AppUpdateEmailModalComponent } from './app-update-email-modal.component';
 
 @Component({
   templateUrl: './app-profile.component.html'
@@ -18,11 +20,29 @@ export class AppProfileComponent implements OnInit {
   public name: string;
   public validations: { [key: string]: string };
 
-  constructor(private userService: UserService, private title: AppTitleService, private toastService: ToastService) {}
+  constructor(
+    private userService: UserService,
+    private title: AppTitleService,
+    private toastService: ToastService,
+    private dialogService: MatDialog
+  ) {}
 
   public ngOnInit(): void {
     this.title.setTitle('profile');
     this.getProfile().subscribe();
+  }
+
+  public openModal(): void {
+    this.dialogService
+      .open(AppUpdateEmailModalComponent, {
+        width: '400px'
+      })
+      .afterClosed()
+      .pipe(
+        filter((res) => !!res),
+        switchMap((res) => this.getProfile())
+      )
+      .subscribe();
   }
 
   public update(): void {

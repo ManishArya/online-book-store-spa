@@ -7,6 +7,7 @@ import { AppDeleteAccountModalComponent } from './delete-account/app-delete-acco
 import { AppDeleteAccountComponent } from './delete-account/app-delete-account.component';
 import { AppLogOutComponent } from './log-out/app-log-out.component';
 import { AppProfileComponent } from './profile/app-profile.component';
+import { AppUpdateEmailModalComponent } from './profile/app-update-email-modal.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { AppProfileComponent } from './profile/app-profile.component';
     AppChangePasswordComponent,
     AppDeleteAccountComponent,
     AppDeleteAccountModalComponent,
+    AppUpdateEmailModalComponent,
     AppHeaderComponent,
     AppLogOutComponent,
     AppProfileComponent

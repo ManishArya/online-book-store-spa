@@ -47,6 +47,13 @@ export class UserService {
     return this.http.delete<IApiResponse<UserProfile>>(`${environment.authApiEndPoint}/user/removeAvatar`);
   }
 
+  public updateEmailAddress(email: string, password: string) {
+    return this.http.put<IApiResponse<UserProfile>>(`${environment.authApiEndPoint}/user/updateEmailAddress`, {
+      email,
+      password
+    });
+  }
+
   public updateProfileAvatar(url: string): void {
     this.profilePicSubject.next(url);
   }

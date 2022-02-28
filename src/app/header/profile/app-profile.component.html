@@ -12,35 +12,36 @@
           (avatarRemoved)="removeAvatar()"
         ></app-avatar>
       </div>
-      <form class="flex-grow-5">
-        <div class="form-group">
-          <label for="username">Username</label>
-          <input
-            type="text"
-            name="username"
-            class="form-control"
-            id="username"
-            readonly
-            [value]="userProfile.username"
-          />
+      <div class="flex-grow-5">
+        <form class="mb-sm">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input
+              type="text"
+              name="username"
+              class="form-control"
+              id="username"
+              readonly
+              [value]="userProfile.username"
+            />
+          </div>
+          <div class="form-group">
+            <label for="name" class="required">Name</label>
+            <input type="text" name="name" class="form-control" id="name" [(ngModel)]="userProfile.name" />
+            <app-field-error fieldName="name" [validations]="validations"></app-field-error>
+          </div>
+          <div class="form-group">
+            <label for="mobile">Mobile</label>
+            <input type="tel" name="mobile" class="form-control" id="mobile" [(ngModel)]="userProfile.mobile" />
+            <app-field-error fieldName="mobile" [validations]="validations"></app-field-error>
+          </div>
+          <button type="submit" mat-raised-button color="primary" (click)="update()">Update Profile</button>
+        </form>
+        <mat-divider></mat-divider>
+        <div class="form-group mt-lg">
+          <button type="submit" mat-raised-button color="primary" (click)="openModal()">Edit Email Address</button>
         </div>
-        <div class="form-group">
-          <label for="name" class="required">Name</label>
-          <input type="text" name="name" class="form-control" id="name" [(ngModel)]="userProfile.name" />
-          <app-field-error fieldName="name" [validations]="validations"></app-field-error>
-        </div>
-        <div class="form-group">
-          <label for="email" class="required">Email</label>
-          <input type="email" name="email" class="form-control" id="email" [(ngModel)]="userProfile.email" />
-          <app-field-error fieldName="email" [validations]="validations"></app-field-error>
-        </div>
-        <div class="form-group">
-          <label for="mobile">Mobile</label>
-          <input type="tel" name="mobile" class="form-control" id="mobile" [(ngModel)]="userProfile.mobile" />
-          <app-field-error fieldName="mobile" [validations]="validations"></app-field-error>
-        </div>
-        <button type="submit" mat-raised-button color="primary" (click)="update()">Update</button>
-      </form>
+      </div>
     </div>
   </ng-container>
 </div>
