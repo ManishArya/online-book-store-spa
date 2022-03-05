@@ -1,22 +1,19 @@
 import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
 import { finalize } from 'rxjs/operators';
-import { ToastService } from 'src/app/services/toast.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  templateUrl: './app-update-email-modal.component.html'
+  selector: 'app-update-email-addres',
+  templateUrl: './app-update-email-addres.component.html',
+  styleUrls: ['./app-update-email-addres.component.scss']
 })
-export class AppUpdateEmailModalComponent {
+export class AppUpdateEmailAddresComponent {
   public password: string;
   public isWaiting: boolean;
   public email: string;
+  public errorMessage: string;
 
-  constructor(
-    private dialogRef: MatDialogRef<AppUpdateEmailModalComponent>,
-    private userService: UserService,
-    private toastService: ToastService
-  ) {}
+  constructor(private userService: UserService) {}
 
   public updateEmail(): void {
     this.isWaiting = true;
@@ -26,10 +23,12 @@ export class AppUpdateEmailModalComponent {
       .subscribe(
         (res) => {
           if (res.isSuccess) {
-            this.dialogRef.close(true);
+            this.errorMessage = '';
+            this.email = '';
+            this.password = '';
           }
         },
-        (err) => this.toastService.open(err.error.content['password'] || err.error.content['email'])
+        (err) => (this.errorMessage = err.error.content['password'] || err.error.content['email'])
       );
   }
 }

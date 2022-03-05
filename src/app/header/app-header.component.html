@@ -27,16 +27,14 @@
         ></app-avatar>
         <mat-menu #menu="matMenu">
           <button mat-menu-item>
-            <a (click)="navigateToProfilePage()">Edit Profile</a>
+            <a (click)="navigateToProfilePage()">View Profile</a>
           </button>
           <button mat-menu-item>
-            <a (click)="navigateToChangePasswoardPage()">Change Password</a>
+            <a (click)="navigateToAccountPage()">Account</a>
           </button>
+          <mat-divider></mat-divider>
           <button mat-menu-item>
-            <app-delete-account></app-delete-account>
-          </button>
-          <button mat-menu-item>
-            <app-log-out></app-log-out>
+            <a (click)="signOut()">Sign out</a>
           </button>
         </mat-menu>
       </li>

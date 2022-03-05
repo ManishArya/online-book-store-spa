@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { combineLatest, Subject } from 'rxjs';
+import { LogOutService } from '../services/log-out.service';
 import { MyListService } from '../services/my-list.service';
 import { UserService } from '../services/user.service';
 
@@ -14,7 +15,12 @@ export class AppHeaderComponent implements OnInit, OnDestroy {
   public listCount: number = 0;
   private ngUnSubscribe: Subject<void> = new Subject<void>();
 
-  constructor(private router: Router, private userService: UserService, private myListService: MyListService) {}
+  constructor(
+    private router: Router,
+    private userService: UserService,
+    private myListService: MyListService,
+    private logOutService: LogOutService
+  ) {}
 
   public ngOnInit(): void {
     combineLatest([this.userService.userProfile$, this.myListService.getListCounts()]).subscribe((res) => {
@@ -31,8 +37,8 @@ export class AppHeaderComponent implements OnInit, OnDestroy {
     this.ngUnSubscribe.complete();
   }
 
-  public navigateToChangePasswoardPage(): void {
-    this.router.navigateByUrl('change-password');
+  public navigateToAccountPage(): void {
+    this.router.navigateByUrl('account/security');
   }
 
   public navigateToProfilePage(): void {
@@ -45,5 +51,9 @@ export class AppHeaderComponent implements OnInit, OnDestroy {
 
   public navigateToMyListPage(): void {
     this.router.navigateByUrl('myList');
+  }
+
+  public signOut(): void {
+    this.logOutService.signOut();
   }
 }

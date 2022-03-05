@@ -1,19 +1,20 @@
 import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
 import { finalize } from 'rxjs/operators';
+import { LogOutService } from 'src/app/services/log-out.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  templateUrl: './app-delete-account-modal.component.html'
+  selector: 'app-delete-account',
+  templateUrl: './app-delete-account.component.html'
 })
-export class AppDeleteAccountModalComponent {
+export class AppDeleteAccountComponent {
   public password: string;
   public errorMessage: string;
   public isWaiting: boolean;
 
-  constructor(private userService: UserService, private dialogRef: MatDialogRef<AppDeleteAccountModalComponent>) {}
+  constructor(private logOutService: LogOutService, private userService: UserService) {}
 
-  public deleteUserAccount(): void {
+  public deleteAccount(): void {
     this.isWaiting = true;
     this.userService
       .deleteUserAccount(this.password)
@@ -21,7 +22,7 @@ export class AppDeleteAccountModalComponent {
       .subscribe(
         (res) => {
           if (res.isSuccess) {
-            this.dialogRef.close(true);
+            this.logOutService.signOut();
           }
         },
         (err) => {

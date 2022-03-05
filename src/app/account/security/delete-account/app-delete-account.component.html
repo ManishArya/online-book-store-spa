@@ -1,0 +1,11 @@
+<app-spinner [isWaiting]="isWaiting"></app-spinner>
+<form>
+  <div class="form-group">
+    <label for="password" class="required">Password</label>
+    <input type="password" class="form-control" name="password" id="password" [(ngModel)]="password" />
+    <div class="error-label" [ngClass]="{ 'error-icon': errorMessage }">
+      {{ errorMessage }}
+    </div>
+  </div>
+  <button type="button" mat-raised-button color="primary" (click)="deleteAccount()">Delete</button>
+</form>
