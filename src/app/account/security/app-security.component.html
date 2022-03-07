@@ -1,6 +1,29 @@
-<mat-sidenav-container class="example-container">
-  <mat-sidenav #sidenav mode="side"> Sidenav content </mat-sidenav>
-  <mat-sidenav-content>
-    <app-security-main-content></app-security-main-content>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+<mat-toolbar>
+  <span class="flex"></span>
+  <button class="btn btn-link" title="Expand all" (click)="accordion.openAll()">
+    <i class="fa fa-angle-double-up fa-2x"></i>
+  </button>
+  <button class="btn btn-link" title="Collpase all" (click)="accordion.closeAll()">
+    <i class="fa fa-angle-double-down fa-2x"></i>
+  </button>
+</mat-toolbar>
+<mat-accordion multi>
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title> <span class="sub-section-heading"> Change Password</span> </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-password-change></app-password-change>
+  </mat-expansion-panel>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title><span class="sub-section-heading"> Update Email</span> </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-update-email-addres></app-update-email-addres>
+  </mat-expansion-panel>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title> <span class="sub-section-heading"> Delete Account</span> </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-delete-account></app-delete-account>
+  </mat-expansion-panel>
+</mat-accordion>

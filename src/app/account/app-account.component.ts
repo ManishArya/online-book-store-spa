@@ -9,7 +9,9 @@ import { AppTitleService } from '../services/title.service';
 export class AppAccountComponent implements OnInit {
   constructor(private title: AppTitleService) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.title.setTitle('Account');
   }
+
+  public scroll(): void {}
 }

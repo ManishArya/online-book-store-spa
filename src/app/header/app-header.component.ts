@@ -38,7 +38,7 @@ export class AppHeaderComponent implements OnInit, OnDestroy {
   }
 
   public navigateToAccountPage(): void {
-    this.router.navigateByUrl('account/security');
+    this.router.navigateByUrl('account');
   }
 
   public navigateToProfilePage(): void {

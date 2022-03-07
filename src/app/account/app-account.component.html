@@ -1,1 +1,17 @@
-<router-outlet></router-outlet>
+<div class="d-flex">
+  <div class="flex-grow-1">
+    <mat-nav-list>
+      <div class="section-heading">Security</div>
+      <a mat-list-item class="active" (click)="scroll()">Change Password</a>
+      <a mat-list-item>Email</a>
+      <a mat-list-item>Delete Account</a>
+      <mat-divider></mat-divider>
+      <div class="section-heading">Preferences</div>
+      <a mat-list-item>Dark Theme</a>
+      <a mat-list-item>Languages</a>
+    </mat-nav-list>
+  </div>
+  <div class="flex-grow-5">
+    <router-outlet></router-outlet>
+  </div>
+</div>

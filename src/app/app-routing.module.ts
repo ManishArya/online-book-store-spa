@@ -40,6 +40,11 @@ const routes: Routes = [
         component: AppAccountComponent,
         children: [
           {
+            path: '',
+            pathMatch: 'full',
+            redirectTo: 'security'
+          },
+          {
             path: 'security',
             component: AppSecurityComponent
           }

@@ -12,7 +12,6 @@ import { AppSecurityComponent } from './security/app-security.component';
 import { AppChangePasswordComponent } from './security/change-password/app-change-password.component';
 import { AppDeleteAccountComponent } from './security/delete-account/app-delete-account.component';
 import { AppUpdateEmailAddresComponent } from './security/update-email-address/app-update-email-addres.component';
-import { AppSecurityMainContentComponent } from './security/app-security-main-content.component';
 @NgModule({
   declarations: [
     AppLoginComponent,
@@ -23,8 +22,7 @@ import { AppSecurityMainContentComponent } from './security/app-security-main-co
     AppChangePasswordComponent,
     AppDeleteAccountComponent,
     AppUpdateEmailAddresComponent,
-    AppProfileComponent,
-    AppSecurityMainContentComponent
+    AppProfileComponent
   ],
   imports: [CommonModule, RecaptchaV3Module, RecaptchaModule, AppSharedModule, RouterModule],
   providers: [{ provide: RECAPTCHA_V3_SITE_KEY, useValue: '6LdlpoAdAAAAAL5mPm8W-oY44-wBt4YDBYHME9ou' }]
