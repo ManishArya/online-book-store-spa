@@ -12,6 +12,4 @@ export class AppAccountComponent implements OnInit {
   public ngOnInit(): void {
     this.title.setTitle('Account');
   }
-
-  public scroll(): void {}
 }

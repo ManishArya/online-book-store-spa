@@ -12,6 +12,8 @@ import { AppSecurityComponent } from './security/app-security.component';
 import { AppChangePasswordComponent } from './security/change-password/app-change-password.component';
 import { AppDeleteAccountComponent } from './security/delete-account/app-delete-account.component';
 import { AppUpdateEmailAddresComponent } from './security/update-email-address/app-update-email-addres.component';
+import { AppAccountSectionComponent } from './account-section/app-account-section.component';
+import { AppPreferenceComponent } from './preferences/app-preference.component';
 @NgModule({
   declarations: [
     AppLoginComponent,
@@ -22,7 +24,9 @@ import { AppUpdateEmailAddresComponent } from './security/update-email-address/a
     AppChangePasswordComponent,
     AppDeleteAccountComponent,
     AppUpdateEmailAddresComponent,
-    AppProfileComponent
+    AppProfileComponent,
+    AppAccountSectionComponent,
+    AppPreferenceComponent
   ],
   imports: [CommonModule, RecaptchaV3Module, RecaptchaModule, AppSharedModule, RouterModule],
   providers: [{ provide: RECAPTCHA_V3_SITE_KEY, useValue: '6LdlpoAdAAAAAL5mPm8W-oY44-wBt4YDBYHME9ou' }]

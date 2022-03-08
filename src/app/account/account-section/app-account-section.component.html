@@ -1,0 +1,28 @@
+<div class="d-flex">
+  <div class="flex-grow-1">
+    <mat-nav-list>
+      <div class="section-heading" (click)="changeSection('security')">Security</div>
+      <a mat-list-item [ngClass]="{ active: activeIndex === 0 }" (click)="onSubSecionClick()">Change Password</a>
+      <a mat-list-item [ngClass]="{ active: activeIndex === 1 }" (click)="onSubSecionClick()">Email</a>
+      <a mat-list-item [ngClass]="{ active: activeIndex === 2 }" (click)="onSubSecionClick()">Delete Account</a>
+      <mat-divider></mat-divider>
+      <div class="section-heading" (click)="changeSection('preferences')">Preferences</div>
+      <a mat-list-item [ngClass]="{ active: activeIndex === 3 }" (click)="onSubSecionClick()">Dark Theme</a>
+      <a mat-list-item [ngClass]="{ active: activeIndex === 4 }" (click)="onSubSecionClick()">Languages</a>
+    </mat-nav-list>
+  </div>
+  <div class="flex-grow-5">
+    <mat-toolbar>
+      <span class="flex"></span>
+      <button class="btn btn-link" title="Expand all" (click)="expandAllSections()">
+        <i class="fa fa-angle-double-up fa-2x"></i>
+      </button>
+      <button class="btn btn-link" title="Collpase all" (click)="collpaseAllSections()">
+        <i class="fa fa-angle-double-down fa-2x"></i>
+      </button>
+    </mat-toolbar>
+    <mat-accordion multi>
+      <router-outlet></router-outlet>
+    </mat-accordion>
+  </div>
+</div>

@@ -4,6 +4,7 @@ import { AppAccountComponent } from './account/app-account.component';
 import { AppForgetPasswordComponent } from './account/app-forget-password.component';
 import { AppLoginComponent } from './account/app-login.component';
 import { AppNewUserComponent } from './account/app-new-user.component';
+import { AppPreferenceComponent } from './account/preferences/app-preference.component';
 import { AppProfileComponent } from './account/profile/app-profile.component';
 import { AppSecurityComponent } from './account/security/app-security.component';
 import { AppHomeComponent } from './app-home.component';
@@ -46,7 +47,17 @@ const routes: Routes = [
           },
           {
             path: 'security',
-            component: AppSecurityComponent
+            component: AppSecurityComponent,
+            data: {
+              sectionName: 'security'
+            }
+          },
+          {
+            path: 'preferences',
+            component: AppPreferenceComponent,
+            data: {
+              sectionName: 'preferences'
+            }
           }
         ]
       },
