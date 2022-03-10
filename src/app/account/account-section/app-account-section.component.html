@@ -1,17 +1,22 @@
 <div class="d-flex">
   <div class="flex-grow-1">
     <mat-nav-list>
-      <div class="section-heading" (click)="changeSection('security')">Security</div>
-      <a mat-list-item [ngClass]="{ active: activeIndex === 0 }" (click)="onSubSecionClick()">Change Password</a>
-      <a mat-list-item [ngClass]="{ active: activeIndex === 1 }" (click)="onSubSecionClick()">Email</a>
-      <a mat-list-item [ngClass]="{ active: activeIndex === 2 }" (click)="onSubSecionClick()">Delete Account</a>
+      <div class="section-heading" (click)="changeSection(accountSectionName.security)">Security</div>
+      <ng-container *ngIf="sectionName === accountSectionName.security">
+        <a mat-list-item [ngClass]="{ active: activeIndex === 0 }" (click)="changeIndex(0)">Change Password</a>
+        <a mat-list-item [ngClass]="{ active: activeIndex === 1 }" (click)="changeIndex(1)">Email</a>
+        <a mat-list-item [ngClass]="{ active: activeIndex === 2 }" (click)="changeIndex(2)">Delete Account</a>
+      </ng-container>
       <mat-divider></mat-divider>
-      <div class="section-heading" (click)="changeSection('preferences')">Preferences</div>
-      <a mat-list-item [ngClass]="{ active: activeIndex === 3 }" (click)="onSubSecionClick()">Dark Theme</a>
-      <a mat-list-item [ngClass]="{ active: activeIndex === 4 }" (click)="onSubSecionClick()">Languages</a>
+      <div class="section-heading" (click)="changeSection(accountSectionName.preferences)">Preferences</div>
+      <ng-container *ngIf="sectionName === accountSectionName.preferences">
+        <a mat-list-item [ngClass]="{ active: activeIndex === 0 }" (click)="changeIndex(0)">Dark Theme</a>
+        <a mat-list-item [ngClass]="{ active: activeIndex === 1 }" (click)="changeIndex(1)">Languages</a>
+      </ng-container>
     </mat-nav-list>
   </div>
   <div class="flex-grow-5">
+    <mat-divider></mat-divider>
     <mat-toolbar>
       <span class="flex"></span>
       <button class="btn btn-link" title="Expand all" (click)="expandAllSections()">
@@ -21,6 +26,7 @@
         <i class="fa fa-angle-double-down fa-2x"></i>
       </button>
     </mat-toolbar>
+    <mat-divider></mat-divider>
     <mat-accordion multi>
       <router-outlet></router-outlet>
     </mat-accordion>

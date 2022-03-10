@@ -3,3 +3,7 @@
   background-color: #666;
   color: white;
 }
+
+mat-toolbar::ng-deep {
+  background: unset !important;
+}

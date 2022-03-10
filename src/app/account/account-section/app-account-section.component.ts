@@ -3,6 +3,7 @@ import { MatAccordion } from '@angular/material/expansion';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { AccountSectionName } from './account-section-name';
 import { AppAccountSectionService } from './app-account-section.service';
 
 @Component({
@@ -12,6 +13,8 @@ import { AppAccountSectionService } from './app-account-section.service';
 })
 export class AppAccountSectionComponent implements OnDestroy {
   public activeIndex: number = 0;
+  public sectionName: AccountSectionName;
+  public accountSectionName = AccountSectionName;
   private readonly _destory$ = new Subject<void>();
   @ViewChild(MatAccordion) private accordion: MatAccordion;
 
@@ -31,8 +34,8 @@ export class AppAccountSectionComponent implements OnDestroy {
     this._destory$.complete();
   }
 
-  public changeSection(sectionName: string): void {
-    this.router.navigateByUrl(`account/${sectionName}`);
+  public changeSection(sectionName: number): void {
+    this.router.navigateByUrl(`account/${AccountSectionName[sectionName]}`);
   }
 
   public onSubSecionClick(): void {}
@@ -50,11 +53,9 @@ export class AppAccountSectionComponent implements OnDestroy {
     this.accordion.closeAll();
   }
 
-  private calculateIndex(sectionName: string): void {
-    if (sectionName === 'security') {
-      this.activeIndex = 0;
-    } else if (sectionName === 'preferences') {
-      this.activeIndex = 3;
-    }
+  private calculateIndex(sectionName: AccountSectionName): void {
+    this.sectionName = sectionName;
+    this.activeIndex = 0;
+    this.accountSectionService.setActiveIndex(0);
   }
 }

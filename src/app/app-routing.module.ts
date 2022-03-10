@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AccountSectionName } from './account/account-section/account-section-name';
 import { AppAccountComponent } from './account/app-account.component';
 import { AppForgetPasswordComponent } from './account/app-forget-password.component';
 import { AppLoginComponent } from './account/app-login.component';
@@ -49,14 +50,14 @@ const routes: Routes = [
             path: 'security',
             component: AppSecurityComponent,
             data: {
-              sectionName: 'security'
+              sectionName: AccountSectionName.security
             }
           },
           {
             path: 'preferences',
             component: AppPreferenceComponent,
             data: {
-              sectionName: 'preferences'
+              sectionName: AccountSectionName.preferences
             }
           }
         ]
