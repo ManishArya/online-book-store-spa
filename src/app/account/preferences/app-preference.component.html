@@ -1,0 +1,13 @@
+<mat-expansion-panel [expanded]="index === 0">
+  <mat-expansion-panel-header>
+    <mat-panel-title> <span class="sub-section-heading"> Dark Theme</span> </mat-panel-title>
+  </mat-expansion-panel-header>
+  <mat-slide-toggle labelPosition="before" [checked]="enableDarkTheme" (change)="onToggleChange($event)">
+    Enable Dark Theme
+  </mat-slide-toggle>
+</mat-expansion-panel>
+<mat-expansion-panel [expanded]="index === 1">
+  <mat-expansion-panel-header>
+    <mat-panel-title><span class="sub-section-heading"> Languages</span> </mat-panel-title>
+  </mat-expansion-panel-header>
+</mat-expansion-panel>

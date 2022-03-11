@@ -12,6 +12,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AppSpinnerComponent } from './shared/app-spinner/app-spinner.component';
@@ -30,6 +31,7 @@ import { AppSpinnerComponent } from './shared/app-spinner/app-spinner.component'
     MatDividerModule,
     MatExpansionModule,
     MatToolbarModule,
+    MatSlideToggleModule,
     AppSpinnerComponent,
     MatListModule
   ],

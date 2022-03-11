@@ -1,7 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
 import { AppTitleService } from 'src/app/services/title.service';
+import { AppAccountSectionContentComponent } from '../account-section/app-account-section-content.component';
 import { AppAccountSectionService } from '../account-section/app-account-section.service';
 
 @Component({
@@ -9,25 +8,13 @@ import { AppAccountSectionService } from '../account-section/app-account-section
   templateUrl: './app-security.component.html',
   styleUrls: ['./app-security.component.scss']
 })
-export class AppSecurityComponent implements OnInit, OnDestroy {
-  public index: number = 0;
-  private readonly _destory$ = new Subject<void>();
-
-  constructor(private titleService: AppTitleService, private accountSectionService: AppAccountSectionService) {}
+export class AppSecurityComponent extends AppAccountSectionContentComponent implements OnInit {
+  constructor(accountSectionService: AppAccountSectionService, titleService: AppTitleService) {
+    super(titleService, accountSectionService);
+  }
 
   public ngOnInit(): void {
-    this.titleService.setTitle('Account Security');
+    this.setTitle('security');
     this.listenToSectionIndexChanges();
-  }
-
-  public ngOnDestroy(): void {
-    this._destory$.next();
-    this._destory$.complete();
-  }
-
-  private listenToSectionIndexChanges(): void {
-    this.accountSectionService.setActiveIndex$
-      .pipe(takeUntil(this._destory$))
-      .subscribe((index) => (this.index = index));
   }
 }
