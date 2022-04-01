@@ -28,10 +28,10 @@ export class AppPreferenceComponent extends AppAccountSectionContentComponent im
   }
 
   public onToggleChange(change: MatSlideToggleChange): void {
-    this.preferenceService.setDarkTheme(change.checked);
+    this.preferenceService.setDarkTheme(change.checked).subscribe();
   }
 
   private getUserPreferences() {
-    this.preferenceService.getPreferences().subscribe((p) => (this.enableDarkTheme = p.content.enableDarkMode));
+    this.preferenceService.getPreferences().subscribe((p) => (this.enableDarkTheme = p.content.enableDarkTheme));
   }
 }

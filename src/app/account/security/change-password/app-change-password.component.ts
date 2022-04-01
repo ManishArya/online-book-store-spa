@@ -29,7 +29,11 @@ export class AppChangePasswordComponent {
           }
         },
         (err: HttpErrorResponse) => {
-          this.errorMessage = err.error.content;
+          if (err.status === 422) {
+            this.errorMessage = err.error.content.password;
+          } else {
+            this.errorMessage = err.error.content;
+          }
         }
       );
   }

@@ -33,6 +33,7 @@ export class AppAddBookModalComponent implements OnInit {
   }
 
   public addBook(closed: boolean): void {
+    this.validations = {};
     const book = {
       name: this.name,
       description: this.description,
