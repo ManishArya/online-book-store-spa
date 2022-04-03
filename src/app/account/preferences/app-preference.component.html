@@ -2,7 +2,7 @@
   <mat-expansion-panel-header>
     <mat-panel-title> <span class="sub-section-heading"> Dark Theme</span> </mat-panel-title>
   </mat-expansion-panel-header>
-  <mat-slide-toggle labelPosition="before" [checked]="enableDarkTheme" (change)="onToggleChange($event)">
+  <mat-slide-toggle labelPosition="before" [checked]="enableDarkTheme" (change)="onDarkThemeChanges($event)">
     Enable
   </mat-slide-toggle>
 </mat-expansion-panel>
@@ -10,4 +10,7 @@
   <mat-expansion-panel-header>
     <mat-panel-title><span class="sub-section-heading"> Languages</span> </mat-panel-title>
   </mat-expansion-panel-header>
+  <select class="form-control" [(ngModel)]="locale" (change)="onLocaleChanges(locale)">
+    <option [ngValue]="language.locale" *ngFor="let language of languages">{{ language.lang }}</option>
+  </select>
 </mat-expansion-panel>

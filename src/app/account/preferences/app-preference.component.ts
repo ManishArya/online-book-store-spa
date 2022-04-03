@@ -12,6 +12,11 @@ import { AppAccountSectionService } from '../account-section/app-account-section
 })
 export class AppPreferenceComponent extends AppAccountSectionContentComponent implements OnInit {
   public enableDarkTheme: boolean;
+  public locale: string;
+  public languages = [
+    { lang: 'english', locale: 'en' },
+    { lang: 'hindi', locale: 'hi' }
+  ];
 
   constructor(
     titleService: AppTitleService,
@@ -27,11 +32,18 @@ export class AppPreferenceComponent extends AppAccountSectionContentComponent im
     this.getUserPreferences();
   }
 
-  public onToggleChange(change: MatSlideToggleChange): void {
+  public onDarkThemeChanges(change: MatSlideToggleChange): void {
     this.preferenceService.setDarkTheme(change.checked).subscribe();
   }
 
+  public onLocaleChanges(locale: string): void {
+    this.preferenceService.setLocale(locale).subscribe();
+  }
+
   private getUserPreferences() {
-    this.preferenceService.getPreferences().subscribe((p) => (this.enableDarkTheme = p.content.enableDarkTheme));
+    this.preferenceService.getPreferences().subscribe((p) => {
+      this.enableDarkTheme = p.content.enableDarkTheme;
+      this.locale = p.content.locale;
+    });
   }
 }

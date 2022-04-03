@@ -19,4 +19,8 @@ export class PreferencesService {
   public setDarkTheme(enableDarkTheme: boolean) {
     return this.http.post(`${environment.authApiEndPoint}/preferences/setDarkTheme`, { enableDarkTheme });
   }
+
+  public setLocale(locale: string) {
+    return this.http.post(`${environment.authApiEndPoint}/preferences/setLocale`, { locale });
+  }
 }

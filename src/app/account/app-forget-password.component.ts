@@ -13,8 +13,8 @@ export class AppForgetPasswordComponent {
 
   constructor(private _loginService: LoginService, private toast: ToastService, private router: Router) {}
 
-  public checkUserNameOrEmail(): void {
-    this._loginService.checkUserNameOrEmailExists(this.userNameOrEmail).subscribe(
+  public sendPasswordResetLink(): void {
+    this._loginService.sendPasswordResetLink(this.userNameOrEmail).subscribe(
       (res) => {
         this.toast.open(res.content);
       },
