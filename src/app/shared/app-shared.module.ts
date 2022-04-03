@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
 import { AppCommaSeparatorPipe } from '../pipes/app-comma-separator.pipe';
+import { AppLocalePipe } from '../pipes/app-locale.pipe';
 import { AppAvatarComponent } from './app-avatar/app-avatar.component';
 import { AppConfirmationDialogComponent } from './app-confirmation-dialog/app-confirmation-dialog.component';
 import { AppFieldErrorComponent } from './app-field-error/app-field-error.component';
@@ -20,7 +21,8 @@ import { AppToastComponent } from './app-toast/app-toast.component';
     ReactiveFormsModule,
     AppCommaSeparatorPipe,
     AppFieldErrorComponent,
-    AppAvatarComponent
+    AppAvatarComponent,
+    AppLocalePipe
   ],
   declarations: [
     AppConfirmationDialogComponent,
@@ -29,7 +31,8 @@ import { AppToastComponent } from './app-toast/app-toast.component';
     AppPasswordViewerComponent,
     AppFieldErrorComponent,
     AppAvatarComponent,
-    AppToastComponent
+    AppToastComponent,
+    AppLocalePipe
   ]
 })
 export class AppSharedModule {}

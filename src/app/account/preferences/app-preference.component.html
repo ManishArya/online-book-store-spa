@@ -1,6 +1,8 @@
 <mat-expansion-panel [expanded]="index === 0">
   <mat-expansion-panel-header>
-    <mat-panel-title> <span class="sub-section-heading"> Dark Theme</span> </mat-panel-title>
+    <mat-panel-title>
+      <span class="sub-section-heading"> {{ 'darkTheme' | appLocale: '99':'55' }}</span>
+    </mat-panel-title>
   </mat-expansion-panel-header>
   <mat-slide-toggle labelPosition="before" [checked]="enableDarkTheme" (change)="onDarkThemeChanges($event)">
     Enable

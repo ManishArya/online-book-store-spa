@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { LocaleService } from 'src/app/services/locale.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { AppTitleService } from 'src/app/services/title.service';
 import { AppAccountSectionContentComponent } from '../account-section/app-account-section-content.component';
@@ -21,12 +22,14 @@ export class AppPreferenceComponent extends AppAccountSectionContentComponent im
   constructor(
     titleService: AppTitleService,
     accountSectionService: AppAccountSectionService,
-    private preferenceService: PreferencesService
+    private preferenceService: PreferencesService,
+    private localeService: LocaleService
   ) {
     super(titleService, accountSectionService);
   }
 
   public ngOnInit(): void {
+    this.localeService.get('firstKey').subscribe((res) => console.log(res));
     this.setTitle('preferences');
     this.listenToSectionIndexChanges();
     this.getUserPreferences();
