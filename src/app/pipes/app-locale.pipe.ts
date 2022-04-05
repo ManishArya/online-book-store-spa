@@ -6,17 +6,17 @@ import { LocaleService } from '../services/locale.service';
   pure: false
 })
 export class AppLocalePipe implements PipeTransform {
-  private localizedData: string;
-  private cachedKey: string;
+  private cachedData: any = {};
 
   constructor(private localeService: LocaleService) {}
 
   public transform(key: string, ...args: unknown[]): string {
-    if (this.cachedKey !== key) {
-      this.cachedKey = key;
-      this.localeService.get(key, args).subscribe((res) => (this.localizedData = res));
+    const name = key + JSON.stringify(args);
+
+    if (!(name in this.cachedData)) {
+      this.localeService.get(key, args).subscribe((res) => (this.cachedData[name] = res));
     }
 
-    return this.localizedData;
+    return this.cachedData[name];
   }
 }
