@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { catchError, map, shareReplay, switchMap } from 'rxjs/operators';
-import { LocaleOption } from '../models/locale-option';
 import { LocaleProvider } from './locale-provider';
 
 interface Resource {
@@ -13,44 +12,46 @@ interface Resource {
   providedIn: 'root'
 })
 export class LocaleService {
-  private localeCache: Observable<Resource>;
+  private obsCache: Observable<Resource> | undefined;
+  private localeCache: { [key: string]: Observable<Resource> } = {};
   constructor(private http: HttpClient, private localeProvider: LocaleProvider) {
-    this.localeCache = this.getLocaleFile();
+    this.localeProvider.localeChange$.subscribe(() => (this.obsCache = undefined));
   }
 
   public get(key: string, ...args: any): Observable<string> {
-    return this.localeCache.pipe(
+    return this.getLocaleFile().pipe(
       map((res) => {
-        return res[key] ? this.formattedOutput(res[key], args) : key;
+        return res[key] ? this.formatMessage(res[key], args) : key;
       })
     );
   }
 
   private getLocaleFile() {
-    return this.localeProvider.getCurrentOrDefaultLocale().pipe(
-      switchMap((l) => {
-        return this.http
-          .get<Resource>(`./assets/locales/locale-${l}.json`)
-          .pipe(catchError(() => this.http.get<Resource>('./assets/locales/locale-en.json')));
-      }),
-      shareReplay(1)
-    );
+    if (!this.obsCache) {
+      this.obsCache = this.localeProvider.getCurrentOrDefaultLocale().pipe(
+        switchMap((l) => {
+          console.log(l);
+          if (!this.localeCache?.[l]) {
+            this.localeCache[l] = this.http.get<Resource>(`./assets/locales/locale-${l}.json`).pipe(shareReplay(1));
+          }
+          return this.localeCache?.[l];
+        }),
+        catchError((err) => {
+          return of({} as Resource);
+        }),
+        shareReplay(1)
+      );
+    }
+    return this.obsCache;
   }
 
-  private formattedOutput(key: string, args: any) {
+  private formatMessage(key: string, args: any) {
     if (args?.length !== 0) {
-      return key.replace(/({(\d+)})+/g, (match, p1, p2) => {
-        return args[0][p2] ?? match;
+      return key.replace(/{(\d+)}+/g, (match, p1) => {
+        return args[0][p1] ?? match;
       });
     }
 
     return key;
-  }
-
-  public configureLocale(localeOption: LocaleOption): LocaleOption {
-    return {
-      defaultLocale: localeOption?.defaultLocale || 'en',
-      supportedLanguages: localeOption.supportedLanguages || ['en', 'hi']
-    };
   }
 }

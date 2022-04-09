@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LocaleProvider {
+  private localeChangeSubject: Subject<void> = new Subject<void>();
+  public localeChange$ = this.localeChangeSubject.asObservable();
+  private _userPreferredLocale = '';
   private readonly _defaultLocale: string = 'en-US';
   private readonly _supportedLocales: readonly string[] = ['en-US', 'en', 'hi'];
 
@@ -12,11 +15,33 @@ export class LocaleProvider {
     return of(this._defaultLocale);
   }
 
+  public changeLocale(locale: string): void {
+    this._userPreferredLocale = locale;
+    console.log(this._userPreferredLocale);
+    this.localeChangeSubject.next();
+  }
+
+  public resetToBrowserSettingsLocale(): void {
+    this._userPreferredLocale = '';
+  }
+
   public getCurrentOrDefaultLocale(): Observable<string> {
-    const currentBrowserLocales = navigator.languages;
+    let locale: string | undefined;
 
-    const locale = currentBrowserLocales.find((c) => this._supportedLocales.includes(c)) ?? this._defaultLocale;
+    if (this._userPreferredLocale) {
+      locale = this._supportedLocales.find((l) => l === this._userPreferredLocale);
+    } else {
+      const currentBrowserLocales = navigator.languages;
+      locale = currentBrowserLocales.find((c) => this._supportedLocales.includes(c));
+    }
 
-    return of(locale);
+    if (!locale) {
+      console.warn(
+        `we are not supporting this locale ${
+          this._userPreferredLocale || navigator.language
+        } switching to default locale ${this._defaultLocale}`
+      );
+    }
+    return of(locale ?? this._defaultLocale);
   }
 }

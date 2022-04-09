@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { LocaleProvider } from 'src/app/services/locale-provider';
 import { LocaleService } from 'src/app/services/locale.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { AppTitleService } from 'src/app/services/title.service';
@@ -23,16 +24,16 @@ export class AppPreferenceComponent extends AppAccountSectionContentComponent im
     titleService: AppTitleService,
     accountSectionService: AppAccountSectionService,
     private preferenceService: PreferencesService,
-    private localeService: LocaleService
+    private localeService: LocaleService,
+    private localeProvider: LocaleProvider
   ) {
     super(titleService, accountSectionService);
   }
 
   public ngOnInit(): void {
-    this.localeService.get('firstKey').subscribe((res) => console.log(res));
+    this.getUserPreferences();
     this.setTitle('preferences');
     this.listenToSectionIndexChanges();
-    this.getUserPreferences();
   }
 
   public onDarkThemeChanges(change: MatSlideToggleChange): void {
@@ -40,7 +41,7 @@ export class AppPreferenceComponent extends AppAccountSectionContentComponent im
   }
 
   public onLocaleChanges(locale: string): void {
-    this.preferenceService.setLocale(locale).subscribe();
+    this.preferenceService.setLocale(locale).subscribe(() => this.localeProvider.changeLocale(locale));
   }
 
   private getUserPreferences() {
