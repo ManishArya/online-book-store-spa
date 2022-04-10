@@ -1,13 +1,19 @@
 <button type="button" class="btn btn-default mr-xs" (click)="openBookModal()" *ngIf="hasPermission">
-  <i class="fa fa-plus-circle"></i> Add
+  <i class="fa fa-plus-circle"></i> {{ 'add' | appLocale }}
 </button>
 <button type="button" class="btn btn-default mr-xs" [disabled]="disabled" (click)="deleteBook()" *ngIf="hasPermission">
-  <i class="fa fa-trash"></i> Delete
+  <i class="fa fa-trash"></i> {{ 'delete' | appLocale }}
 </button>
-<button type="button" class="btn btn-default mr-xs"><i class="fa fa-filter" aria-hidden="true"></i> Filter</button>
-<button type="button" class="btn btn-link" (click)="selectAll()" *ngIf="hasPermission">Select All</button>
-<button type="button" class="btn btn-link" (click)="clearAll()" *ngIf="hasPermission">Clear All</button>
-<button type="button" class="btn btn-link" title="refresh" (click)="refreshBookList()">
+<button type="button" class="btn btn-default mr-xs">
+  <i class="fa fa-filter" aria-hidden="true"></i> {{ 'filter' | appLocale }}
+</button>
+<button type="button" class="btn btn-link" (click)="selectAll()" *ngIf="hasPermission">
+  {{ 'selectAll' | appLocale }}
+</button>
+<button type="button" class="btn btn-link" (click)="clearAll()" *ngIf="hasPermission">
+  {{ 'clearAll' | appLocale }}
+</button>
+<button type="button" class="btn btn-link" [title]="'refresh' | appLocale" (click)="refreshBookList()">
   <i class="fa fa-refresh" aria-hidden="true"></i>
 </button>
 <div>

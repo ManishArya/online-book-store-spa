@@ -9,7 +9,7 @@
     <hr />
     <div *ngIf="!isAdded; else check">
       <button type="button" mat-raised-button color="primary" (click)="addToMyList()">
-        <i class="fa fa-plus-circle"></i> My List
+        <i class="fa fa-plus-circle"></i> {{ 'myList' | appLocale }}
       </button>
     </div>
     <div>
@@ -17,4 +17,4 @@
     </div>
   </ng-container>
 </div>
-<ng-template #check> <i class="fa fa-check"></i> Added </ng-template>
+<ng-template #check> <i class="fa fa-check"></i> {{ 'added' | appLocale }} </ng-template>

@@ -1,11 +1,11 @@
 <app-spinner [isWaiting]="isWaiting"></app-spinner>
 <h4 class="error-label" [ngClass]="{ 'error-icon': errorMessage }">{{ errorMessage }}</h4>
 <div class="form-group">
-  <label for="email" class="required">Email</label>
+  <label for="email" class="required">{{ 'email' | appLocale }}</label>
   <input type="email" class="form-control" name="email" autocomplete="off" id="email" [(ngModel)]="email" />
 </div>
 <div class="form-group">
-  <label for="password" class="required">Password</label>
+  <label for="password" class="required">{{ 'password' | appLocale }}</label>
   <input
     type="password"
     class="form-control"
@@ -15,4 +15,4 @@
     [(ngModel)]="password"
   />
 </div>
-<button type="button" mat-raised-button color="primary" (click)="updateEmail()">Update</button>
+<button type="button" mat-raised-button color="primary" (click)="updateEmail()">{{ 'update' | appLocale }}</button>

@@ -2,20 +2,30 @@
   <div class="flex-grow-1 mr-sm top-margin">
     <mat-nav-list>
       <div class="section-heading pointer" (click)="changeSection(accountSectionName.security)">
-        <i class="fa fa-shield fa-flip-vertical" aria-hidden="true"></i> Security
+        <i class="fa fa-shield fa-flip-vertical" aria-hidden="true"></i> {{ 'security' | appLocale }}
       </div>
       <ng-container *ngIf="sectionName === accountSectionName.security">
-        <a mat-list-item [ngClass]="{ active: activeIndex === 0 }" (click)="changeIndex(0)">Change Password</a>
-        <a mat-list-item [ngClass]="{ active: activeIndex === 1 }" (click)="changeIndex(1)">Email</a>
-        <a mat-list-item [ngClass]="{ active: activeIndex === 2 }" (click)="changeIndex(2)">Delete Account</a>
+        <a mat-list-item [ngClass]="{ active: activeIndex === 0 }" (click)="changeIndex(0)">{{
+          'changePassword' | appLocale
+        }}</a>
+        <a mat-list-item [ngClass]="{ active: activeIndex === 1 }" (click)="changeIndex(1)">{{
+          'email' | appLocale
+        }}</a>
+        <a mat-list-item [ngClass]="{ active: activeIndex === 2 }" (click)="changeIndex(2)">{{
+          'deleteAccount' | appLocale
+        }}</a>
       </ng-container>
       <mat-divider></mat-divider>
       <div class="section-heading mt-sm pointer" (click)="changeSection(accountSectionName.preferences)">
-        <i class="fa fa-cog" aria-hidden="true"></i> Preferences
+        <i class="fa fa-cog" aria-hidden="true"></i> {{ 'preferences' | appLocale }}
       </div>
       <ng-container *ngIf="sectionName === accountSectionName.preferences">
-        <a mat-list-item [ngClass]="{ active: activeIndex === 0 }" (click)="changeIndex(0)">Dark Theme</a>
-        <a mat-list-item [ngClass]="{ active: activeIndex === 1 }" (click)="changeIndex(1)">Languages</a>
+        <a mat-list-item [ngClass]="{ active: activeIndex === 0 }" (click)="changeIndex(0)">{{
+          'darkTheme' | appLocale
+        }}</a>
+        <a mat-list-item [ngClass]="{ active: activeIndex === 1 }" (click)="changeIndex(1)">{{
+          'languages' | appLocale
+        }}</a>
       </ng-container>
     </mat-nav-list>
   </div>
@@ -23,10 +33,10 @@
     <mat-divider></mat-divider>
     <mat-toolbar>
       <span class="flex"></span>
-      <button class="btn btn-link" title="Expand all" (click)="expandAllSections()">
+      <button class="btn btn-link" [title]="'expandAll' | appLocale" (click)="expandAllSections()">
         <i class="fa fa-angle-double-up fa-2x"></i>
       </button>
-      <button class="btn btn-link" title="Collpase all" (click)="collpaseAllSections()">
+      <button class="btn btn-link" [title]="'collapseAll' | appLocale" (click)="collpaseAllSections()">
         <i class="fa fa-angle-double-down fa-2x"></i>
       </button>
     </mat-toolbar>
