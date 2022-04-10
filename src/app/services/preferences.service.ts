@@ -11,7 +11,7 @@ import { LocaleProvider } from './locale-provider';
   providedIn: 'root'
 })
 export class PreferencesService {
-  private _preferencesCahe: Observable<IApiResponse<Preferences>>;
+  private _preferencesCahe: Observable<IApiResponse<Preferences>> | undefined;
 
   constructor(private http: HttpClient, private localeProvider: LocaleProvider) {}
 
@@ -23,6 +23,10 @@ export class PreferencesService {
     }
 
     return this._preferencesCahe;
+  }
+
+  public clearPreferenceCache(): void {
+    this._preferencesCahe = undefined;
   }
 
   public async changeUserLocale(): Promise<void> {

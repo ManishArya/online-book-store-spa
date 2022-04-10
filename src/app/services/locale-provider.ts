@@ -5,7 +5,7 @@ import { Observable, of, Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class LocaleProvider {
-  private localeChangeSubject: Subject<void> = new Subject<void>();
+  private localeChangeSubject: Subject<string> = new Subject<string>();
   public localeChange$ = this.localeChangeSubject.asObservable();
   private _userPreferredLocale = '';
   private readonly _defaultLocale: string = 'en-US';
@@ -17,12 +17,11 @@ export class LocaleProvider {
 
   public changeLocale(locale: string): void {
     this._userPreferredLocale = locale;
-    console.log(this._userPreferredLocale);
-    this.localeChangeSubject.next();
+    this.localeChangeSubject.next(locale);
   }
 
   public resetToBrowserSettingsLocale(): void {
-    this._userPreferredLocale = '';
+    this.changeLocale('');
   }
 
   public getCurrentOrDefaultLocale(): Observable<string> {

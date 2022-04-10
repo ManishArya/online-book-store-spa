@@ -1,15 +1,15 @@
 <button class="btn btn-link pull-right" mat-button mat-dialog-close>X</button>
-<h2 mat-dialog-title>Add a Book</h2>
+<h2 mat-dialog-title>{{ 'addABook' | appLocale }}</h2>
 <mat-dialog-content>
   <app-spinner [isWaiting]="isWaiting"></app-spinner>
   <form>
     <div class="form-group">
-      <label for="name" class="required">Name</label>
+      <label for="name" class="required">{{ 'name' | appLocale }}</label>
       <input type="text" name="name" class="form-control" id="name" [(ngModel)]="name" />
       <app-field-error [validations]="validations" fieldName="name"></app-field-error>
     </div>
     <div class="form-group">
-      <label for="description" class="required">Description</label>
+      <label for="description" class="required">{{ 'description' | appLocale }}</label>
       <textarea
         name="description"
         class="form-control resize-none"
@@ -22,7 +22,7 @@
       <app-field-error [validations]="validations" fieldName="description"></app-field-error>
     </div>
     <div class="form-group w-25">
-      <label for="date" class="required">Publication Date</label>
+      <label for="date" class="required">{{ 'publicationDate' | appLocale }}</label>
       <input
         name="date"
         id="date"
@@ -38,21 +38,25 @@
       <app-field-error [validations]="validations" fieldName="date"></app-field-error>
     </div>
     <div class="form-group">
-      <label for="genre" class="required">Genres</label>
+      <label for="genre" class="required">{{ 'genre' | appLocale }}</label>
       <mat-select class="form-control" multiple [(ngModel)]="genres" name="genres">
         <mat-option *ngFor="let genre of genreOptions" [value]="genre.name">{{ genre.name }}</mat-option>
       </mat-select>
       <app-field-error [validations]="validations" fieldName="genres"></app-field-error>
     </div>
     <div class="form-group">
-      <label class="required" for="poster">Poster</label>
+      <label class="required" for="poster">{{ 'poster' | appLocale }}</label>
       <input type="file" name="poster" id="poster" #poster />
       <app-field-error [validations]="validations" fieldName="poster"></app-field-error>
     </div>
   </form>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button type="button" mat-raised-button color="primary" class="mr-xs" (click)="addBook(false)">Add Another</button>
-  <button type="button" mat-raised-button color="primary" (click)="addBook(true)">Save And Close</button>
-  <button class="btn btn-link" mat-button mat-dialog-close>Cancel</button>
+  <button type="button" mat-raised-button color="primary" class="mr-xs" (click)="addBook(false)">
+    {{ 'addAnother' | appLocale }}
+  </button>
+  <button type="button" mat-raised-button color="primary" (click)="addBook(true)">
+    {{ 'saveAndClose' | appLocale }}
+  </button>
+  <button class="btn btn-link" mat-button mat-dialog-close>{{ 'cancel' | appLocale }}</button>
 </mat-dialog-actions>

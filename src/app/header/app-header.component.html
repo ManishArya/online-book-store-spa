@@ -2,7 +2,7 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="nav navbar-nav mr-auto">
       <li class="nav-item">
-        <a (click)="navigateToDashboard()">Dashboard</a>
+        <a (click)="navigateToDashboard()">{{ 'dashboard' | appLocale }}</a>
       </li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
@@ -27,17 +27,17 @@
             <div class="d-flex flex-direction-column align-items-center">
               <span>{{ name }}</span>
               <button mat-menu-item>
-                <a (click)="navigateToProfilePage()">View Profile</a>
+                <a (click)="navigateToProfilePage()">{{ 'viewProfile' | appLocale }}</a>
               </button>
             </div>
           </div>
           <mat-divider></mat-divider>
           <button mat-menu-item>
-            <a (click)="navigateToAccountPage()">Account</a>
+            <a (click)="navigateToAccountPage()">{{ 'account' | appLocale }}</a>
           </button>
           <mat-divider></mat-divider>
           <button mat-menu-item>
-            <a (click)="signOut()">Sign out</a>
+            <a (click)="signOut()">{{ 'signOut' | appLocale }}</a>
           </button>
         </mat-menu>
       </li>

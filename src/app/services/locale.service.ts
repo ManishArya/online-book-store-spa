@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { catchError, map, shareReplay, switchMap } from 'rxjs/operators';
+import { Injectable, OnDestroy } from '@angular/core';
+import { Observable, of, Subject } from 'rxjs';
+import { catchError, map, shareReplay, switchMap, takeUntil } from 'rxjs/operators';
 import { LocaleProvider } from './locale-provider';
 
 interface Resource {
@@ -11,26 +11,36 @@ interface Resource {
 @Injectable({
   providedIn: 'root'
 })
-export class LocaleService {
-  private obsCache: Observable<Resource> | undefined;
+export class LocaleService implements OnDestroy {
+  private resourceCache: Observable<Resource> | undefined;
   private localeCache: { [key: string]: Observable<Resource> } = {};
+  private destory$ = new Subject<void>();
+
   constructor(private http: HttpClient, private localeProvider: LocaleProvider) {
-    this.localeProvider.localeChange$.subscribe(() => (this.obsCache = undefined));
+    this.localeProvider.localeChange$.pipe(takeUntil(this.destory$)).subscribe(() => (this.resourceCache = undefined));
   }
 
   public get(key: string, ...args: any): Observable<string> {
-    return this.getLocaleFile().pipe(
+    return this.getResource(key, args).pipe(
       map((res) => {
         return res[key] ? this.formatMessage(res[key], args) : key;
       })
     );
   }
 
-  private getLocaleFile() {
-    if (!this.obsCache) {
-      this.obsCache = this.localeProvider.getCurrentOrDefaultLocale().pipe(
+  public getStrings(keys: { [key: string]: string }) {
+    // TODO: To Be implement
+  }
+
+  public ngOnDestroy(): void {
+    this.destory$.next();
+    this.destory$.complete();
+  }
+
+  private getResource(key: string, args: any[]) {
+    if (!this.resourceCache) {
+      this.resourceCache = this.localeProvider.getCurrentOrDefaultLocale().pipe(
         switchMap((l) => {
-          console.log(l);
           if (!this.localeCache?.[l]) {
             this.localeCache[l] = this.http.get<Resource>(`./assets/locales/locale-${l}.json`).pipe(shareReplay(1));
           }
@@ -42,7 +52,8 @@ export class LocaleService {
         shareReplay(1)
       );
     }
-    return this.obsCache;
+
+    return this.resourceCache;
   }
 
   private formatMessage(key: string, args: any) {
@@ -51,7 +62,6 @@ export class LocaleService {
         return args[0][p1] ?? match;
       });
     }
-
     return key;
   }
 }

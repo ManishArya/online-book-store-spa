@@ -41,7 +41,10 @@ export class AppPreferenceComponent extends AppAccountSectionContentComponent im
   }
 
   public onLocaleChanges(locale: string): void {
-    this.preferenceService.setLocale(locale).subscribe(() => this.localeProvider.changeLocale(locale));
+    this.preferenceService.setLocale(locale).subscribe(() => {
+      this.localeProvider.changeLocale(locale);
+      this.preferenceService.clearPreferenceCache();
+    });
   }
 
   private getUserPreferences() {

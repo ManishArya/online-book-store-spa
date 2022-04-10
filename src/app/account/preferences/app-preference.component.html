@@ -1,16 +1,18 @@
 <mat-expansion-panel [expanded]="index === 0">
   <mat-expansion-panel-header>
     <mat-panel-title>
-      <span class="sub-section-heading"> {{ 'darkTheme' | appLocale: '99':'55' }}</span>
+      <span class="sub-section-heading"> {{ 'darkTheme' | appLocale }}</span>
     </mat-panel-title>
   </mat-expansion-panel-header>
   <mat-slide-toggle labelPosition="before" [checked]="enableDarkTheme" (change)="onDarkThemeChanges($event)">
-    Enable
+    {{ 'enable' | appLocale }}
   </mat-slide-toggle>
 </mat-expansion-panel>
 <mat-expansion-panel [expanded]="index === 1">
   <mat-expansion-panel-header>
-    <mat-panel-title><span class="sub-section-heading"> Languages</span> </mat-panel-title>
+    <mat-panel-title
+      ><span class="sub-section-heading"> {{ 'languages' | appLocale }}</span>
+    </mat-panel-title>
   </mat-expansion-panel-header>
   <select class="form-control" [(ngModel)]="locale" (change)="onLocaleChanges(locale)">
     <option [ngValue]="language.locale" *ngFor="let language of languages">{{ language.lang }}</option>
