@@ -1,8 +1,47 @@
+@use '@angular/material' as mat;
 @import '../src/assets/scss/spacing';
 @import '../src/assets/scss/flex';
 @import '../src/assets/scss/text';
 @import '../src/assets/scss/color';
 @import '../src/assets/scss/variable';
+
+$dark-background-color: #424242;
+$dark-color-text: #eeeeef;
+
+$dark-primary: mat.define-palette(mat.$pink-palette);
+$dark-accent: mat.define-palette(mat.$blue-gray-palette);
+$dark-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $dark-primary,
+      accent: $dark-accent
+    )
+  )
+);
+
+.dark-theme {
+  background-color: $dark-background-color !important;
+  color: $dark-color-text !important;
+  scrollbar-color: $dark-background-color;
+  @include mat.all-component-themes($dark-theme);
+  @include mat.strong-focus-indicators-theme($dark-theme);
+  .form-control,
+  input[type='checkbox'] {
+    background-color: $dark-background-color !important;
+    border-color: gray !important;
+    color: $dark-color-text !important;
+  }
+  .btn {
+    background-color: $dark-background-color !important;
+    color: $dark-color-text !important;
+  }
+  input:-webkit-autofil {
+    -webkit-text-fill-color: $dark-background-color !important;
+  }
+  a {
+    color: $dark-color-text !important;
+  }
+}
 
 html,
 body {

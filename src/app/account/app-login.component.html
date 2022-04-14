@@ -3,7 +3,7 @@
   <div class="flex-basis-half">
     <div class="form-group">
       <label for="usernameOrEmail">{{ 'usernameOrEmail' | appLocale }}</label>
-      <input type="usernameOrEmail" class="form-control" id="usernameOrEmail" [(ngModel)]="usernameOrEmail" />
+      <input type="text" class="form-control" id="usernameOrEmail" [(ngModel)]="usernameOrEmail" />
     </div>
     <app-password-viewer
       [label]="'password' | appLocale"
