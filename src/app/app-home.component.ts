@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { forkJoin } from 'rxjs';
 import { PreferencesService } from './services/preferences.service';
 import { UserService } from './services/user.service';
 
@@ -9,6 +10,12 @@ export class AppHomeComponent implements OnInit {
   constructor(private userService: UserService, private preferencesService: PreferencesService) {}
 
   public ngOnInit(): void {
-    this.userService.getProfile().subscribe((res) => this.userService.updateUserProfile(res.content));
+    forkJoin({
+      profile: this.userService.getProfile(),
+      preferences: this.preferencesService.getPreferences()
+    }).subscribe((res) => {
+      this.userService.updateUserProfile(res.profile.content);
+      this.preferencesService.toggleTheme(res.preferences.content.enableDarkTheme);
+    });
   }
 }

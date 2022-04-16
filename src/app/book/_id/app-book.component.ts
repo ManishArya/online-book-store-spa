@@ -9,8 +9,7 @@ import { MyListService } from 'src/app/services/my-list.service';
 import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
-  templateUrl: './app-book.component.html',
-  styleUrls: ['./app-book.component.scss']
+  templateUrl: './app-book.component.html'
 })
 export class AppBookComponent implements OnInit {
   public book: IBook;

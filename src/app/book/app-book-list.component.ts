@@ -42,10 +42,10 @@ export class AppBookListComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.title.setTitle();
-    forkJoin([
-      this.getBooks(),
-      this.userService.userProfile$.pipe(tap((res) => (this.hasPermission = res.isAdmin)))
-    ]).subscribe();
+    forkJoin({
+      books: this.getBooks(),
+      profile: this.userService.userProfile$.pipe(tap((res) => (this.hasPermission = res.isAdmin)))
+    }).subscribe();
 
     this.listenToRefreshBookList();
   }
@@ -90,13 +90,12 @@ export class AppBookListComponent implements OnInit, OnDestroy {
         })
       )
       .pipe(switchMap(() => this.getBooks()))
-      .subscribe(
-        () => {},
-        (err: HttpErrorResponse) => {
+      .subscribe({
+        error: (err: HttpErrorResponse) => {
           this.isWaiting = false;
           this.toastService.open((err.error as IApiResponse<string>).errorDescription);
         }
-      );
+      });
   }
 
   public refreshBookList(): void {

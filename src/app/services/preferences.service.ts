@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
 import { Observable } from 'rxjs';
 import { shareReplay, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -11,9 +11,16 @@ import { LocaleProvider } from './locale-provider';
   providedIn: 'root'
 })
 export class PreferencesService {
+  private renderer: Renderer2;
   private _preferencesCahe: Observable<IApiResponse<Preferences>> | undefined;
 
-  constructor(private http: HttpClient, private localeProvider: LocaleProvider) {}
+  constructor(
+    private http: HttpClient,
+    private localeProvider: LocaleProvider,
+    private rendererFactory: RendererFactory2
+  ) {
+    this.renderer = this.rendererFactory.createRenderer(null, null);
+  }
 
   public getPreferences(): Observable<IApiResponse<Preferences>> {
     if (!this._preferencesCahe) {
@@ -41,5 +48,9 @@ export class PreferencesService {
 
   public setLocale(locale: string) {
     return this.http.post(`${environment.authApiEndPoint}/preferences/setLocale`, { locale });
+  }
+
+  public toggleTheme(isDarkMode: boolean): void {
+    this.renderer.setAttribute(document.documentElement, 'data-color-scheme', isDarkMode ? 'dark' : 'light');
   }
 }

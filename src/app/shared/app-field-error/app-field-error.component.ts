@@ -2,7 +2,7 @@ import { Component, Input, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'app-field-error',
-  templateUrl: './app-field-error.component.html'
+  template: `<span [ngClass]="{ 'error-icon error-label mt-lg': validationMessage }">{{ validationMessage }}</span>`
 })
 export class AppFieldErrorComponent implements OnChanges {
   public validationMessage: string;

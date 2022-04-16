@@ -14,25 +14,25 @@ import { AppToastComponent } from './app-toast/app-toast.component';
 @NgModule({
   imports: [CommonModule, MaterialModule, FormsModule],
   exports: [
+    AppAvatarComponent,
+    AppCommaSeparatorPipe,
     AppConfirmationDialogComponent,
+    AppFieldErrorComponent,
+    AppLocalePipe,
     AppPasswordViewerComponent,
     FormsModule,
     MaterialModule,
-    ReactiveFormsModule,
-    AppCommaSeparatorPipe,
-    AppFieldErrorComponent,
-    AppAvatarComponent,
-    AppLocalePipe
+    ReactiveFormsModule
   ],
   declarations: [
-    AppConfirmationDialogComponent,
+    AppAvatarComponent,
     AppCommaSeparatorPipe,
+    AppConfirmationDialogComponent,
+    AppFieldErrorComponent,
+    AppLocalePipe,
     AppNotFoundComponent,
     AppPasswordViewerComponent,
-    AppFieldErrorComponent,
-    AppAvatarComponent,
-    AppToastComponent,
-    AppLocalePipe
+    AppToastComponent
   ]
 })
 export class AppSharedModule {}

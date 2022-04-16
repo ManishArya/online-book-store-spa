@@ -5,8 +5,7 @@ import { AppAccountSectionService } from '../account-section/app-account-section
 
 @Component({
   selector: 'app-security',
-  templateUrl: './app-security.component.html',
-  styleUrls: ['./app-security.component.scss']
+  templateUrl: './app-security.component.html'
 })
 export class AppSecurityComponent extends AppAccountSectionContentComponent implements OnInit {
   constructor(accountSectionService: AppAccountSectionService, titleService: AppTitleService) {

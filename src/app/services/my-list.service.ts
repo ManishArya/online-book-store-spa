@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -19,11 +19,19 @@ export class MyListService {
   }
 
   public addToMyList(id: string): Observable<IApiResponse<string>> {
-    return this.http.post<IApiResponse<string>>(`${environment.bookApiEndPoint}/MyList?itemId=${id}`, {});
+    return this.http.post<IApiResponse<string>>(
+      `${environment.bookApiEndPoint}/MyList`,
+      {},
+      {
+        params: new HttpParams().set('itemId', id)
+      }
+    );
   }
 
   public removeFromMyList(id: string): Observable<IApiResponse<string>> {
-    return this.http.delete<IApiResponse<string>>(`${environment.bookApiEndPoint}/MyList/?itemId=${id}`);
+    return this.http.delete<IApiResponse<string>>(`${environment.bookApiEndPoint}/MyList`, {
+      params: new HttpParams().set('itemId', id)
+    });
   }
 
   public checkItemInMyList(id: string): Observable<IApiResponse<boolean>> {

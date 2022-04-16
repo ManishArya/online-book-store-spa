@@ -1,0 +1,12 @@
+@mixin darkThemeColor {
+  --bg-color: #424242;
+  --text-color-bg: #c9d1d9;
+  --btn-bg-color: #21262d;
+  --btn-border-color: rgba(240, 246, 252, 0.1);
+  --btn-text-color: #c9d1d9;
+  --btn-shadow-color: 0 0 transparent;
+  --border-defult-color: #30363d;
+  --shodow: 0 0 transparent;
+  --text-color-fg: #c9d1d9;
+  --form-control-bg-color: var(--bg-color);
+}

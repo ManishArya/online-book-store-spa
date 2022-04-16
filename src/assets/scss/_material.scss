@@ -1,0 +1,17 @@
+@use '@angular/material' as mat;
+
+$dark-primary: mat.define-palette(mat.$pink-palette);
+$dark-accent: mat.define-palette(mat.$blue-gray-palette);
+$dark-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $dark-primary,
+      accent: $dark-accent
+    )
+  )
+);
+
+[data-color-scheme='dark'] {
+  @include mat.all-component-themes($dark-theme);
+  @include mat.strong-focus-indicators-theme($dark-theme);
+}
