@@ -2,8 +2,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { ReCaptchaV3Service } from 'ng-recaptcha';
-import { Subject } from 'rxjs';
-import { finalize, switchMap } from 'rxjs/operators';
+import { iif, Subject } from 'rxjs';
+import { filter, finalize, switchMap } from 'rxjs/operators';
 import { IApiResponse } from '../models/api-response.model';
 import { LoginService } from './../services/login.service';
 import { ToastService } from './../services/toast.service';
@@ -42,9 +42,9 @@ export class AppLoginComponent implements OnInit, OnDestroy {
 
   public signIn(): void {
     this.isWaiting = true;
-    let subscription = null;
-    if (this.isRecaptchaEnabled) {
-      subscription = this.recaptchaV3Service.execute('login').pipe(
+    iif(
+      () => this.isRecaptchaEnabled,
+      this.recaptchaV3Service.execute('login').pipe(
         switchMap((token) =>
           this._loginService.getToken({
             usernameOrEmail: this.usernameOrEmail,
@@ -52,22 +52,23 @@ export class AppLoginComponent implements OnInit, OnDestroy {
             recaptchaToken: token
           })
         )
-      );
-    } else {
-      subscription = this._loginService.getToken({ usernameOrEmail: this.usernameOrEmail, password: this.password });
-    }
-    subscription.pipe(finalize(() => (this.isWaiting = false))).subscribe(
-      (res) => {
-        if (res.isSuccess) {
+      ),
+      this._loginService.getToken({ usernameOrEmail: this.usernameOrEmail, password: this.password })
+    )
+      .pipe(
+        finalize(() => (this.isWaiting = false)),
+        filter((res) => res.isSuccess)
+      )
+      .subscribe(
+        (res) => {
           this.toast.dismiss();
           this._loginService.login(res.content.token);
           return;
+        },
+        (err: HttpErrorResponse) => {
+          this.toast.open((err.error as IApiResponse<string>).content);
         }
-      },
-      (err: HttpErrorResponse) => {
-        this.toast.open((err.error as IApiResponse<string>).content);
-      }
-    );
+      );
   }
 
   public redirectToForgetPasswordPage(): void {

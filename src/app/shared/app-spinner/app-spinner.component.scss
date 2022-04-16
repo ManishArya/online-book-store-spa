@@ -7,8 +7,11 @@
 }
 
 .overlay {
-  margin: auto;
   background-color: rgba(255, 255, 255, 0.7);
+}
+
+.overlay {
+  margin: auto;
   z-index: 10;
   top: 0;
   right: 0;

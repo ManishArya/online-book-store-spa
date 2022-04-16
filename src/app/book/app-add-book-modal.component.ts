@@ -51,7 +51,7 @@ export class AppAddBookModalComponent implements OnInit {
       .addBook(formData)
       .pipe(finalize(() => (this.isWaiting = false)))
       .subscribe(
-        (res) => {
+        () => {
           this.resetBookForm();
           this.bookService.refreshBookList();
           if (closed) {

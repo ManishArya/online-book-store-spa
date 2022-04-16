@@ -4,7 +4,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'appCommaSeparator'
 })
 export class AppCommaSeparatorPipe implements PipeTransform {
-  transform(value: string[], ...args: unknown[]): string {
+  transform(value: string[], ...args: any[]): string {
     return value?.join(' , ') ?? '';
   }
 }

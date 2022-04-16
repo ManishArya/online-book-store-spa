@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { LocaleProvider } from 'src/app/services/locale-provider';
 import { PreferencesService } from 'src/app/services/preferences.service';
@@ -8,13 +8,12 @@ import { AppAccountSectionService } from '../account-section/app-account-section
 
 @Component({
   selector: 'app-preference',
-  templateUrl: './app-preference.component.html',
-  styleUrls: ['./app-preference.component.scss']
+  templateUrl: './app-preference.component.html'
 })
 export class AppPreferenceComponent extends AppAccountSectionContentComponent implements OnInit {
   public enableDarkTheme: boolean;
   public locale: string;
-  public languages = [
+  public languages: readonly { lang: string; locale: string }[] = [
     { lang: 'english', locale: 'en' },
     { lang: 'hindi', locale: 'hi' }
   ];
@@ -23,8 +22,7 @@ export class AppPreferenceComponent extends AppAccountSectionContentComponent im
     titleService: AppTitleService,
     accountSectionService: AppAccountSectionService,
     private preferenceService: PreferencesService,
-    private localeProvider: LocaleProvider,
-    private renderer: Renderer2
+    private localeProvider: LocaleProvider
   ) {
     super(titleService, accountSectionService);
   }
@@ -37,9 +35,8 @@ export class AppPreferenceComponent extends AppAccountSectionContentComponent im
 
   public onDarkThemeChanges(change: MatSlideToggleChange): void {
     this.preferenceService.setDarkTheme(change.checked).subscribe(() => {
-      change.checked
-        ? this.renderer.addClass(document.body, 'dark-theme')
-        : this.renderer.removeClass(document.body, 'dark-theme');
+      this.preferenceService.clearPreferenceCache();
+      this.preferenceService.toggleTheme(change.checked);
     });
   }
 

@@ -18,7 +18,7 @@ export class AppLocalePipe implements PipeTransform, OnDestroy {
       .subscribe(() => (this.cachedData = {}));
   }
 
-  public transform(key: string, ...args: unknown[]): string {
+  public transform(key: string, ...args: any[]): string {
     const name = key + JSON.stringify(args);
 
     if (!(name in this.cachedData)) {

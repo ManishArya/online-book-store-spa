@@ -6,8 +6,7 @@ import { AppAccountSectionService } from './app-account-section.service';
 
 @Component({
   selector: 'app-account-section-content',
-  templateUrl: './app-account-section-content.component.html',
-  styleUrls: ['./app-account-section-content.component.scss']
+  templateUrl: './app-account-section-content.component.html'
 })
 export class AppAccountSectionContentComponent implements OnDestroy {
   public index: number = 0;
