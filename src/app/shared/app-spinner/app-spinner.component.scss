@@ -1,4 +1,14 @@
-.center {
+.overlay {
+  z-index: 15;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay-center {
   margin-top: -25px;
   margin-left: -25px;
   position: absolute;
@@ -6,22 +16,18 @@
   left: 50%;
 }
 
-.overlay {
-  background-color: rgba(255, 255, 255, 0.7);
+.overlay-page {
+  position: fixed;
+  z-index: 15;
+  bottom: 0;
+  left: 0;
 }
 
-.overlay {
+.overlay-full-page {
   margin: auto;
-  z-index: 10;
   top: 0;
   right: 0;
-  left: 0;
-  bottom: 0;
-  position: absolute;
-}
-
-.overlay-fixed {
-  position: fixed;
+  @extend .overlay-page;
 }
 
 :host ::ng-deep .mat-progress-spinner circle,
@@ -31,22 +37,15 @@
   stroke-width: unset !important;
 }
 
-.wait-double-bounce1,
-.wait-double-bounce2 {
+.wait-double-bounce {
   width: 100%;
   height: 100%;
   border-radius: 50%;
   opacity: 0.6;
-  position: absolute;
-  top: 0;
-  left: 0;
-  -webkit-animation: sk-bounce 2s infinite ease-in-out;
-  animation: sk-bounce 2s infinite ease-in-out;
-}
-
-.wait-double-bounce2 {
   -webkit-animation-delay: -1s;
   animation-delay: -1s;
+  -webkit-animation: sk-bounce 2s infinite ease-in-out;
+  animation: sk-bounce 2s infinite ease-in-out;
 }
 
 @-webkit-keyframes sk-bounce {

@@ -1,7 +1,25 @@
 <ng-container *ngIf="isWaiting">
-  <div class="overlay overlay-fixed">
-    <div class="center">
-      <mat-progress-spinner class="wait-double-bounce1 wait-double-bounce2" mode="indeterminate"></mat-progress-spinner>
-    </div>
+  <div class="overlay-page" *ngIf="nonBlocking; else blocking">
+    <ng-container *ngTemplateOutlet="matspinner"></ng-container>
   </div>
 </ng-container>
+
+<ng-template #blocking>
+  <ng-container *ngIf="isFullPage; else element">
+    <div class="overlay-full-page">
+      <div class="overlay-center">
+        <ng-container *ngTemplateOutlet="matspinner"></ng-container>
+      </div>
+    </div>
+  </ng-container>
+</ng-template>
+
+<ng-template #element>
+  <div class="overlay">
+    <ng-container *ngTemplateOutlet="matspinner"></ng-container>
+  </div>
+</ng-template>
+
+<ng-template #matspinner>
+  <mat-progress-spinner class="wait-double-bounce" mode="indeterminate"></mat-progress-spinner>
+</ng-template>
