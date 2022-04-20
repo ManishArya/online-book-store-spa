@@ -9,11 +9,14 @@ import { AppConfirmationDialogComponent } from './app-confirmation-dialog/app-co
 import { AppFieldErrorComponent } from './app-field-error/app-field-error.component';
 import { AppNotFoundComponent } from './app-not-found/app-not-found.component';
 import { AppPasswordViewerComponent } from './app-password-viewer/app-password-viewer.component';
+import { AppPageSpinnerComponent } from './app-spinner/app-page-spinner.component';
+import { AppSpinnerComponent } from './app-spinner/app-spinner.component';
 import { AppToastComponent } from './app-toast/app-toast.component';
 
 @NgModule({
   imports: [CommonModule, MaterialModule, FormsModule],
   exports: [
+    AppSpinnerComponent,
     AppAvatarComponent,
     AppCommaSeparatorPipe,
     AppConfirmationDialogComponent,
@@ -25,6 +28,7 @@ import { AppToastComponent } from './app-toast/app-toast.component';
     ReactiveFormsModule
   ],
   declarations: [
+    AppSpinnerComponent,
     AppAvatarComponent,
     AppCommaSeparatorPipe,
     AppConfirmationDialogComponent,
@@ -32,7 +36,8 @@ import { AppToastComponent } from './app-toast/app-toast.component';
     AppLocalePipe,
     AppNotFoundComponent,
     AppPasswordViewerComponent,
-    AppToastComponent
+    AppToastComponent,
+    AppPageSpinnerComponent
   ]
 })
 export class AppSharedModule {}

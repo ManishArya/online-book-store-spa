@@ -3,13 +3,23 @@
   <div class="mt-sm d-flex f-wrap">
     <ng-container *ngFor="let list of myList">
       <ng-container *ngIf="list.books.length > 0">
-        <div class="mt-sm mr-sm pointer" [routerLink]="['/book', list.books[0].id]">
-          <img src="data:image/jpg;base64,{{ list.books[0].poster }}" height="200" width="200" />
-        </div>
-        <div>
-          <button type="button" class="btn btn-default" (click)="remove(list.books[0].id)">
-            <i class="fa fa-trash-o"></i> {{ 'remove' | appLocale }}
-          </button>
+        <div class="mt-sm mr-sm pointer relative">
+          <img
+            src="data:image/jpg;base64,{{ list.books[0].poster }}"
+            height="200"
+            width="200"
+            [routerLink]="['/book', list.books[0].id]"
+          />
+          <div class="absolute top-0 right-0 z-index-10">
+            <button
+              type="button"
+              title="{{ 'remove' | appLocale }}"
+              class="btn btn-link"
+              (click)="remove(list.books[0].id)"
+            >
+              <i class="fa fa-close"></i>
+            </button>
+          </div>
         </div>
       </ng-container>
     </ng-container>

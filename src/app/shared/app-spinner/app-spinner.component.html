@@ -1,7 +1,7 @@
 <ng-container *ngIf="isWaiting">
-  <div class="overlay overlay-fixed">
-    <div class="center">
-      <mat-progress-spinner class="wait-double-bounce1 wait-double-bounce2" mode="indeterminate"></mat-progress-spinner>
+  <div [ngClass]="{ 'overlay-non-blocking': nonBlocking, overlay: !nonBlocking }" [class.overlay-fixed]="isFullPage">
+    <div class="loader-container">
+      <div class="loader"></div>
     </div>
   </div>
 </ng-container>
