@@ -1,45 +1,46 @@
 .overlay {
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 15;
   height: 100%;
   width: 100%;
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-.overlay-center {
-  margin-top: -25px;
-  margin-left: -25px;
+.overlay-fixed {
+  position: fixed;
+}
+
+.overlay-non-blocking {
+  bottom: 0;
+}
+
+.overlay-non-blocking > .loader-container {
+  top: auto;
+  bottom: 0;
+  left: 0;
+  margin-left: auto;
+  margin-right: auto;
+  right: auto;
+}
+
+.loader-container {
   position: absolute;
   top: 50%;
   left: 50%;
+  margin-left: -25px;
+  margin-right: -25px;
+  height: 50px;
+  width: 50px;
 }
 
-.overlay-page {
-  position: fixed;
-  z-index: 15;
-  bottom: 0;
-  left: 0;
-}
-
-.overlay-full-page {
-  margin: auto;
-  top: 0;
-  right: 0;
-  @extend .overlay-page;
-}
-
-:host ::ng-deep .mat-progress-spinner circle,
-.mat-spinner circle {
-  stroke: #b7da9b;
-  fill: #b7da9b;
-  stroke-width: unset !important;
-}
-
-.wait-double-bounce {
-  width: 100%;
+.loader {
   height: 100%;
+  width: 100%;
+  background-color: #72bf44;
   border-radius: 50%;
   opacity: 0.6;
   -webkit-animation-delay: -1s;
