@@ -8,11 +8,11 @@ import { IApiResponse } from '../models/api-response.model';
 import { LoginService } from './../services/login.service';
 import { ToastService } from './../services/toast.service';
 import { TokenService } from './../services/token.service';
-
 @Component({
   templateUrl: './app-login.component.html'
 })
 export class AppLoginComponent implements OnInit, OnDestroy {
+  public reason: string;
   public usernameOrEmail: string;
   public password: string;
   public isWaiting: boolean;
@@ -25,7 +25,9 @@ export class AppLoginComponent implements OnInit, OnDestroy {
     private toast: ToastService,
     private recaptchaV3Service: ReCaptchaV3Service,
     private renderer: Renderer2
-  ) {}
+  ) {
+    this.reason = this.router.getCurrentNavigation()?.extras.state?.['reason'];
+  }
 
   public ngOnInit(): void {
     this.renderer.addClass(document.body, 'recaptcha');
@@ -66,6 +68,7 @@ export class AppLoginComponent implements OnInit, OnDestroy {
           return;
         },
         (err: HttpErrorResponse) => {
+          console.log(err);
           this.toast.open((err.error as IApiResponse<string>).content);
         }
       );

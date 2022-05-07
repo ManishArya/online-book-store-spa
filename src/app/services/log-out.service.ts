@@ -10,10 +10,11 @@ import { TokenService } from './token.service';
 export class LogOutService {
   constructor(private router: Router, private title: AppTitleService, private localeProvider: LocaleProvider) {}
 
-  public signOut(): void {
+  public signOut(reason?: string): void {
     this.localeProvider.resetToBrowserSettingsLocale();
     this.title.setTitle();
     TokenService.clearToken();
-    this.router.navigateByUrl('/login');
+    // this.idleService.removeWatcher();
+    this.router.navigateByUrl('/login', { state: { reason } });
   }
 }
