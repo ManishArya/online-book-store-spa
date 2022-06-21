@@ -4,8 +4,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { forkJoin, Observable, Subject } from 'rxjs';
 import { filter, finalize, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { RolePermission } from '../enum/role-permission';
 import { IApiResponse } from '../models/api-response.model';
 import { IBook } from '../models/book';
+import UserInfo from '../models/user-info';
 import { BookService } from '../services/book.service';
 import { AppTitleService } from '../services/title.service';
 import { ToastService } from '../services/toast.service';
@@ -19,7 +21,9 @@ import { AppAddBookModalComponent } from './app-add-book-modal.component';
 export class AppBookListComponent implements OnInit, OnDestroy {
   public books: IBook[] = [];
   public isWaiting: boolean;
-  public hasPermission: boolean;
+  public hasAddPermission: boolean;
+  public hasDeletePermission: boolean;
+  private userInfo: UserInfo;
   private ngUnsubscribe = new Subject<void>();
 
   public get disabled(): boolean {
@@ -44,8 +48,13 @@ export class AppBookListComponent implements OnInit, OnDestroy {
     this.title.setTitle();
     forkJoin({
       books: this.getBooks(),
-      profile: this.userService.userProfile$.pipe(tap((res) => (this.hasPermission = res.isAdmin)))
-    }).subscribe();
+      userPermissions: this.userService.getUserPermissions()
+    }).subscribe((res) => {
+      this.userInfo = res.userPermissions.content;
+      this.hasAddPermission = this.userInfo.isAdmin || this.userInfo.perms.some((p) => p === RolePermission.AddBook);
+      this.hasDeletePermission =
+        this.userInfo.isAdmin || this.userInfo.perms.some((p) => p === RolePermission.DeleteBook);
+    });
 
     this.listenToRefreshBookList();
   }

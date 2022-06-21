@@ -5,5 +5,4 @@ export class UserProfile {
   name: string = '';
   password: string = '';
   avatar: string;
-  isAdmin: boolean;
 }

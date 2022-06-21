@@ -1,16 +1,22 @@
-<button type="button" class="btn btn-default mr-xs" (click)="openBookModal()" *ngIf="hasPermission">
+<button type="button" class="btn btn-default mr-xs" (click)="openBookModal()" *ngIf="hasAddPermission">
   <i class="fa fa-plus-circle"></i> {{ 'add' | appLocale }}
 </button>
-<button type="button" class="btn btn-default mr-xs" [disabled]="disabled" (click)="deleteBook()" *ngIf="hasPermission">
+<button
+  type="button"
+  class="btn btn-default mr-xs"
+  [disabled]="disabled"
+  (click)="deleteBook()"
+  *ngIf="hasDeletePermission"
+>
   <i class="fa fa-trash"></i> {{ 'delete' | appLocale }}
 </button>
 <button type="button" class="btn btn-default mr-xs">
   <i class="fa fa-filter" aria-hidden="true"></i> {{ 'filter' | appLocale }}
 </button>
-<button type="button" class="btn btn-link" (click)="selectAll()" *ngIf="hasPermission">
+<button type="button" class="btn btn-link" (click)="selectAll()" *ngIf="hasDeletePermission">
   {{ 'selectAll' | appLocale }}
 </button>
-<button type="button" class="btn btn-link" (click)="clearAll()" *ngIf="hasPermission">
+<button type="button" class="btn btn-link" (click)="clearAll()" *ngIf="hasDeletePermission">
   {{ 'clearAll' | appLocale }}
 </button>
 <button type="button" class="btn btn-link" [title]="'refresh' | appLocale" (click)="refreshBookList()">
@@ -21,7 +27,7 @@
   <div class="mt-sm d-flex f-wrap">
     <ng-container *ngFor="let book of books">
       <div class="mt-sm mr-sm pointer">
-        <input type="checkbox" *ngIf="hasPermission" [(ngModel)]="book.isChecked" />
+        <input type="checkbox" *ngIf="hasDeletePermission" [(ngModel)]="book.isChecked" />
         <div (click)="openBook(book.id)">
           <img src="data:image/jpg;base64,{{ book.poster }}" height="200" width="200" />
         </div>

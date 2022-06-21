@@ -12,7 +12,8 @@ import { LocaleProvider } from './locale-provider';
 })
 export class PreferencesService {
   private renderer: Renderer2;
-  private _preferencesCahe: Observable<IApiResponse<Preferences>> | undefined;
+  public preferencesCache: Preferences;
+  private _preferencesObsCache: Observable<IApiResponse<Preferences>> | undefined;
 
   constructor(
     private http: HttpClient,
@@ -23,17 +24,20 @@ export class PreferencesService {
   }
 
   public getPreferences(): Observable<IApiResponse<Preferences>> {
-    if (!this._preferencesCahe) {
-      this._preferencesCahe = this.http
+    if (!this._preferencesObsCache) {
+      this._preferencesObsCache = this.http
         .get<IApiResponse<Preferences>>(`${environment.authApiEndPoint}/preferences`)
-        .pipe(shareReplay(1));
+        .pipe(
+          tap((res) => (this.preferencesCache = res.content)),
+          shareReplay(1)
+        );
     }
 
-    return this._preferencesCahe;
+    return this._preferencesObsCache;
   }
 
   public clearPreferenceCache(): void {
-    this._preferencesCahe = undefined;
+    this._preferencesObsCache = undefined;
   }
 
   public async changeUserLocale(): Promise<void> {

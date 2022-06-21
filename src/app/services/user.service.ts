@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { shareReplay } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { IApiResponse } from '../models/api-response.model';
 import { IToken } from '../models/token';
+import UserInfo from '../models/user-info';
 import { UserProfile } from '../models/user-profile.model';
 
 @Injectable({
@@ -14,6 +16,7 @@ export class UserService {
   public userProfile$: Observable<UserProfile> = this.userProfileSubject.asObservable();
   private profilePicSubject: Subject<string> = new Subject<string>();
   public profilePic$: Observable<string> = this.profilePicSubject.asObservable();
+  private userPermissionsObsCache: Observable<IApiResponse<UserInfo>>;
 
   constructor(private http: HttpClient) {}
 
@@ -52,6 +55,15 @@ export class UserService {
       email,
       password
     });
+  }
+
+  public getUserPermissions(): Observable<IApiResponse<UserInfo>> {
+    if (!this.userPermissionsObsCache) {
+      this.userPermissionsObsCache = this.http
+        .get<IApiResponse<UserInfo>>(`${environment.authApiEndPoint}/user/permissions`)
+        .pipe(shareReplay(1));
+    }
+    return this.userPermissionsObsCache;
   }
 
   public updateProfileAvatar(url: string): void {
