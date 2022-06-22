@@ -3,16 +3,24 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { LogOutService } from './log-out.service';
+import { PreferencesService } from './preferences.service';
 import { TokenService } from './token.service';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-  constructor(private logoutService: LogOutService) {}
+  constructor(private logoutService: LogOutService, private preferencesService: PreferencesService) {}
 
   public intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     const token = TokenService.Token;
     if (token) {
-      const headers = request.headers.set('Authorization', `Bearer ${token}`);
+      let headers = request.headers;
+      const preferences = this.preferencesService.preferencesCache;
+      if (preferences) {
+        const userLocale = preferences.locale;
+        headers = headers.set('Content-Language', userLocale);
+      }
+
+      headers = headers.set('Authorization', `Bearer ${token}`);
       request = request.clone({ headers });
     }
 
