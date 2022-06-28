@@ -22,23 +22,15 @@
           <ng-container *ngTemplateOutlet="avatar"></ng-container>
         </div>
         <mat-menu #menu="matMenu">
-          <div class="d-flex align-items-center">
-            <div *ngTemplateOutlet="avatar"></div>
-            <div class="d-flex flex-direction-column align-items-center">
-              <span>{{ name }}</span>
-              <button mat-menu-item>
-                <a (click)="navigateToProfilePage()">{{ 'viewProfile' | appLocale }}</a>
-              </button>
-            </div>
-          </div>
-          <mat-divider></mat-divider>
-          <button mat-menu-item>
-            <a (click)="navigateToAccountPage()">{{ 'account' | appLocale }}</a>
-          </button>
-          <mat-divider></mat-divider>
-          <button mat-menu-item>
-            <a (click)="signOut()">{{ 'signOut' | appLocale }}</a>
-          </button>
+          <ng-container *ngIf="!isUserLogged; else profile">
+            <button mat-menu-item>
+              <a (click)="navigateToLoginPage()">{{ 'Login' | appLocale }}</a>
+            </button>
+            <mat-divider></mat-divider>
+            <button mat-menu-item>
+              <a (click)="navigateToRegisterPage()">{{ 'Register' | appLocale }}</a>
+            </button>
+          </ng-container>
         </mat-menu>
       </li>
     </ul>
@@ -46,5 +38,30 @@
 </nav>
 
 <ng-template #avatar>
-  <app-avatar size="small" [canChange]="false" [imageSrc]="imageSrc" [name]="name"></app-avatar>
+  <app-avatar
+    size="small"
+    [canChange]="false"
+    [imageSrc]="isUserLogged ? imageSrc : login_avatar_path"
+    [name]="name"
+  ></app-avatar>
+</ng-template>
+
+<ng-template #profile>
+  <div class="d-flex align-items-center">
+    <div *ngTemplateOutlet="avatar"></div>
+    <div class="d-flex flex-direction-column align-items-center">
+      <span>{{ name }}</span>
+      <button mat-menu-item>
+        <a (click)="navigateToProfilePage()">{{ 'viewProfile' | appLocale }}</a>
+      </button>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <button mat-menu-item>
+    <a (click)="navigateToAccountPage()">{{ 'account' | appLocale }}</a>
+  </button>
+  <mat-divider></mat-divider>
+  <button mat-menu-item>
+    <a (click)="signOut()">{{ 'signOut' | appLocale }}</a>
+  </button>
 </ng-template>

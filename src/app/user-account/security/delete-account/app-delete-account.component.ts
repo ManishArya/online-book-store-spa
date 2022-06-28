@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { finalize } from 'rxjs/operators';
-import { LogOutService } from 'src/app/services/log-out.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -12,7 +12,7 @@ export class AppDeleteAccountComponent {
   public errorMessage: string;
   public isWaiting: boolean;
 
-  constructor(private logOutService: LogOutService, private userService: UserService) {}
+  constructor(private authService: AuthService, private userService: UserService) {}
 
   public deleteAccount(): void {
     this.isWaiting = true;
@@ -22,7 +22,7 @@ export class AppDeleteAccountComponent {
       .subscribe(
         (res) => {
           if (res.isSuccess) {
-            this.logOutService.signOut();
+            this.authService.signOut();
           }
         },
         (err) => {

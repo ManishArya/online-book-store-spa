@@ -2,13 +2,13 @@ import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { LogOutService } from './log-out.service';
+import { AuthService } from './auth.service';
 import { PreferencesService } from './preferences.service';
 import { TokenService } from './token.service';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-  constructor(private logoutService: LogOutService, private preferencesService: PreferencesService) {}
+  constructor(private authService: AuthService, private preferencesService: PreferencesService) {}
 
   public intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     const token = TokenService.Token;
@@ -27,8 +27,7 @@ export class TokenInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((err) => {
         if (err instanceof HttpErrorResponse && err.status === 401) {
-          this.logoutService.signOut();
-          window.location.reload();
+          this.authService.signOut();
         }
         return throwError(err);
       })

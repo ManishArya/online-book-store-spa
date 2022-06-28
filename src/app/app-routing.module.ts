@@ -1,70 +1,54 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { AccountSectionName } from './account/account-section/account-section-name';
-import { AppAccountComponent } from './account/app-account.component';
-import { AppForgetPasswordComponent } from './account/app-forget-password.component';
-import { AppLoginComponent } from './account/app-login.component';
-import { AppNewUserComponent } from './account/app-new-user.component';
-import { AppPreferenceComponent } from './account/preferences/app-preference.component';
-import { AppProfileComponent } from './account/profile/app-profile.component';
-import { AppSecurityComponent } from './account/security/app-security.component';
 import { AppHomeComponent } from './app-home.component';
+import { AppBookListComponent } from './book/app-book-list.component';
 import { MyListComponent } from './book/my-list/my-list.component';
+import { AppBookComponent } from './book/_id/app-book.component';
 import { LoginGuard } from './services/login.guard';
 import { AppNotFoundComponent } from './shared/app-not-found/app-not-found.component';
+import { AppAccountComponent } from './user-account/app-account.component';
+import { AppProfileComponent } from './user-account/profile/app-profile.component';
 
 const routes: Routes = [
-  { path: 'login', component: AppLoginComponent },
-  {
-    path: 'forgetPassword',
-    component: AppForgetPasswordComponent
-  },
-  {
-    path: 'newUser',
-    component: AppNewUserComponent
-  },
   {
     path: '',
     component: AppHomeComponent,
-    canActivate: [LoginGuard],
     children: [
+      { path: '', component: AppBookListComponent },
       {
-        path: '',
-        canLoad: [LoginGuard],
-        loadChildren: () => import('./book/app-book.module').then((b) => b.AppBookModule)
-      },
-      {
-        path: 'myList',
-        component: MyListComponent
+        path: 'book/:id',
+        component: AppBookComponent
       },
       {
         path: 'account',
-        component: AppAccountComponent,
         children: [
           {
             path: '',
-            pathMatch: 'full',
-            redirectTo: 'security'
-          },
+            loadChildren: () => import('./account/account.module').then((a) => a.AccountModule)
+          }
+        ]
+      },
+      {
+        path: 'myList',
+        component: MyListComponent,
+        canActivate: [LoginGuard]
+      },
+      {
+        path: 'user-account',
+        component: AppAccountComponent,
+        canActivate: [LoginGuard],
+        children: [
           {
-            path: 'security',
-            component: AppSecurityComponent,
-            data: {
-              sectionName: AccountSectionName.security
-            }
-          },
-          {
-            path: 'preferences',
-            component: AppPreferenceComponent,
-            data: {
-              sectionName: AccountSectionName.preferences
-            }
+            path: '',
+            canLoad: [LoginGuard],
+            loadChildren: () => import('./user-account/user-account.module').then((u) => u.UserAccountModule)
           }
         ]
       },
       {
         path: 'profile',
-        component: AppProfileComponent
+        component: AppProfileComponent,
+        canActivate: [LoginGuard]
       },
       {
         path: '**',

@@ -1,4 +1,4 @@
-export default interface UserInfo {
+export default interface UserPermission {
   _id: string;
   username: string;
   isAdmin: boolean;

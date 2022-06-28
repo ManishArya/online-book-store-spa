@@ -1,21 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { forkJoin } from 'rxjs';
+import { Router } from '@angular/router';
+import { AuthService } from './services/auth.service';
 import { PreferencesService } from './services/preferences.service';
+import { TokenService } from './services/token.service';
 import { UserService } from './services/user.service';
 
 @Component({
   templateUrl: './app-home.component.html'
 })
 export class AppHomeComponent implements OnInit {
-  constructor(private userService: UserService, private preferencesService: PreferencesService) {}
+  constructor(
+    private userService: UserService,
+    private preferencesService: PreferencesService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   public ngOnInit(): void {
-    forkJoin({
-      profile: this.userService.getProfile(),
-      preferences: this.preferencesService.getPreferences()
-    }).subscribe((res) => {
-      this.userService.updateUserProfile(res.profile.content);
-      this.preferencesService.toggleTheme(res.preferences.content.enableDarkTheme);
-    });
+    if (TokenService.Token) {
+      this.authService.setUserLoggedStatus(true);
+      this.router.navigateByUrl('');
+    }
   }
 }

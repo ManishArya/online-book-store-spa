@@ -3,7 +3,7 @@ import { AppTitleService } from '../services/title.service';
 
 @Component({
   selector: 'app-account',
-  templateUrl: './app-account.component.html'
+  template: '<app-account-section></app-account-section>'
 })
 export class AppAccountComponent implements OnInit {
   constructor(private title: AppTitleService) {}

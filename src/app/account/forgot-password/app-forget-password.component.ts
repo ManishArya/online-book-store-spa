@@ -1,9 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { IApiResponse } from '../models/api-response.model';
-import { LoginService } from './../services/login.service';
-import { ToastService } from './../services/toast.service';
+import { ApiResponse } from '../../models/api-response.model';
+import { AuthService } from '../../services/auth.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   templateUrl: './app-forget-password.component.html'
@@ -11,20 +11,20 @@ import { ToastService } from './../services/toast.service';
 export class AppForgetPasswordComponent {
   public userNameOrEmail: string;
 
-  constructor(private _loginService: LoginService, private toast: ToastService, private router: Router) {}
+  constructor(private _authService: AuthService, private toast: ToastService, private router: Router) {}
 
   public sendPasswordResetLink(): void {
-    this._loginService.sendPasswordResetLink(this.userNameOrEmail).subscribe(
+    this._authService.sendPasswordResetLink(this.userNameOrEmail).subscribe(
       (res) => {
         this.toast.open(res.content);
       },
       (err: HttpErrorResponse) => {
-        this.toast.open((err.error as IApiResponse<string>).content);
+        this.toast.open((err.error as ApiResponse<string>).content);
       }
     );
   }
 
   public cancel(): void {
-    this.router.navigateByUrl('/login');
+    this.router.navigateByUrl('/account/login');
   }
 }

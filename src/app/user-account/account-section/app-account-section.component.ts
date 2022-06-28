@@ -35,7 +35,7 @@ export class AppAccountSectionComponent implements OnDestroy {
   }
 
   public changeSection(sectionName: number): void {
-    this.router.navigateByUrl(`account/${AccountSectionName[sectionName]}`);
+    this.router.navigateByUrl(`user-account/${AccountSectionName[sectionName]}`);
   }
 
   public onSubSecionClick(): void {}

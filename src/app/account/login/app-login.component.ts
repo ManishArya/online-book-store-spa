@@ -4,10 +4,9 @@ import { Router } from '@angular/router';
 import { ReCaptchaV3Service } from 'ng-recaptcha';
 import { iif, Subject } from 'rxjs';
 import { filter, finalize, switchMap } from 'rxjs/operators';
-import { IApiResponse } from '../models/api-response.model';
-import { LoginService } from './../services/login.service';
-import { ToastService } from './../services/toast.service';
-import { TokenService } from './../services/token.service';
+import { ApiResponse } from 'src/app/models/api-response.model';
+import { AuthService } from 'src/app/services/auth.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   templateUrl: './app-login.component.html'
@@ -21,7 +20,7 @@ export class AppLoginComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private _loginService: LoginService,
+    private _authService: AuthService,
     private toast: ToastService,
     private recaptchaV3Service: ReCaptchaV3Service,
     private renderer: Renderer2
@@ -29,9 +28,6 @@ export class AppLoginComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.renderer.addClass(document.body, 'recaptcha');
-    if (TokenService.Token) {
-      this.router.navigateByUrl('');
-    }
   }
 
   public ngOnDestroy(): void {
@@ -46,14 +42,14 @@ export class AppLoginComponent implements OnInit, OnDestroy {
       () => this.isRecaptchaEnabled,
       this.recaptchaV3Service.execute('login').pipe(
         switchMap((token) =>
-          this._loginService.getToken({
+          this._authService.getToken({
             usernameOrEmail: this.usernameOrEmail,
             password: this.password,
             recaptchaToken: token
           })
         )
       ),
-      this._loginService.getToken({ usernameOrEmail: this.usernameOrEmail, password: this.password })
+      this._authService.getToken({ usernameOrEmail: this.usernameOrEmail, password: this.password })
     )
       .pipe(
         finalize(() => (this.isWaiting = false)),
@@ -62,20 +58,20 @@ export class AppLoginComponent implements OnInit, OnDestroy {
       .subscribe(
         (res) => {
           this.toast.dismiss();
-          this._loginService.login(res.content.token);
+          this._authService.login(res.content.token);
           return;
         },
         (err: HttpErrorResponse) => {
-          this.toast.open((err.error as IApiResponse<string>).content);
+          this.toast.open((err.error as ApiResponse<string>).content);
         }
       );
   }
 
-  public redirectToForgetPasswordPage(): void {
-    this.router.navigateByUrl('forgetPassword');
+  public redirectToForgotPasswordPage(): void {
+    this.router.navigateByUrl('account/forgotPassword');
   }
 
   public redirectToNewUserPage(): void {
-    this.router.navigateByUrl('newUser');
+    this.router.navigateByUrl('account/newUser');
   }
 }

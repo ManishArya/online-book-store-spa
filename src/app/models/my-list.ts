@@ -1,7 +1,7 @@
-import { IBook } from './book';
+import { Book } from './book';
 
-export interface IMyList {
+export interface MyList {
   id: string;
   username: string;
-  books: IBook[];
+  books: Book[];
 }

@@ -2,12 +2,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { forkJoin, Observable, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { filter, finalize, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { RolePermission } from '../enum/role-permission';
-import { IApiResponse } from '../models/api-response.model';
-import { IBook } from '../models/book';
-import UserInfo from '../models/user-info';
+import { ApiResponse } from '../models/api-response.model';
+import { Book } from '../models/book';
 import { BookService } from '../services/book.service';
 import { AppTitleService } from '../services/title.service';
 import { ToastService } from '../services/toast.service';
@@ -19,11 +18,10 @@ import { AppAddBookModalComponent } from './app-add-book-modal.component';
   templateUrl: './app-book-list.component.html'
 })
 export class AppBookListComponent implements OnInit, OnDestroy {
-  public books: IBook[] = [];
+  public books: Book[] = [];
   public isWaiting: boolean;
   public hasAddPermission: boolean;
   public hasDeletePermission: boolean;
-  private userInfo: UserInfo;
   private ngUnsubscribe = new Subject<void>();
 
   public get disabled(): boolean {
@@ -39,23 +37,16 @@ export class AppBookListComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private router: Router,
     private title: AppTitleService,
-    private userService: UserService,
     private dialogService: DialogService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private userService: UserService
   ) {}
 
   public ngOnInit(): void {
     this.title.setTitle();
-    forkJoin({
-      books: this.getBooks(),
-      userPermissions: this.userService.getUserPermissions()
-    }).subscribe((res) => {
-      this.userInfo = res.userPermissions.content;
-      this.hasAddPermission = this.userInfo.isAdmin || this.userInfo.perms.some((p) => p === RolePermission.AddBook);
-      this.hasDeletePermission =
-        this.userInfo.isAdmin || this.userInfo.perms.some((p) => p === RolePermission.DeleteBook);
-    });
-
+    this.getBooks().subscribe();
+    this.hasAddPermission = this.userService.hasPermission(RolePermission.AddBook);
+    this.hasDeletePermission = this.userService.hasPermission(RolePermission.DeleteBook);
     this.listenToRefreshBookList();
   }
 
@@ -102,7 +93,7 @@ export class AppBookListComponent implements OnInit, OnDestroy {
       .subscribe({
         error: (err: HttpErrorResponse) => {
           this.isWaiting = false;
-          this.toastService.open((err.error as IApiResponse<string>).errorDescription);
+          this.toastService.open((err.error as ApiResponse<string>).errorDescription);
         }
       });
   }
@@ -115,7 +106,7 @@ export class AppBookListComponent implements OnInit, OnDestroy {
     this.books.forEach((b) => (b.isChecked = isChecked));
   }
 
-  private getBooks(): Observable<IApiResponse<IBook[]>> {
+  private getBooks(): Observable<ApiResponse<Book[]>> {
     this.isWaiting = true;
     return this.bookService.getBooks().pipe(
       tap((res) => {

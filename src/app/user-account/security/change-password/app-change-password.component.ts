@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
-import { LoginService } from 'src/app/services/login.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-password-change',
@@ -15,11 +15,11 @@ export class AppChangePasswordComponent {
   public isWaiting: boolean;
   public errorMessage: string;
 
-  constructor(private loginService: LoginService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   public changePassword(): void {
     this.isWaiting = true;
-    this.loginService
+    this.authService
       .changePassword({ password: this.password, confirmPassword: this.confirmPassword, oldPassword: this.oldPassword })
       .pipe(finalize(() => (this.isWaiting = false)))
       .subscribe(

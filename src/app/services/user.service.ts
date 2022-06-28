@@ -1,67 +1,81 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { shareReplay } from 'rxjs/operators';
+import { shareReplay, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { IApiResponse } from '../models/api-response.model';
-import { IToken } from '../models/token';
-import UserInfo from '../models/user-info';
+import { RolePermission } from '../enum/role-permission';
+import { ApiResponse } from '../models/api-response.model';
+import Token from '../models/token';
+import UserPermission from '../models/user-permission';
 import { UserProfile } from '../models/user-profile.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+  public isUserLogged: boolean = false;
   private userProfileSubject: Subject<UserProfile> = new BehaviorSubject<UserProfile>({} as UserProfile);
   public userProfile$: Observable<UserProfile> = this.userProfileSubject.asObservable();
   private profilePicSubject: Subject<string> = new Subject<string>();
   public profilePic$: Observable<string> = this.profilePicSubject.asObservable();
-  private userPermissionsObsCache: Observable<IApiResponse<UserInfo>>;
+  private userPermissionsObsCache: Observable<ApiResponse<UserPermission>>;
+  public userPermissionsCache: UserPermission;
 
   constructor(private http: HttpClient) {}
 
-  public getProfile(): Observable<IApiResponse<UserProfile>> {
-    return this.http.get<IApiResponse<UserProfile>>(`${environment.authApiEndPoint}/user`);
+  public hasPermission(role: RolePermission): boolean {
+    const permission = this.userPermissionsCache;
+    if (permission) {
+      return permission.isAdmin || permission.perms.some((p) => p === role.valueOf());
+    }
+    return false;
   }
 
-  public addNewUser(user: UserProfile): Observable<IApiResponse<IToken>> {
-    return this.http.post<IApiResponse<IToken>>(`${environment.authApiEndPoint}/user`, user);
+  public getProfile(): Observable<ApiResponse<UserProfile>> {
+    return this.http.get<ApiResponse<UserProfile>>(`${environment.authApiEndPoint}/user`);
   }
 
-  public deleteUser(): Observable<IApiResponse<string>> {
-    return this.http.delete<IApiResponse<string>>(`${environment.authApiEndPoint}/manage/user`);
+  public addNewUser(user: UserProfile): Observable<ApiResponse<Token>> {
+    return this.http.post<ApiResponse<Token>>(`${environment.authApiEndPoint}/user`, user);
   }
 
-  public deleteUserAccount(password: string): Observable<IApiResponse<string>> {
-    return this.http.post<IApiResponse<string>>(`${environment.authApiEndPoint}/manage/user/deleteUserAccount`, {
+  public deleteUser(): Observable<ApiResponse<string>> {
+    return this.http.delete<ApiResponse<string>>(`${environment.authApiEndPoint}/manage/user`);
+  }
+
+  public deleteUserAccount(password: string): Observable<ApiResponse<string>> {
+    return this.http.post<ApiResponse<string>>(`${environment.authApiEndPoint}/manage/user/deleteUserAccount`, {
       password
     });
   }
 
-  public updateUser(profile: UserProfile): Observable<IApiResponse<UserProfile>> {
-    return this.http.put<IApiResponse<UserProfile>>(`${environment.authApiEndPoint}/user`, profile);
+  public updateUser(profile: UserProfile): Observable<ApiResponse<UserProfile>> {
+    return this.http.put<ApiResponse<UserProfile>>(`${environment.authApiEndPoint}/user`, profile);
   }
 
-  public updateAvatar(formData: FormData): Observable<IApiResponse<UserProfile>> {
-    return this.http.put<IApiResponse<UserProfile>>(`${environment.authApiEndPoint}/user/uploadAvatar`, formData);
+  public updateAvatar(formData: FormData): Observable<ApiResponse<UserProfile>> {
+    return this.http.put<ApiResponse<UserProfile>>(`${environment.authApiEndPoint}/user/uploadAvatar`, formData);
   }
 
-  public removeAvatar(): Observable<IApiResponse<UserProfile>> {
-    return this.http.delete<IApiResponse<UserProfile>>(`${environment.authApiEndPoint}/user/removeAvatar`);
+  public removeAvatar(): Observable<ApiResponse<UserProfile>> {
+    return this.http.delete<ApiResponse<UserProfile>>(`${environment.authApiEndPoint}/user/removeAvatar`);
   }
 
   public updateEmailAddress(email: string, password: string) {
-    return this.http.put<IApiResponse<UserProfile>>(`${environment.authApiEndPoint}/user/updateEmailAddress`, {
+    return this.http.put<ApiResponse<UserProfile>>(`${environment.authApiEndPoint}/user/updateEmailAddress`, {
       email,
       password
     });
   }
 
-  public getUserPermissions(): Observable<IApiResponse<UserInfo>> {
+  public getUserPermissions(): Observable<ApiResponse<UserPermission>> {
     if (!this.userPermissionsObsCache) {
       this.userPermissionsObsCache = this.http
-        .get<IApiResponse<UserInfo>>(`${environment.authApiEndPoint}/user/permissions`)
-        .pipe(shareReplay(1));
+        .get<ApiResponse<UserPermission>>(`${environment.authApiEndPoint}/user/permissions`)
+        .pipe(
+          tap((res) => (this.userPermissionsCache = res.content)),
+          shareReplay(1)
+        );
     }
     return this.userPermissionsObsCache;
   }

@@ -3,10 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
-import { IApiResponse } from '../models/api-response.model';
-import { UserProfile } from '../models/user-profile.model';
-import { LoginService } from '../services/login.service';
-import { UserService } from './../services/user.service';
+import { ApiResponse } from '../../models/api-response.model';
+import { UserProfile } from '../../models/user-profile.model';
+import { AuthService } from '../../services/auth.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   templateUrl: './app-new-user.component.html'
@@ -20,7 +20,7 @@ export class AppNewUserComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     private fb: FormBuilder,
-    private loginService: LoginService
+    private authService: AuthService
   ) {}
 
   public ngOnInit(): void {
@@ -48,16 +48,16 @@ export class AppNewUserComponent implements OnInit {
       .subscribe(
         (res) => {
           if (res.isSuccess) {
-            this.loginService.login(res.content.token);
+            this.authService.login(res.content.token);
           }
         },
         (err: HttpErrorResponse) => {
-          this.validations = (err.error as IApiResponse<{ [key: string]: string }>).content;
+          this.validations = (err.error as ApiResponse<{ [key: string]: string }>).content;
         }
       );
   }
 
   public cancel(): void {
-    this.router.navigateByUrl('/login');
+    this.router.navigateByUrl('/account/login');
   }
 }

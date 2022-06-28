@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { filter, finalize, switchMap, tap } from 'rxjs/operators';
-import { IApiResponse } from 'src/app/models/api-response.model';
+import { ApiResponse } from 'src/app/models/api-response.model';
 import { UserProfile } from 'src/app/models/user-profile.model';
 import { AppTitleService } from 'src/app/services/title.service';
 import { ToastService } from 'src/app/services/toast.service';
@@ -39,7 +39,7 @@ export class AppProfileComponent implements OnInit {
         (res) => {
           this.toastService.open('Profile Updated Successfully');
         },
-        (err: HttpErrorResponse) => (this.validations = (err.error as IApiResponse<{ [key: string]: string }>).content)
+        (err: HttpErrorResponse) => (this.validations = (err.error as ApiResponse<{ [key: string]: string }>).content)
       );
   }
 
@@ -54,7 +54,7 @@ export class AppProfileComponent implements OnInit {
           switchMap(() => this.getProfile())
         )
         .subscribe({
-          error: (err: HttpErrorResponse) => this.toastService.open((err.error as IApiResponse<string>).content)
+          error: (err: HttpErrorResponse) => this.toastService.open((err.error as ApiResponse<string>).content)
         });
     }
   }
@@ -66,7 +66,7 @@ export class AppProfileComponent implements OnInit {
       .subscribe();
   }
 
-  private getProfile(): Observable<IApiResponse<UserProfile>> {
+  private getProfile(): Observable<ApiResponse<UserProfile>> {
     this.isWaiting = true;
     return this.userService.getProfile().pipe(
       tap((res) => {

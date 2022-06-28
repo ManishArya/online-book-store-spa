@@ -1,3 +1,3 @@
-export interface IToken {
+export default interface Token {
   token: string;
 }

@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { finalize, switchMap, tap } from 'rxjs/operators';
-import { IApiResponse } from 'src/app/models/api-response.model';
-import { IMyList } from '../../models/my-list';
+import { ApiResponse } from 'src/app/models/api-response.model';
+import { MyList } from '../../models/my-list';
 import { MyListService } from '../../services/my-list.service';
 
 @Component({
   templateUrl: './my-list.component.html'
 })
 export class MyListComponent implements OnInit {
-  public myList: IMyList[];
+  public myList: MyList[];
   public isWaiting: boolean;
 
   constructor(private myListService: MyListService) {}
@@ -25,7 +25,7 @@ export class MyListComponent implements OnInit {
       .subscribe(() => this.myListService.refreshListCounts(-1));
   }
 
-  private getMyList(): Observable<IApiResponse<IMyList[]>> {
+  private getMyList(): Observable<ApiResponse<MyList[]>> {
     this.isWaiting = true;
     return this.myListService.getMyList().pipe(
       tap((res) => (this.myList = res.content)),

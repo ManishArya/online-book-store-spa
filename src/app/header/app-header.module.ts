@@ -4,7 +4,7 @@ import { AppSharedModule } from '../shared/app-shared.module';
 import { AppHeaderComponent } from './app-header.component';
 
 @NgModule({
-  declarations: [AppHeaderComponent, AppHeaderComponent],
+  declarations: [AppHeaderComponent],
   imports: [AppSharedModule, CommonModule],
   exports: [AppHeaderComponent]
 })

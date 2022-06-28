@@ -1,4 +1,4 @@
-export interface IBook extends AdditionalCriteria {
+export interface Book extends AdditionalCriteria {
   id: string;
   name: string;
   description: string;

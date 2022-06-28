@@ -2,8 +2,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { finalize } from 'rxjs/operators';
-import { IApiResponse } from '../models/api-response.model';
-import { IGenre } from '../models/genre';
+import { ApiResponse } from '../models/api-response.model';
+import { Genre } from '../models/genre';
 import { BookService } from '../services/book.service';
 import { GenreService } from '../services/genre.service';
 import { ToastService } from '../services/toast.service';
@@ -13,7 +13,7 @@ import { ToastService } from '../services/toast.service';
 })
 export class AppAddBookModalComponent implements OnInit {
   public name: string;
-  public genreOptions: IGenre[] = [];
+  public genreOptions: Genre[] = [];
   public date: any;
   public genres: string[];
   public description: string;
@@ -60,9 +60,9 @@ export class AppAddBookModalComponent implements OnInit {
         },
         (err: HttpErrorResponse) => {
           if (err.status === 400) {
-            this.validations = (err.error as IApiResponse<{ [key: string]: string }>).content;
+            this.validations = (err.error as ApiResponse<{ [key: string]: string }>).content;
           } else {
-            this.toastService.open((err.error as IApiResponse<string>).errorDescription);
+            this.toastService.open((err.error as ApiResponse<string>).errorDescription);
           }
         }
       );

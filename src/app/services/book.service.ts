@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { IApiResponse } from '../models/api-response.model';
-import { IBook } from '../models/book';
+import { ApiResponse } from '../models/api-response.model';
+import { Book } from '../models/book';
 
 const CONTROLLER_NAME = 'Book';
 
@@ -16,20 +16,20 @@ export class BookService {
 
   constructor(private http: HttpClient) {}
 
-  public getBooks(): Observable<IApiResponse<IBook[]>> {
-    return this.http.get<IApiResponse<IBook[]>>(`${environment.bookApiEndPoint}/${CONTROLLER_NAME}/list`);
+  public getBooks(): Observable<ApiResponse<Book[]>> {
+    return this.http.get<ApiResponse<Book[]>>(`${environment.bookApiEndPoint}/${CONTROLLER_NAME}/list`);
   }
 
-  public getBook(id: string): Observable<IApiResponse<IBook>> {
-    return this.http.get<IApiResponse<IBook>>(`${environment.bookApiEndPoint}/${CONTROLLER_NAME}?id=${id}`);
+  public getBook(id: string): Observable<ApiResponse<Book>> {
+    return this.http.get<ApiResponse<Book>>(`${environment.bookApiEndPoint}/${CONTROLLER_NAME}?id=${id}`);
   }
 
-  public addBook(formData: FormData): Observable<IApiResponse<string>> {
-    return this.http.post<IApiResponse<string>>(`${environment.bookApiEndPoint}/${CONTROLLER_NAME}`, formData);
+  public addBook(formData: FormData): Observable<ApiResponse<string>> {
+    return this.http.post<ApiResponse<string>>(`${environment.bookApiEndPoint}/${CONTROLLER_NAME}`, formData);
   }
 
-  public removeBook(ids: string[]): Observable<IApiResponse<string>> {
-    return this.http.post<IApiResponse<string>>(`${environment.bookApiEndPoint}/${CONTROLLER_NAME}/delete`, ids);
+  public removeBook(ids: string[]): Observable<ApiResponse<string>> {
+    return this.http.post<ApiResponse<string>>(`${environment.bookApiEndPoint}/${CONTROLLER_NAME}/delete`, ids);
   }
 
   public refreshBookList(): void {

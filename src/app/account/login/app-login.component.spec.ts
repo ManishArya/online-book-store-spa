@@ -4,8 +4,8 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of, throwError } from 'rxjs';
+import { LoginService } from 'src/app/services/auth.service';
 import { AppLoginComponent } from './app-login.component';
-import { LoginService } from './services/login.service';
 
 describe('LoginComponent', () => {
   let fixture: ComponentFixture<AppLoginComponent>;

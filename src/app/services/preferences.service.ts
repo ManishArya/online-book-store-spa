@@ -3,7 +3,7 @@ import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
 import { Observable } from 'rxjs';
 import { shareReplay, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { IApiResponse } from '../models/api-response.model';
+import { ApiResponse } from '../models/api-response.model';
 import { Preferences } from '../models/preferences';
 import { LocaleProvider } from './locale-provider';
 
@@ -13,7 +13,7 @@ import { LocaleProvider } from './locale-provider';
 export class PreferencesService {
   private renderer: Renderer2;
   public preferencesCache: Preferences;
-  private _preferencesObsCache: Observable<IApiResponse<Preferences>> | undefined;
+  private _preferencesObsCache: Observable<ApiResponse<Preferences>> | undefined;
 
   constructor(
     private http: HttpClient,
@@ -23,10 +23,10 @@ export class PreferencesService {
     this.renderer = this.rendererFactory.createRenderer(null, null);
   }
 
-  public getPreferences(): Observable<IApiResponse<Preferences>> {
+  public getPreferences(): Observable<ApiResponse<Preferences>> {
     if (!this._preferencesObsCache) {
       this._preferencesObsCache = this.http
-        .get<IApiResponse<Preferences>>(`${environment.authApiEndPoint}/preferences`)
+        .get<ApiResponse<Preferences>>(`${environment.authApiEndPoint}/preferences`)
         .pipe(
           tap((res) => (this.preferencesCache = res.content)),
           shareReplay(1)

@@ -1,4 +1,5 @@
 export class TokenService {
+  // private isUserLogged:
   public static get Token(): string | null {
     return localStorage.getItem('token');
   }

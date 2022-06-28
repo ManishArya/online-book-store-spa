@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
-import { LoginService } from './login.service';
+import { AuthService } from './auth.service';
 
 export class HttpClientMock {
   public post(url: string, body: any) {
@@ -9,8 +9,8 @@ export class HttpClientMock {
   }
 }
 
-describe('Login Service', () => {
-  let loginService: LoginService;
+describe('Auth Service', () => {
+  let authService: AuthService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -21,14 +21,14 @@ describe('Login Service', () => {
         }
       ]
     });
-    loginService = TestBed.inject(LoginService);
+    authService = TestBed.inject(AuthService);
   });
 
   it('should call http post', () => {
     const httpClient = TestBed.inject(HttpClient);
     spyOn(httpClient, 'post').and.callThrough();
 
-    loginService.getToken({} as any);
+    authService.getToken({} as any);
 
     expect(httpClient.post).toHaveBeenCalled();
   });
