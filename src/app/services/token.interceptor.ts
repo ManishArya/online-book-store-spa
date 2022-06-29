@@ -17,7 +17,7 @@ export class TokenInterceptor implements HttpInterceptor {
       const preferences = this.preferencesService.preferencesCache;
       if (preferences) {
         const userLocale = preferences.locale;
-        headers = headers.set('Content-Language', userLocale);
+        headers = headers.set('user-locale', userLocale);
       }
 
       headers = headers.set('Authorization', `Bearer ${token}`);

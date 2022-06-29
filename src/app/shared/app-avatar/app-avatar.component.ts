@@ -68,7 +68,7 @@ export class AppAvatarComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   public getImage() {
-    return `url(data:image/jpg;base64,${this.imageSrc})`;
+    return `url(${this.imageSrc})`;
   }
 
   public onAvatarRemoved(): void {

@@ -41,7 +41,7 @@
   <app-avatar
     size="small"
     [canChange]="false"
-    [imageSrc]="isUserLogged ? imageSrc : login_avatar_path"
+    [imageSrc]="isUserLogged ? profileAvatarBase64 : login_avatar_url"
     [name]="name"
   ></app-avatar>
 </ng-template>

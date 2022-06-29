@@ -13,8 +13,8 @@ import { UserService } from '../services/user.service';
   templateUrl: './app-header.component.html'
 })
 export class AppHeaderComponent implements OnInit, OnDestroy {
-  public readonly login_avatar_path = './../../assets/images/login_avatar.jpg';
-  public imageSrc: string;
+  public readonly login_avatar_url = './../../assets/images/login_avatar.jpg';
+  public profileAvatarBase64: string;
   public name: string;
   public listCount: number = 0;
   public isUserLogged: boolean = false;
@@ -90,7 +90,7 @@ export class AppHeaderComponent implements OnInit, OnDestroy {
 
   private listenToUserProfileChanges(): void {
     this.userService.userProfile$.pipe(takeUntil(this.ngUnSubscribe)).subscribe((res) => {
-      this.imageSrc = res.avatar;
+      this.profileAvatarBase64 = res.avatar;
       this.name = res.name;
     });
   }
