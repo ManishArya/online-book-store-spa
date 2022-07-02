@@ -13,9 +13,9 @@ import { AppAccountSectionService } from '../account-section/app-account-section
 export class AppPreferenceComponent extends AppAccountSectionContentComponent implements OnInit {
   public enableDarkTheme: boolean;
   public locale: string;
-  public languages: readonly { lang: string; locale: string }[] = [
-    { lang: 'english', locale: 'en' },
-    { lang: 'hindi', locale: 'hi' }
+  public supportedLanguages: readonly { language: string; locale: string }[] = [
+    { language: 'english', locale: 'en' },
+    { language: 'hindi', locale: 'hi' }
   ];
 
   constructor(

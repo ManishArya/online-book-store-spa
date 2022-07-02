@@ -6,7 +6,7 @@ import { AppAccountSectionService } from './app-account-section.service';
 
 @Component({
   selector: 'app-account-section-content',
-  templateUrl: './app-account-section-content.component.html'
+  template: ''
 })
 export class AppAccountSectionContentComponent implements OnDestroy {
   public index: number = 0;
@@ -24,7 +24,7 @@ export class AppAccountSectionContentComponent implements OnDestroy {
   }
 
   protected listenToSectionIndexChanges(): void {
-    this.accountSectionService.setActiveIndex$
+    this.accountSectionService.activeIndexChanges$
       .pipe(takeUntil(this._destory$))
       .subscribe((index) => (this.index = index));
   }

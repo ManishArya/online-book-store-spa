@@ -5,12 +5,12 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class AppAccountSectionService {
-  private setActiveIndexSubject = new BehaviorSubject<number>(0);
-  public setActiveIndex$ = this.setActiveIndexSubject.asObservable();
+  private activeIndexChangesSubject = new BehaviorSubject<number>(0);
+  public activeIndexChanges$ = this.activeIndexChangesSubject.asObservable();
 
   constructor() {}
 
-  public setActiveIndex(index: number): void {
-    this.setActiveIndexSubject.next(index);
+  public activeIndexChanges(index: number): void {
+    this.activeIndexChangesSubject.next(index);
   }
 }

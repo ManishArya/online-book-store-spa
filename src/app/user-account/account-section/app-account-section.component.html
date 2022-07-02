@@ -1,48 +1,37 @@
-<div class="d-flex">
-  <div class="flex-grow-1 mr-sm top-margin">
-    <mat-nav-list>
-      <div class="section-heading pointer" (click)="changeSection(accountSectionName.security)">
-        <i class="fa fa-shield fa-flip-vertical" aria-hidden="true"></i> {{ 'security' | appLocale }}
-      </div>
-      <ng-container *ngIf="sectionName === accountSectionName.security">
-        <a mat-list-item [ngClass]="{ active: activeIndex === 0 }" (click)="changeIndex(0)">{{
-          'changePassword' | appLocale
-        }}</a>
-        <a mat-list-item [ngClass]="{ active: activeIndex === 1 }" (click)="changeIndex(1)">{{
-          'email' | appLocale
-        }}</a>
-        <a mat-list-item [ngClass]="{ active: activeIndex === 2 }" (click)="changeIndex(2)">{{
-          'deleteAccount' | appLocale
-        }}</a>
-      </ng-container>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-3 mr-sm top-margin">
+      <mat-nav-list>
+        <ng-container *ngFor="let section of sections; let last = last">
+          <div class="section-heading pointer mb-lg" (click)="changeSection(section.name)">
+            <i [class]="section.iconClass" aria-hidden="true"></i> {{ section.labelName | appLocale }}
+            <ng-container *ngIf="section.name === sectionName">
+              <ng-container *ngFor="let subSection of section.subsections; let index = index">
+                <a mat-list-item [ngClass]="{ active: activeIndex === index }" (click)="changeSubsection(index)">{{
+                  subSection.labelName | appLocale
+                }}</a>
+              </ng-container>
+            </ng-container>
+            <mat-divider class="mt-sm" *ngIf="!last"></mat-divider>
+          </div>
+        </ng-container>
+      </mat-nav-list>
+    </div>
+    <div class="col-lg-7">
       <mat-divider></mat-divider>
-      <div class="section-heading mt-sm pointer" (click)="changeSection(accountSectionName.preferences)">
-        <i class="fa fa-cog" aria-hidden="true"></i> {{ 'preferences' | appLocale }}
-      </div>
-      <ng-container *ngIf="sectionName === accountSectionName.preferences">
-        <a mat-list-item [ngClass]="{ active: activeIndex === 0 }" (click)="changeIndex(0)">{{
-          'darkTheme' | appLocale
-        }}</a>
-        <a mat-list-item [ngClass]="{ active: activeIndex === 1 }" (click)="changeIndex(1)">{{
-          'languages' | appLocale
-        }}</a>
-      </ng-container>
-    </mat-nav-list>
-  </div>
-  <div class="flex-grow-5">
-    <mat-divider></mat-divider>
-    <mat-toolbar>
-      <span class="flex"></span>
-      <button class="btn btn-link" [title]="'expandAll' | appLocale" (click)="expandAllSections()">
-        <i class="fa fa-angle-double-up fa-2x"></i>
-      </button>
-      <button class="btn btn-link" [title]="'collapseAll' | appLocale" (click)="collpaseAllSections()">
-        <i class="fa fa-angle-double-down fa-2x"></i>
-      </button>
-    </mat-toolbar>
-    <mat-divider></mat-divider>
-    <mat-accordion multi>
-      <router-outlet></router-outlet>
-    </mat-accordion>
+      <mat-toolbar>
+        <span class="flex"></span>
+        <button class="btn btn-link" [title]="'expandAll' | appLocale" (click)="expandAllSections()">
+          <i class="fa fa-angle-double-up fa-2x"></i>
+        </button>
+        <button class="btn btn-link" [title]="'collapseAll' | appLocale" (click)="collpaseAllSections()">
+          <i class="fa fa-angle-double-down fa-2x"></i>
+        </button>
+      </mat-toolbar>
+      <mat-divider></mat-divider>
+      <mat-accordion multi>
+        <router-outlet></router-outlet>
+      </mat-accordion>
+    </div>
   </div>
 </div>

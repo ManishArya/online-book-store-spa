@@ -19,7 +19,7 @@ export class AppHomeComponent implements OnInit {
   public ngOnInit(): void {
     if (TokenService.Token) {
       this.authService.setUserLoggedStatus(true);
-      this.router.navigateByUrl('');
+      this.router.navigateByUrl(this.router.url ?? '');
     }
   }
 }

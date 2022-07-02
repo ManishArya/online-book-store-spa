@@ -12,6 +12,7 @@ import { AppChangePasswordComponent } from './security/change-password/app-chang
 import { AppDeleteAccountComponent } from './security/delete-account/app-delete-account.component';
 import { AppUpdateEmailAddresComponent } from './security/update-email-address/app-update-email-addres.component';
 import { UserAccountRoutingModule } from './user-account-routing.module';
+import { AddressComponent } from './address/address.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { UserAccountRoutingModule } from './user-account-routing.module';
     AppDeleteAccountComponent,
     AppAccountSectionComponent,
     AppAccountSectionContentComponent,
-    AppAccountComponent
+    AppAccountComponent,
+    AddressComponent
   ],
   imports: [CommonModule, AppSharedModule, RouterModule, UserAccountRoutingModule]
 })

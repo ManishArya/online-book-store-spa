@@ -15,6 +15,6 @@
     </mat-panel-title>
   </mat-expansion-panel-header>
   <select class="form-control" [(ngModel)]="locale" (change)="onLocaleChanges(locale)">
-    <option [ngValue]="language.locale" *ngFor="let language of languages">{{ language.lang }}</option>
+    <option [ngValue]="language.locale" *ngFor="let language of supportedLanguages">{{ language.language }}</option>
   </select>
 </mat-expansion-panel>

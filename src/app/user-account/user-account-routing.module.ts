@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AccountSectionName } from './account-section/account-section-name';
+import { AddressComponent } from './address/address.component';
 import { AppPreferenceComponent } from './preferences/app-preference.component';
 import { AppSecurityComponent } from './security/app-security.component';
 
@@ -22,6 +23,13 @@ const routes: Routes = [
     component: AppPreferenceComponent,
     data: {
       sectionName: AccountSectionName.preferences
+    }
+  },
+  {
+    path: 'address',
+    component: AddressComponent,
+    data: {
+      sectionName: AccountSectionName.address
     }
   }
 ];

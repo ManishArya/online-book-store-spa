@@ -1,5 +1,5 @@
 <div>
-  <app-spinner [isWaiting]="!isWaiting" [nonBlocking]="true"></app-spinner>
+  <app-spinner [isWaiting]="isWaiting" [nonBlocking]="true"></app-spinner>
   <h4 class="error-label" [ngClass]="{ 'error-icon': errorMessage }">{{ errorMessage }}</h4>
   <div class="form-group">
     <label for="email" class="required">{{ 'email' | appLocale }}</label>
