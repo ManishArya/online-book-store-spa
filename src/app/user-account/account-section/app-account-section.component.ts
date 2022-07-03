@@ -1,8 +1,7 @@
-import { Component, OnDestroy, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatAccordion } from '@angular/material/expansion';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { ActivationEnd, Router } from '@angular/router';
+import { filter, map, take } from 'rxjs/operators';
 import AccountSection from './account-section';
 import { AccountSectionName } from './account-section-name';
 import { AppAccountSectionService } from './app-account-section.service';
@@ -12,7 +11,7 @@ import { AppAccountSectionService } from './app-account-section.service';
   templateUrl: './app-account-section.component.html',
   styleUrls: ['./app-account-section.component.scss']
 })
-export class AppAccountSectionComponent implements OnDestroy {
+export class AppAccountSectionComponent {
   public sections: readonly AccountSection[] = [
     {
       labelName: 'security',
@@ -50,34 +49,28 @@ export class AppAccountSectionComponent implements OnDestroy {
   public activeIndex: number = 0;
   public sectionName: AccountSectionName;
   public accountSectionName = AccountSectionName;
-  private readonly _destory$ = new Subject<void>();
   @ViewChild(MatAccordion) private accordion: MatAccordion;
 
-  constructor(
-    private accountSectionService: AppAccountSectionService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
-    route.url.pipe(takeUntil(this._destory$)).subscribe(() => {
-      const sectionName = route.snapshot.firstChild?.data?.['sectionName'];
-      console.log(route?.snapshot);
-      this.calculateIndex(sectionName);
-    });
-  }
-
-  public ngOnDestroy(): void {
-    this._destory$.next();
-    this._destory$.complete();
+  constructor(private accountSectionService: AppAccountSectionService, private router: Router) {
+    router.events
+      .pipe(
+        take(1),
+        filter((event) => event instanceof ActivationEnd),
+        map((event) => (event as ActivationEnd).snapshot.data?.['sectionName'])
+      )
+      .subscribe((sectionName: AccountSectionName) => {
+        if (sectionName || sectionName === AccountSectionName.security) this.setSectionNameAndIndex(sectionName);
+      });
   }
 
   public changeSection(name: number | undefined): void {
     if (name || name === 0) {
-      this.sectionName = name;
+      this.setSectionNameAndIndex(name);
       this.router.navigateByUrl(`user-account/${AccountSectionName[name]}`);
     }
   }
 
-  public changeSubsection(index: number): void {
+  public changeSubsection(index: any): void {
     this.activeIndex = index;
     this.accountSectionService.activeIndexChanges(index);
   }
@@ -90,10 +83,9 @@ export class AppAccountSectionComponent implements OnDestroy {
     this.accordion.closeAll();
   }
 
-  private calculateIndex(sectionName: AccountSectionName): void {
-    //   this.sectionName = sectionName;
-    console.log(this.sectionName);
+  private setSectionNameAndIndex(sectionName: AccountSectionName): void {
+    this.sectionName = sectionName;
     this.activeIndex = 0;
-    this.accountSectionService.activeIndexChanges(0);
+    this.accountSectionService.activeIndexChanges(this.activeIndex);
   }
 }

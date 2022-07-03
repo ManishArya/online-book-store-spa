@@ -3,15 +3,29 @@
     <div class="col-lg-3 mr-sm top-margin">
       <mat-nav-list>
         <ng-container *ngFor="let section of sections; let last = last">
-          <div class="section-heading pointer mb-lg" (click)="changeSection(section.name)">
-            <i [class]="section.iconClass" aria-hidden="true"></i> {{ section.labelName | appLocale }}
-            <ng-container *ngIf="section.name === sectionName">
-              <ng-container *ngFor="let subSection of section.subsections; let index = index">
-                <a mat-list-item [ngClass]="{ active: activeIndex === index }" (click)="changeSubsection(index)">{{
-                  subSection.labelName | appLocale
-                }}</a>
-              </ng-container>
-            </ng-container>
+          <div
+            class="section-heading mb-lg"
+            [ngClass]="{ pointer: section.name !== sectionName }"
+            (click)="changeSection(section.name)"
+          >
+            <div class="row">
+              <div class="col-lg-2">
+                <i [class]="section.iconClass" aria-hidden="true"></i>
+              </div>
+              <div class="col-lg-9">
+                {{ section.labelName | appLocale }}
+                <ng-container *ngIf="section.name === sectionName">
+                  <ng-container *ngFor="let subSection of section.subsections; let index = index">
+                    <a
+                      mat-list-item
+                      [ngClass]="{ active: activeIndex === index }"
+                      (click)="changeSubsection(index); $event.stopPropagation()"
+                      >{{ subSection.labelName | appLocale }}</a
+                    >
+                  </ng-container>
+                </ng-container>
+              </div>
+            </div>
             <mat-divider class="mt-sm" *ngIf="!last"></mat-divider>
           </div>
         </ng-container>
