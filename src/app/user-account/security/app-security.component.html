@@ -1,24 +1,30 @@
-<mat-expansion-panel [expanded]="index === 0">
-  <mat-expansion-panel-header>
-    <mat-panel-title>
-      <span class="sub-section-heading"> {{ 'changePassword' | appLocale }}</span>
-    </mat-panel-title>
-  </mat-expansion-panel-header>
-  <app-password-change></app-password-change>
-</mat-expansion-panel>
-<mat-expansion-panel [expanded]="index === 1">
-  <mat-expansion-panel-header>
-    <mat-panel-title
-      ><span class="sub-section-heading"> {{ 'updateEmail' | appLocale }}</span>
-    </mat-panel-title>
-  </mat-expansion-panel-header>
-  <app-update-email-addres></app-update-email-addres>
-</mat-expansion-panel>
-<mat-expansion-panel [expanded]="index === 2">
-  <mat-expansion-panel-header>
-    <mat-panel-title>
-      <span class="sub-section-heading"> {{ 'deleteAccount' | appLocale }}</span>
-    </mat-panel-title>
-  </mat-expansion-panel-header>
-  <app-delete-account></app-delete-account>
-</mat-expansion-panel>
+<div class="mt-xl">
+  <mat-expansion-panel [expanded]="index === 0">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <span class="sub-section-heading"> {{ 'changePassword' | appLocale }}</span>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-password-change></app-password-change>
+  </mat-expansion-panel>
+</div>
+<div class="mt-xl">
+  <mat-expansion-panel [expanded]="index === 1">
+    <mat-expansion-panel-header>
+      <mat-panel-title
+        ><span class="sub-section-heading"> {{ 'updateEmail' | appLocale }}</span>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-update-email-addres></app-update-email-addres>
+  </mat-expansion-panel>
+</div>
+<div class="mt-xl">
+  <mat-expansion-panel [expanded]="index === 2">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <span class="sub-section-heading"> {{ 'deleteAccount' | appLocale }}</span>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-delete-account></app-delete-account>
+  </mat-expansion-panel>
+</div>

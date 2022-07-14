@@ -1,0 +1,105 @@
+<button class="btn btn-link pull-right" mat-button mat-dialog-close>X</button>
+<h2 mat-dialog-title>{{ (isNew ? 'Add Address' : 'Edit Address') | appLocale }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="formGroup">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="form-group">
+          <label class="required" for="name">{{ 'Name' | appLocale }}</label>
+          <input class="form-control" formControlName="name" type="text" id="name" />
+          <app-field-error fieldName="name" [validations]="validations"></app-field-error>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="form-group">
+          <label class="required" for="mobileNumber">{{ 'Mobile Number' | appLocale }}</label>
+          <input class="form-control" type="text" formControlName="mobileNumber" id="mobileNumber" />
+          <app-field-error fieldName="mobileNumber" [validations]="validations"></app-field-error>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="form-group">
+          <label class="required" for="street">{{ 'Street' | appLocale }}</label>
+          <input class="form-control" type="text" formControlName="street" id="street" />
+          <app-field-error fieldName="street" [validations]="validations"></app-field-error>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="form-group">
+          <label class="required" for="pincode">{{ 'Pincode' | appLocale }}</label>
+          <input class="form-control" type="text" formControlName="pincode" id="pincode" />
+          <app-field-error fieldName="pincode" [validations]="validations"></app-field-error>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="form-group">
+          <label class="required" for="city">{{ 'City' | appLocale }}</label>
+          <input class="form-control" type="text" formControlName="city" id="city" />
+          <app-field-error fieldName="city" [validations]="validations"></app-field-error>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="form-group">
+          <label class="required" for="state">{{ 'State' | appLocale }}</label>
+          <input class="form-control" type="text" formControlName="state" id="state" />
+          <app-field-error fieldName="state" [validations]="validations"></app-field-error>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="form-group">
+          <label class="required" for="area">{{ 'Area' | appLocale }}</label>
+          <input class="form-control" type="text" formControlName="area" id="area" />
+          <app-field-error fieldName="area" [validations]="validations"></app-field-error>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="form-group">
+          <label for="landmark">{{ 'Landmark' | appLocale }}</label>
+          <input class="form-control" type="text" formControlName="landmark" id="landmark" />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="form-group">
+          <mat-checkbox formControlName="default">{{ 'Make as default address' | appLocale }}</mat-checkbox>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="form-group">
+          <div class="mb-sm">
+            <label class="required" for="addressType">{{ 'Address Type' | appLocale }}</label>
+          </div>
+          <div>
+            <mat-radio-group aria-label="Select an option" formControlName="addressType">
+              <mat-radio-button class="mr-md" [value]="addressType.Home">Home</mat-radio-button>
+              <mat-radio-button class="mx-md" [value]="addressType.Office">Office</mat-radio-button>
+              <mat-radio-button class="mx-md" [value]="addressType.Others">Others</mat-radio-button>
+            </mat-radio-group>
+          </div>
+          <app-field-error fieldName="addressType" [validations]="validations"></app-field-error>
+        </div>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button type="button" mat-raised-button color="primary" class="mr-xs" (click)="saveAddress()">
+    {{ 'Save' | appLocale }}
+  </button>
+  <button class="btn btn-link" mat-button mat-dialog-close>{{ 'cancel' | appLocale }}</button>
+</mat-dialog-actions>

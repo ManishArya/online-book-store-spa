@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
-import { filter, finalize, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { concatMap, filter, finalize, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { RolePermission } from '../enum/role-permission';
 import { ApiResponse } from '../models/api-response.model';
 import { Book } from '../models/book';
@@ -11,7 +11,7 @@ import { BookService } from '../services/book.service';
 import { AppTitleService } from '../services/title.service';
 import { ToastService } from '../services/toast.service';
 import { UserService } from '../services/user.service';
-import { DialogService } from '../shared/app-confirmation-dialog/dialog.service';
+import { ConfirmDialogService } from '../shared/app-confirmation-dialog/dialog.service';
 import { AppAddBookModalComponent } from './app-add-book-modal.component';
 
 @Component({
@@ -37,7 +37,7 @@ export class AppBookListComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private router: Router,
     private title: AppTitleService,
-    private dialogService: DialogService,
+    private confirmService: ConfirmDialogService,
     private toastService: ToastService,
     private userService: UserService
   ) {}
@@ -76,7 +76,7 @@ export class AppBookListComponent implements OnInit, OnDestroy {
   public deleteBook(): void {
     const selectedBooksCount = this.bookIds.length;
 
-    this.dialogService
+    this.confirmService
       .openConfirmationDialog({
         header: 'Delete the Books',
         body: `Do you want to delete the selected ${selectedBooksCount} books ?`
@@ -87,9 +87,9 @@ export class AppBookListComponent implements OnInit, OnDestroy {
         switchMap(() => {
           this.isWaiting = true;
           return this.bookService.removeBook(this.bookIds);
-        })
+        }),
+        concatMap(() => this.getBooks())
       )
-      .pipe(switchMap(() => this.getBooks()))
       .subscribe({
         error: (err: HttpErrorResponse) => {
           this.isWaiting = false;

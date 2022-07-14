@@ -1,1 +1,48 @@
-<p>address works!</p>
+<div class="my-md d-flex f-justify-end" *ngIf="!isAddressEmpty; else AddAddressToCenter">
+  <a (click)="addAddress()">{{ 'Add Address' | appLocale }}</a>
+</div>
+<div class="mt-xl">
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <span class="sub-section-heading"> {{ 'Addresses' | appLocale }}</span>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <ng-container *ngFor="let address of addresses; let first = first">
+      <mat-card class="example-card" [ngClass]="{ 'mt-xl': !first }">
+        <mat-card-title>
+          <div class="d-flex f-justify-end">
+            <mat-chip-list aria-label="Default">
+              <mat-chip color="primary" *ngIf="address.default" selected>Default</mat-chip>
+              <ng-container [ngSwitch]="address.addressType">
+                <mat-chip color="primary" *ngSwitchCase="addressType.Home">Home</mat-chip>
+                <mat-chip color="primary" *ngSwitchCase="addressType.Office">Office</mat-chip>
+                <mat-chip color="primary" *ngSwitchCase="addressType.Others">Others</mat-chip>
+              </ng-container>
+            </mat-chip-list>
+          </div>
+          <div class="mt-sm">
+            {{ address.name }}
+          </div>
+        </mat-card-title>
+        <mat-card-content>
+          <p>{{ address | addressSeprator }}</p>
+          <div class="mt-md">{{ 'Phone' | appLocale }} : {{ address.mobileNumber }}</div>
+        </mat-card-content>
+        <mat-divider inset></mat-divider>
+        <mat-card-actions>
+          <button mat-button (click)="deleteAddress(address._id)">Delete</button>
+          <button mat-button (click)="editAddress(address._id)">Edit</button>
+        </mat-card-actions>
+      </mat-card>
+    </ng-container>
+  </mat-expansion-panel>
+</div>
+
+<ng-template #AddAddressToCenter>
+  <div class="parent-container">
+    <div class="child-container">
+      <button mat-button (click)="addAddress()">{{ 'Add Address' | appLocale }}</button>
+    </div>
+  </div>
+</ng-template>

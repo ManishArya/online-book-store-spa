@@ -13,6 +13,8 @@ import { AppDeleteAccountComponent } from './security/delete-account/app-delete-
 import { AppUpdateEmailAddresComponent } from './security/update-email-address/app-update-email-addres.component';
 import { UserAccountRoutingModule } from './user-account-routing.module';
 import { AddressComponent } from './address/address.component';
+import { AddressModalComponent } from './address/address-modal/address-modal.component';
+import { AddressSepratorPipe } from './address/address-seprator.pipe';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { AddressComponent } from './address/address.component';
     AppAccountSectionComponent,
     AppAccountSectionContentComponent,
     AppAccountComponent,
-    AddressComponent
+    AddressComponent,
+    AddressModalComponent,
+    AddressSepratorPipe
   ],
   imports: [CommonModule, AppSharedModule, RouterModule, UserAccountRoutingModule]
 })

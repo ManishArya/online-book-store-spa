@@ -6,7 +6,7 @@ import { IConfirmationDialogOption } from './confirmation-dialog-option';
 @Injectable({
   providedIn: 'root'
 })
-export class DialogService {
+export class ConfirmDialogService {
   constructor(private matDialog: MatDialog) {}
 
   public openConfirmationDialog(

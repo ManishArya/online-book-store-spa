@@ -1,66 +1,118 @@
 /*
+ m -> margin
+ p -> padding
  t -> top
  b -> bottom
  r-> right
  l -> left
  x -> left and right
  y -> top and bottom
- xs -> 5px
- sm -> 10px
- md -> 15px
- lg -> 20px
- m -> margin
- p -> padding
 */
+
+$xs: 5px;
+$sm: 10px;
+$md: 15px;
+$lg: 20px;
+$xl: 30px;
+
 .mt-xs,
 .my-xs {
-  margin-top: 5px !important;
-}
-
-.mb-xs,
-.my-xs {
-  margin-bottom: 5px !important;
-}
-
-.mb-sm,
-.my-sm {
-  margin-bottom: 10px !important;
-}
-
-.mb-lg,
-.my-lg {
-  margin-bottom: 20px !important;
+  margin-top: $xs !important;
 }
 
 .mt-sm,
 .my-sm {
-  margin-top: 10px !important;
+  margin-top: $sm !important;
 }
 
 .mt-md,
 .my-md {
-  margin-top: 15px !important;
+  margin-top: $md !important;
 }
 
 .mt-lg,
 .my-lg {
-  margin-top: 20px !important;
+  margin-top: $lg !important;
 }
 
-.mr-xs {
-  margin-right: 5px !important;
+.mt-xl,
+.my-xl {
+  margin-top: $xl !important;
 }
 
-.mr-sm {
-  margin-right: 10px !important;
+.mb-xs,
+.my-xs {
+  margin-bottom: $xs !important;
 }
 
-.mr-md {
-  margin-right: 15px !important;
+.mb-sm,
+.my-sm {
+  margin-bottom: $sm !important;
 }
 
-.mr-lg {
-  margin-right: 20px !important;
+.mb-md,
+.my-md {
+  margin-bottom: $md !important;
+}
+
+.mb-lg,
+.my-lg {
+  margin-bottom: $lg !important;
+}
+
+.mb-xl,
+.my-xl {
+  margin-bottom: $xl !important;
+}
+
+.mr-xs,
+.mx-xs {
+  margin-right: $xs !important;
+}
+
+.mr-sm,
+.mx-sm {
+  margin-right: $sm !important;
+}
+
+.mr-md,
+.mx-md {
+  margin-right: $md !important;
+}
+
+.mr-lg,
+.mx-lg {
+  margin-right: $lg !important;
+}
+
+.mr-xl,
+.mx-xl {
+  margin-right: $xl !important;
+}
+
+.ml-xs,
+.mx-xs {
+  margin-left: $xs !important;
+}
+
+.ml-sm,
+.mx-sm {
+  margin-left: $sm !important;
+}
+
+.ml-md,
+.mx-md {
+  margin-left: $md !important;
+}
+
+.ml-lg,
+.mx-lg {
+  margin-left: $lg !important;
+}
+
+.ml-xl,
+.mx-xl {
+  margin-left: $xl !important;
 }
 
 .w-25 {

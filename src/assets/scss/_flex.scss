@@ -1,21 +1,6 @@
 .flex {
   flex: 1 1 auto !important;
 }
-.f-wrap {
-  flex-wrap: wrap !important;
-}
-
-.f-justify-center {
-  justify-content: center !important;
-}
-
-.align-items-center {
-  align-items: center;
-}
-
-.f-justify-end {
-  justify-content: end !important;
-}
 
 .flex-basis-half {
   flex-basis: 50% !important;
@@ -34,5 +19,23 @@
 @each $dir in row, column {
   .flex-direction-#{$dir} {
     flex-direction: $dir !important;
+  }
+}
+
+@each $content in start, end, center, baseline, left, right {
+  .f-justify-#{$content} {
+    justify-content: $content !important;
+  }
+}
+
+@each $alignItem in center, baseline, flex-end, flex-start {
+  .align-items-#{$alignItem} {
+    align-items: $alignItem !important;
+  }
+}
+
+@each $wrap in wrap, nowrap, wrap-reverse {
+  .f-#{$wrap} {
+    flex-wrap: $wrap !important;
   }
 }
