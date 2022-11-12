@@ -26,7 +26,7 @@ export class UserService {
   public hasPermission(role: RolePermission): boolean {
     const permission = this.userPermissionsCache;
     if (permission) {
-      return permission.isAdmin || permission.perms.some((p) => p === role.valueOf());
+      return permission.isAdmin || permission.perms.some((p) => p === RolePermission[role.valueOf()]);
     }
     return false;
   }

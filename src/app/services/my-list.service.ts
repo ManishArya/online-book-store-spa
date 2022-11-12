@@ -35,9 +35,7 @@ export class MyListService {
   }
 
   public checkItemInMyList(id: string): Observable<ApiResponse<boolean>> {
-    return this.http.get<ApiResponse<boolean>>(
-      `${environment.bookApiEndPoint}/MyList/checckiteminmylist/?itemId=${id}`
-    );
+    return this.http.get<ApiResponse<boolean>>(`${environment.bookApiEndPoint}/MyList/checkitem/?itemId=${id}`);
   }
 
   public getListCounts(): Observable<ApiResponse<number>> {
