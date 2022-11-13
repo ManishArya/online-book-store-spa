@@ -45,4 +45,8 @@ export class MyListService {
   public refreshListCounts(count: number): void {
     this.myListCountsRefreshSubject.next(count);
   }
+
+  public removeAllFromMyList(): Observable<ApiResponse<string>> {
+    return this.http.delete<ApiResponse<string>>(`${environment.bookApiEndPoint}/MyList/removeAll`);
+  }
 }

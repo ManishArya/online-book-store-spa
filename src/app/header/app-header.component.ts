@@ -96,8 +96,12 @@ export class AppHeaderComponent implements OnInit, OnDestroy {
   }
 
   private listenToMyListChanges(): void {
-    this.myListService.myListCountsRefresh$
-      .pipe(takeUntil(this.ngUnSubscribe))
-      .subscribe((res) => (this.listCount += res));
+    this.myListService.myListCountsRefresh$.pipe(takeUntil(this.ngUnSubscribe)).subscribe((count) => {
+      if (count == 0) {
+        this.listCount = 0;
+      } else {
+        this.listCount += count;
+      }
+    });
   }
 }
