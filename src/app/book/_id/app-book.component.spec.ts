@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppMovieComponent } from './app-book.component';
+import { AppBookComponent } from './app-book.component';
 
-describe('AppMovieComponent', () => {
-  let component: AppMovieComponent;
-  let fixture: ComponentFixture<AppMovieComponent>;
+describe('AppBookComponent', () => {
+  let component: AppBookComponent;
+  let fixture: ComponentFixture<AppBookComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AppMovieComponent]
+      declarations: [AppBookComponent]
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AppMovieComponent);
+    fixture = TestBed.createComponent(AppBookComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

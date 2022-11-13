@@ -5,6 +5,8 @@ export interface Book extends AdditionalCriteria {
   genres: string[];
   poster: string;
   releaseDate: Date;
+  price: string;
+  quantity: number;
 }
 
 interface AdditionalCriteria {

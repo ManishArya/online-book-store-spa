@@ -23,6 +23,16 @@
         <app-field-error [validations]="validations" fieldName="description"></app-field-error>
       </div>
       <div class="form-group w-25">
+        <label for="price" class="required">{{ 'price' | appLocale }}</label>
+        <input type="number" name="price" class="form-control" id="price" [(ngModel)]="price" />
+        <app-field-error [validations]="validations" fieldName="price"></app-field-error>
+      </div>
+      <div class="form-group w-25">
+        <label for="quantity" class="required">{{ 'quantity' | appLocale }}</label>
+        <input type="number" name="quantity" class="form-control" id="quantity" [(ngModel)]="quantity" />
+        <app-field-error [validations]="validations" fieldName="quantity"></app-field-error>
+      </div>
+      <div class="form-group w-25">
         <label for="date" class="required">{{ 'publicationDate' | appLocale }}</label>
         <input
           name="date"

@@ -17,6 +17,8 @@ export class AppAddBookModalComponent implements OnInit {
   public date: any;
   public genres: string[];
   public description: string;
+  public price: number;
+  public quantity: number;
   public isWaiting: boolean;
   public validations: { [key: string]: string };
   @ViewChild('poster') public poster: ElementRef;
@@ -38,7 +40,9 @@ export class AppAddBookModalComponent implements OnInit {
       name: this.name,
       description: this.description,
       releaseDate: this.date,
-      genres: this.genres
+      genres: this.genres,
+      price: this.price,
+      quantity: this.quantity
     };
 
     const formData = new FormData();
@@ -73,6 +77,8 @@ export class AppAddBookModalComponent implements OnInit {
     this.description = undefined as any;
     this.date = undefined;
     this.genres = undefined as any;
+    this.price = undefined as any;
+    this.quantity = undefined as any;
     this.poster.nativeElement.value = '';
   }
 }
