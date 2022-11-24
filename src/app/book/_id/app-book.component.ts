@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { forkJoin, iif, of } from 'rxjs';
-import { finalize, map, switchMap } from 'rxjs/operators';
+import { finalize, switchMap, take } from 'rxjs/operators';
 import { ApiResponse } from 'src/app/models/api-response.model';
 import { Book } from 'src/app/models/book';
 import { AuthService } from 'src/app/services/auth.service';
@@ -14,7 +13,6 @@ import { ToastService } from 'src/app/services/toast.service';
 })
 export class AppBookComponent implements OnInit {
   public book: Book;
-  public isAdded: boolean;
   public isWaiting: boolean;
 
   constructor(
@@ -27,29 +25,19 @@ export class AppBookComponent implements OnInit {
 
   public ngOnInit(): void {
     this.isWaiting = true;
-    this.route.params
-      .pipe(
-        switchMap((p) =>
-          forkJoin([
-            this.bookService.getBook(p.id),
-            iif(
-              () => this.authService.userLoggedStatus,
-              this.myListService.checkItemInMyList(p.id).pipe(map((res) => res.content)),
-              of(false)
-            )
-          ]).pipe(finalize(() => (this.isWaiting = false)))
-        )
-      )
-      .subscribe(([book, isExistsInMyList]) => ((this.book = book.content), (this.isAdded = isExistsInMyList)));
+    const bookObs = this.route.params.pipe(
+      take(1),
+      switchMap((p) => this.bookService.getBook(p.id))
+    );
+    bookObs
+      .pipe(finalize(() => (this.isWaiting = false)))
+      .subscribe((bookResponse) => (this.book = bookResponse.content));
   }
 
   public addToMyList(): void {
     if (this.authService.userLoggedStatus) {
       this.myListService.addToMyList(this.book.id).subscribe(
-        () => {
-          this.isAdded = true;
-          this.myListService.refreshListCounts(1);
-        },
+        () => this.myListService.refreshListCounts(1),
         (err) => this.toast.open((err.error as ApiResponse<string>).errorDescription)
       );
     } else {

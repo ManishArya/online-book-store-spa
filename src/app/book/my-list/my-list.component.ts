@@ -12,6 +12,7 @@ export class MyListComponent implements OnInit {
   public myList: MyList[];
   public isWaiting: boolean;
   public totalPrice: number = 0;
+  public isItemInMyList: boolean;
 
   constructor(private myListService: MyListService) {}
 
@@ -20,10 +21,11 @@ export class MyListComponent implements OnInit {
   }
 
   public remove(id: string): void {
+    const quantity = this.myList.find((m) => m.book.id === id)?.quantity ?? 0;
     this.myListService
       .removeFromMyList(id)
       .pipe(switchMap(() => this.getMyList()))
-      .subscribe(() => this.myListService.refreshListCounts(-1));
+      .subscribe(() => this.myListService.refreshListCounts(-quantity));
   }
 
   public removeAll(): void {
@@ -38,7 +40,8 @@ export class MyListComponent implements OnInit {
     return this.myListService.getMyList().pipe(
       tap((res) => {
         this.myList = res.content;
-        const prices = this.myList?.map((m) => m.book?.price);
+        this.isItemInMyList = this.myList.length !== 0;
+        const prices = this.myList?.map((m) => m.book?.price * m.quantity);
         this.computeTotalPrice(prices);
       }),
       finalize(() => (this.isWaiting = false))
