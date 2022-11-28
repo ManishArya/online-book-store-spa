@@ -1,24 +1,20 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { finalize } from 'rxjs/operators';
 import { ApiResponse } from '../models/api-response.model';
-import { Genre } from '../models/genre';
 import { BookService } from '../services/book.service';
-import { GenreService } from '../services/genre.service';
 import { ToastService } from '../services/toast.service';
 
 @Component({
   templateUrl: './app-add-book-modal.component.html'
 })
-export class AppAddBookModalComponent implements OnInit {
-  public name: string;
-  public genreOptions: Genre[] = [];
-  public date: any;
-  public genres: string[];
-  public description: string;
-  public price: number;
-  public quantity: number;
+export class AppAddBookModalComponent {
+  public name: string | undefined;
+  public author: string | undefined;
+  public date: Date | undefined;
+  public description: string | undefined;
+  public price: number | undefined;
   public isWaiting: boolean;
   public validations: { [key: string]: string };
   @ViewChild('poster') public poster: ElementRef;
@@ -26,13 +22,8 @@ export class AppAddBookModalComponent implements OnInit {
   constructor(
     private matDialogRef: MatDialogRef<AppAddBookModalComponent>,
     private bookService: BookService,
-    private genreService: GenreService,
     private toastService: ToastService
   ) {}
-
-  public ngOnInit(): void {
-    this.genreService.getGenres().subscribe((genres) => (this.genreOptions = genres));
-  }
 
   public addBook(closed: boolean): void {
     this.validations = {};
@@ -40,9 +31,8 @@ export class AppAddBookModalComponent implements OnInit {
       name: this.name,
       description: this.description,
       releaseDate: this.date,
-      genres: this.genres,
-      price: this.price,
-      quantity: this.quantity
+      author: this.author,
+      price: this.price
     };
 
     const formData = new FormData();
@@ -73,12 +63,11 @@ export class AppAddBookModalComponent implements OnInit {
   }
 
   private resetBookForm(): void {
-    this.name = undefined as any;
-    this.description = undefined as any;
+    this.name = undefined;
+    this.description = undefined;
     this.date = undefined;
-    this.genres = undefined as any;
-    this.price = undefined as any;
-    this.quantity = undefined as any;
+    this.price = undefined;
     this.poster.nativeElement.value = '';
+    this.author = undefined;
   }
 }

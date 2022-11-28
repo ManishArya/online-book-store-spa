@@ -20,11 +20,18 @@
                 </div>
               </div>
               <mat-card-content>
-                <p>Quantity: {{ list.quantity }}</p>
                 <p>Price: {{ book.price | currency: 'INR':'symbol-narrow' }}</p>
               </mat-card-content>
             </div>
             <mat-card-actions>
+              Quantity:
+              <button (click)="downQty(list)">
+                <i class="fa fa-minus"></i>
+              </button>
+              {{ list.quantity }}
+              <button (click)="upQty(list)">
+                <i class="fa fa-plus"></i>
+              </button>
               <button mat-button (click)="remove(book.id)">{{ 'remove' | appLocale }}</button>
             </mat-card-actions>
           </mat-card>
@@ -34,7 +41,7 @@
     <hr />
     <div class="pull-right">
       <p>Total Price: {{ totalPrice | currency: 'INR':'symbol-narrow' }}</p>
-      <button type="button" class="btn btn-link">Proceed to checkout</button>
+      <button type="button" class="btn btn-link" [routerLink]="['/checkout']">Proceed to checkout</button>
     </div>
   </div>
 </div>

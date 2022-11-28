@@ -10,6 +10,11 @@
         <app-field-error [validations]="validations" fieldName="name"></app-field-error>
       </div>
       <div class="form-group">
+        <label for="author" class="required">{{ 'Autor Name' | appLocale }}</label>
+        <input type="text" name="name" class="form-control" id="author" [(ngModel)]="author" />
+        <app-field-error [validations]="validations" fieldName="author"></app-field-error>
+      </div>
+      <div class="form-group">
         <label for="description" class="required">{{ 'description' | appLocale }}</label>
         <textarea
           name="description"
@@ -28,11 +33,6 @@
         <app-field-error [validations]="validations" fieldName="price"></app-field-error>
       </div>
       <div class="form-group w-25">
-        <label for="quantity" class="required">{{ 'quantity' | appLocale }}</label>
-        <input type="number" name="quantity" class="form-control" id="quantity" [(ngModel)]="quantity" />
-        <app-field-error [validations]="validations" fieldName="quantity"></app-field-error>
-      </div>
-      <div class="form-group w-25">
         <label for="date" class="required">{{ 'publicationDate' | appLocale }}</label>
         <input
           name="date"
@@ -47,13 +47,6 @@
         <mat-datepicker-toggle class="calender-position" matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
         <app-field-error [validations]="validations" fieldName="date"></app-field-error>
-      </div>
-      <div class="form-group">
-        <label for="genre" class="required">{{ 'genre' | appLocale }}</label>
-        <mat-select class="form-control" multiple [(ngModel)]="genres" name="genres">
-          <mat-option *ngFor="let genre of genreOptions" [value]="genre.name">{{ genre.name }}</mat-option>
-        </mat-select>
-        <app-field-error [validations]="validations" fieldName="genres"></app-field-error>
       </div>
       <div class="form-group">
         <label class="required" for="poster">{{ 'poster' | appLocale }}</label>

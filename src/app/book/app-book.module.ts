@@ -4,11 +4,12 @@ import { RouterModule } from '@angular/router';
 import { AppSharedModule } from '../shared/app-shared.module';
 import { AppAddBookModalComponent } from './app-add-book-modal.component';
 import { AppBookListComponent } from './app-book-list.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 import { MyListComponent } from './my-list/my-list.component';
 import { AppBookComponent } from './_id/app-book.component';
 
 @NgModule({
-  declarations: [AppAddBookModalComponent, AppBookComponent, AppBookListComponent, MyListComponent],
+  declarations: [AppAddBookModalComponent, AppBookComponent, AppBookListComponent, MyListComponent, CheckoutComponent],
   imports: [AppSharedModule, CommonModule, RouterModule]
 })
 export class AppBookModule {}

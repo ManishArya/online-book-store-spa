@@ -36,8 +36,8 @@ export class AppBookComponent implements OnInit {
 
   public addToMyList(): void {
     if (this.authService.userLoggedStatus) {
-      this.myListService.addToMyList(this.book.id).subscribe(
-        () => this.myListService.refreshListCounts(1),
+      this.myListService.addToMyList({ bookId: this.book.id }).subscribe(
+        () => this.myListService.incrementCount(1),
         (err) => this.toast.open((err.error as ApiResponse<string>).errorDescription)
       );
     } else {

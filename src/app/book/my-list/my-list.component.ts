@@ -21,18 +21,39 @@ export class MyListComponent implements OnInit {
   }
 
   public remove(id: string): void {
-    const quantity = this.myList.find((m) => m.book.id === id)?.quantity ?? 0;
     this.myListService
       .removeFromMyList(id)
       .pipe(switchMap(() => this.getMyList()))
-      .subscribe(() => this.myListService.refreshListCounts(-quantity));
+      .subscribe();
   }
 
   public removeAll(): void {
     this.myListService
       .removeAllFromMyList()
       .pipe(switchMap(() => this.getMyList()))
-      .subscribe(() => this.myListService.refreshListCounts(0));
+      .subscribe();
+  }
+
+  public downQty(list: MyList): void {
+    let quantity = list.quantity;
+    quantity = quantity - 1;
+    if (quantity > 0) {
+      this.updateQuantity(list.book.id, quantity);
+    }
+  }
+
+  public upQty(list: MyList): void {
+    let quantity = list.quantity;
+    quantity = quantity + 1;
+    this.updateQuantity(list.book.id, quantity);
+  }
+
+  private updateQuantity(bookId: string, quantity: number): void {
+    this.isWaiting = true;
+    this.myListService
+      .addToMyList({ bookId, quantity })
+      .pipe(switchMap(() => this.getMyList()))
+      .subscribe();
   }
 
   private getMyList(): Observable<ApiResponse<MyList[]>> {
@@ -42,13 +63,16 @@ export class MyListComponent implements OnInit {
         this.myList = res.content;
         this.isItemInMyList = this.myList.length !== 0;
         const prices = this.myList?.map((m) => m.book?.price * m.quantity);
-        this.computeTotalPrice(prices);
+        this.totalPrice = this.compute(prices);
+        const quanties = this.myList?.map((m) => m.quantity);
+        const totalQuantity = this.compute(quanties);
+        this.myListService.updateCount(totalQuantity);
       }),
       finalize(() => (this.isWaiting = false))
     );
   }
 
-  private computeTotalPrice(prices: number[]) {
-    this.totalPrice = prices?.reduce((prev, curr) => (prev += curr), 0);
+  private compute(numbers: number[]): number {
+    return numbers?.reduce((prev, curr) => (prev += curr), 0);
   }
 }

@@ -9,8 +9,10 @@ import { MyList } from '../models/my-list';
   providedIn: 'root'
 })
 export class MyListService {
-  private myListCountsRefreshSubject = new Subject<number>();
-  public myListCountsRefresh$ = this.myListCountsRefreshSubject.asObservable();
+  private countIncrementSubject = new Subject<number>();
+  public countIncrement$ = this.countIncrementSubject.asObservable();
+  private countUpdateSubject = new Subject<number>();
+  public countUpdate$ = this.countUpdateSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -18,14 +20,8 @@ export class MyListService {
     return this.http.get<ApiResponse<MyList[]>>(`${environment.bookApiEndPoint}/MyList`);
   }
 
-  public addToMyList(id: string): Observable<ApiResponse<string>> {
-    return this.http.post<ApiResponse<string>>(
-      `${environment.bookApiEndPoint}/MyList`,
-      {},
-      {
-        params: new HttpParams().set('itemId', id)
-      }
-    );
+  public addToMyList(myList: { bookId: string; quantity?: number }): Observable<ApiResponse<string>> {
+    return this.http.post<ApiResponse<string>>(`${environment.bookApiEndPoint}/MyList`, myList);
   }
 
   public removeFromMyList(id: string): Observable<ApiResponse<string>> {
@@ -42,8 +38,12 @@ export class MyListService {
     return this.http.get<ApiResponse<number>>(`${environment.bookApiEndPoint}/MyList/counts`);
   }
 
-  public refreshListCounts(count: number): void {
-    this.myListCountsRefreshSubject.next(count);
+  public incrementCount(count: number): void {
+    this.countIncrementSubject.next(count);
+  }
+
+  public updateCount(count: number): void {
+    this.countUpdateSubject.next(count);
   }
 
   public removeAllFromMyList(): Observable<ApiResponse<string>> {
