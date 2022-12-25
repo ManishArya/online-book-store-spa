@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   authApiEndPoint: 'http://localhost:3000/api',
-  bookApiEndPoint: 'https://localhost:5001/api'
+  bookApiEndPoint: 'https://localhost:5001/api',
+  cartApiEndPoint: 'https://localhost:7227/api'
 };
 
 /*

@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AppHomeComponent } from './app-home.component';
 import { AppBookListComponent } from './book/app-book-list.component';
+import { CartComponent } from './book/cart/cart.component';
 import { CheckoutComponent } from './book/checkout/checkout.component';
-import { MyListComponent } from './book/my-list/my-list.component';
 import { AppBookComponent } from './book/_id/app-book.component';
 import { LoginGuard } from './services/login.guard';
 import { AppNotFoundComponent } from './shared/app-not-found/app-not-found.component';
@@ -30,8 +30,8 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'myList',
-        component: MyListComponent,
+        path: 'cart',
+        component: CartComponent,
         canActivate: [LoginGuard]
       },
       {

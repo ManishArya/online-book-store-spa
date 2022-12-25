@@ -5,7 +5,7 @@ import { ApiResponse } from 'src/app/models/api-response.model';
 import { Book } from 'src/app/models/book';
 import { AuthService } from 'src/app/services/auth.service';
 import { BookService } from 'src/app/services/book.service';
-import { MyListService } from 'src/app/services/my-list.service';
+import { CartService } from 'src/app/services/cart.service';
 import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
@@ -18,7 +18,7 @@ export class AppBookComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private bookService: BookService,
-    private myListService: MyListService,
+    private cartService: CartService,
     private toast: ToastService,
     private authService: AuthService
   ) {}
@@ -34,12 +34,20 @@ export class AppBookComponent implements OnInit {
       .subscribe((bookResponse) => (this.book = bookResponse.content));
   }
 
-  public addToMyList(): void {
+  public addItemToCart(): void {
     if (this.authService.userLoggedStatus) {
-      this.myListService.addToMyList({ bookId: this.book.id }).subscribe(
-        () => this.myListService.incrementCount(1),
-        (err) => this.toast.open((err.error as ApiResponse<string>).errorDescription)
-      );
+      this.cartService
+        .addItemToCart({
+          productId: this.book.id,
+          quantity: 1,
+          price: this.book.price,
+          image: this.book.poster,
+          title: this.book.name
+        })
+        .subscribe(
+          () => this.cartService.incrementCount(1),
+          (err) => this.toast.open((err.error as ApiResponse<string>).errorDescription)
+        );
     } else {
       this.authService.signOut();
     }
