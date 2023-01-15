@@ -26,7 +26,6 @@ export class AppNewUserComponent implements OnInit {
   public ngOnInit(): void {
     this.formGroup = this.fb.group({
       name: [],
-      username: [],
       email: [],
       password: []
     });
@@ -35,7 +34,6 @@ export class AppNewUserComponent implements OnInit {
   public addUser(): void {
     const user = {
       name: this.formGroup.get('name')?.value,
-      username: this.formGroup.get('username')?.value,
       email: this.formGroup.get('email')?.value,
       password: this.formGroup.get('password')?.value
     } as UserProfile;

@@ -15,17 +15,6 @@
       <div class="flex-grow-5">
         <form class="mb-sm">
           <div class="form-group">
-            <label for="username">{{ 'username' | appLocale }}</label>
-            <input
-              type="text"
-              name="username"
-              class="form-control"
-              id="username"
-              readonly
-              [value]="userProfile.username"
-            />
-          </div>
-          <div class="form-group">
             <label for="name" class="required">{{ 'name' | appLocale }}</label>
             <input type="text" name="name" class="form-control" id="name" [(ngModel)]="userProfile.name" />
             <app-field-error fieldName="name" [validations]="validations"></app-field-error>

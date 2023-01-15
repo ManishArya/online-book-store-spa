@@ -12,7 +12,7 @@ import { ToastService } from 'src/app/services/toast.service';
   templateUrl: './app-login.component.html'
 })
 export class AppLoginComponent implements OnInit, OnDestroy {
-  public usernameOrEmail: string;
+  public email: string;
   public password: string;
   public isWaiting: boolean;
   private isRecaptchaEnabled: boolean;
@@ -43,13 +43,13 @@ export class AppLoginComponent implements OnInit, OnDestroy {
       this.recaptchaV3Service.execute('login').pipe(
         switchMap((token) =>
           this._authService.getToken({
-            usernameOrEmail: this.usernameOrEmail,
+            email: this.email,
             password: this.password,
             recaptchaToken: token
           })
         )
       ),
-      this._authService.getToken({ usernameOrEmail: this.usernameOrEmail, password: this.password })
+      this._authService.getToken({ email: this.email, password: this.password })
     )
       .pipe(
         finalize(() => (this.isWaiting = false)),

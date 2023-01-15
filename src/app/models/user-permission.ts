@@ -1,6 +1,6 @@
 export default interface UserPermission {
   _id: string;
-  username: string;
+  userId: string;
   isAdmin: boolean;
   perms: string[];
 }

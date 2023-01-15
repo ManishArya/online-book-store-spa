@@ -9,12 +9,12 @@ import { ToastService } from '../../services/toast.service';
   templateUrl: './app-forget-password.component.html'
 })
 export class AppForgetPasswordComponent {
-  public userNameOrEmail: string;
+  public email: string;
 
   constructor(private _authService: AuthService, private toast: ToastService, private router: Router) {}
 
   public sendPasswordResetLink(): void {
-    this._authService.sendPasswordResetLink(this.userNameOrEmail).subscribe(
+    this._authService.sendPasswordResetLink(this.email).subscribe(
       (res) => {
         this.toast.open(res.content);
       },

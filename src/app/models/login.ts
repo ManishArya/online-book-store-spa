@@ -1,5 +1,5 @@
 export interface Login {
-  usernameOrEmail?: string;
+  email?: string;
   password: string;
   recaptchaToken?: string;
 }

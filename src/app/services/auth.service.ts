@@ -29,9 +29,9 @@ export class AuthService {
     return this.http.post<ApiResponse<Token>>(`${environment.authApiEndPoint}/token`, login);
   }
 
-  public sendPasswordResetLink(usernameOrEmail: string): Observable<ApiResponse<string>> {
+  public sendPasswordResetLink(email: string): Observable<ApiResponse<string>> {
     return this.http.post<ApiResponse<string>>(`${environment.authApiEndPoint}/sendPasswordResetLink`, {
-      usernameOrEmail
+      email
     });
   }
 
