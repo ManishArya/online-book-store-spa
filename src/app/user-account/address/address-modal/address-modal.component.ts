@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AddressType } from 'src/app/enum/address-type';
 import { ApiResponse } from 'src/app/models/api-response.model';
@@ -13,7 +13,7 @@ import { AddressContext } from '../address-context';
   styleUrls: ['./address-modal.component.scss']
 })
 export class AddressModalComponent implements OnInit {
-  public formGroup: FormGroup;
+  public formGroup: UntypedFormGroup;
   public isNew: boolean;
   public validations: { [key: string]: string };
   public addressType: typeof AddressType = AddressType;
@@ -21,7 +21,7 @@ export class AddressModalComponent implements OnInit {
   constructor(
     private matDialogRef: MatDialogRef<AddressModalComponent>,
     @Inject(MAT_DIALOG_DATA) private context: AddressContext,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private addressService: AddressService
   ) {}
 

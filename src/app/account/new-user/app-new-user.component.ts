@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { ApiResponse } from '../../models/api-response.model';
@@ -14,12 +14,12 @@ import { UserService } from '../../services/user.service';
 export class AppNewUserComponent implements OnInit {
   public validations: { [key: string]: string };
   public isWaiting: boolean;
-  public formGroup: FormGroup;
+  public formGroup: UntypedFormGroup;
 
   constructor(
     private userService: UserService,
     private router: Router,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private authService: AuthService
   ) {}
 
