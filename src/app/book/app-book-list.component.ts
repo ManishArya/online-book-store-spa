@@ -108,12 +108,18 @@ export class AppBookListComponent implements OnInit, OnDestroy {
 
   private getBooks(): Observable<ApiResponse<Book[]>> {
     this.isWaiting = true;
-    return this.bookService.getBooks().pipe(
-      tap((res) => {
-        this.books = res.content;
-      }),
-      finalize(() => (this.isWaiting = false))
-    );
+    return this.bookService
+      .getBooks({
+        currentPage: 1,
+        pageSize: 10,
+        searchText: 'c'
+      })
+      .pipe(
+        tap((res) => {
+          this.books = res.content;
+        }),
+        finalize(() => (this.isWaiting = false))
+      );
   }
 
   private listenToRefreshBookList(): void {
