@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AppTitleService } from 'src/app/services/title.service';
 import { AppAccountSectionContentComponent } from '../account-section/app-account-section-content.component';
 import { AppAccountSectionService } from '../account-section/app-account-section.service';
 
@@ -8,12 +7,11 @@ import { AppAccountSectionService } from '../account-section/app-account-section
   templateUrl: './app-security.component.html'
 })
 export class AppSecurityComponent extends AppAccountSectionContentComponent implements OnInit {
-  constructor(accountSectionService: AppAccountSectionService, titleService: AppTitleService) {
-    super(titleService, accountSectionService);
+  constructor(accountSectionService: AppAccountSectionService) {
+    super(accountSectionService);
   }
 
   public ngOnInit(): void {
-    this.setTitle('security');
     this.listenToSectionIndexChanges();
   }
 }

@@ -1,7 +1,7 @@
 <div class="my-md d-flex f-justify-end" *ngIf="!isAddressEmpty; else AddAddressToCenter">
   <a (click)="addAddress()">{{ 'Add Address' | appLocale }}</a>
 </div>
-<div class="mt-xl">
+<div class="mt-xl" *ngIf="!isAddressEmpty">
   <mat-expansion-panel [expanded]="true">
     <mat-expansion-panel-header>
       <mat-panel-title>

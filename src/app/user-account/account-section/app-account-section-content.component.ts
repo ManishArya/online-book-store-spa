@@ -1,7 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { AppTitleService } from 'src/app/services/title.service';
 import { AppAccountSectionService } from './app-account-section.service';
 
 @Component({
@@ -12,15 +11,11 @@ export class AppAccountSectionContentComponent implements OnDestroy {
   public index: number = 0;
   private readonly _destory$ = new Subject<void>();
 
-  constructor(protected titleService: AppTitleService, protected accountSectionService: AppAccountSectionService) {}
+  constructor(protected accountSectionService: AppAccountSectionService) {}
 
   public ngOnDestroy(): void {
     this._destory$.next();
     this._destory$.complete();
-  }
-
-  protected setTitle(title: string): void {
-    this.titleService.setTitle(title);
   }
 
   protected listenToSectionIndexChanges(): void {

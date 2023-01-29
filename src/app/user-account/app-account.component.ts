@@ -1,14 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { AppTitleService } from '../services/title.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-account',
   template: '<app-account-section></app-account-section>'
 })
-export class AppAccountComponent implements OnInit {
-  constructor(private title: AppTitleService) {}
-
-  public ngOnInit(): void {
-    this.title.setTitle('Account');
-  }
-}
+export class AppAccountComponent {}

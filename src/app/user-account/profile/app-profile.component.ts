@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { filter, finalize, switchMap, tap } from 'rxjs/operators';
 import { ApiResponse } from 'src/app/models/api-response.model';
 import { UserProfile } from 'src/app/models/user-profile.model';
-import { AppTitleService } from 'src/app/services/title.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -18,10 +17,9 @@ export class AppProfileComponent implements OnInit {
   public name: string;
   public validations: { [key: string]: string };
 
-  constructor(private userService: UserService, private title: AppTitleService, private toastService: ToastService) {}
+  constructor(private userService: UserService, private toastService: ToastService) {}
 
   public ngOnInit(): void {
-    this.title.setTitle('profile');
     this.getProfile().subscribe();
   }
 

@@ -7,7 +7,6 @@ import { ApiResponse } from '../models/api-response.model';
 import { Login } from '../models/login';
 import Token from '../models/token';
 import { LocaleProvider } from './locale-provider';
-import { AppTitleService } from './title.service';
 import { TokenService } from './token.service';
 
 @Injectable({
@@ -18,12 +17,7 @@ export class AuthService {
   public isUserLogged$ = this.isUserLogged.asObservable();
   public userLoggedStatus: boolean = false;
 
-  constructor(
-    private http: HttpClient,
-    private router: Router,
-    private title: AppTitleService,
-    private localeProvider: LocaleProvider
-  ) {}
+  constructor(private http: HttpClient, private router: Router, private localeProvider: LocaleProvider) {}
 
   public getToken(login: Login): Observable<ApiResponse<Token>> {
     return this.http.post<ApiResponse<Token>>(`${environment.authApiEndPoint}/token`, login);
@@ -41,7 +35,6 @@ export class AuthService {
 
   public signOut(): void {
     this.localeProvider.resetToBrowserSettingsLocale();
-    this.title.setTitle();
     TokenService.clearToken();
     this.setUserLoggedStatus(false);
     window.location.href = 'account/login';

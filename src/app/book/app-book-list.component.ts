@@ -8,7 +8,6 @@ import { RolePermission } from '../enum/role-permission';
 import { ApiResponse } from '../models/api-response.model';
 import { Book } from '../models/book';
 import { BookService } from '../services/book.service';
-import { AppTitleService } from '../services/title.service';
 import { ToastService } from '../services/toast.service';
 import { UserService } from '../services/user.service';
 import { ConfirmDialogService } from '../shared/app-confirmation-dialog/dialog.service';
@@ -36,14 +35,12 @@ export class AppBookListComponent implements OnInit, OnDestroy {
     private bookService: BookService,
     private dialog: MatDialog,
     private router: Router,
-    private title: AppTitleService,
     private confirmService: ConfirmDialogService,
     private toastService: ToastService,
     private userService: UserService
   ) {}
 
   public ngOnInit(): void {
-    this.title.setTitle();
     this.getBooks().subscribe();
     this.hasAddPermission = this.userService.hasPermission(RolePermission.AddBook);
     this.hasDeletePermission = this.userService.hasPermission(RolePermission.DeleteBook);

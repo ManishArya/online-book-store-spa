@@ -16,21 +16,24 @@ const routes: Routes = [
     component: AppSecurityComponent,
     data: {
       sectionName: AccountSectionName.security
-    }
+    },
+    title: 'security'
   },
   {
     path: 'preferences',
     component: AppPreferenceComponent,
     data: {
       sectionName: AccountSectionName.preferences
-    }
+    },
+    title: 'preferences'
   },
   {
     path: 'address',
     component: AddressComponent,
     data: {
       sectionName: AccountSectionName.address
-    }
+    },
+    title: 'address'
   }
 ];
 

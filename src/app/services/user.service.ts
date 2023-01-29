@@ -35,7 +35,7 @@ export class UserService {
     return this.http.get<ApiResponse<UserProfile>>(`${environment.authApiEndPoint}/user`);
   }
 
-  public addNewUser(user: UserProfile): Observable<ApiResponse<Token>> {
+  public addNewUser(user: Partial<UserProfile>): Observable<ApiResponse<Token>> {
     return this.http.post<ApiResponse<Token>>(`${environment.authApiEndPoint}/user`, user);
   }
 

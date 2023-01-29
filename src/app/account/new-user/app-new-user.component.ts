@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { FormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { ApiResponse } from '../../models/api-response.model';
@@ -19,7 +19,7 @@ export class AppNewUserComponent implements OnInit {
   constructor(
     private userService: UserService,
     private router: Router,
-    private fb: UntypedFormBuilder,
+    private fb: FormBuilder,
     private authService: AuthService
   ) {}
 
@@ -32,11 +32,11 @@ export class AppNewUserComponent implements OnInit {
   }
 
   public addUser(): void {
-    const user = {
+    const user: Partial<UserProfile> = {
       name: this.formGroup.get('name')?.value,
       email: this.formGroup.get('email')?.value,
       password: this.formGroup.get('password')?.value
-    } as UserProfile;
+    };
 
     this.isWaiting = true;
 

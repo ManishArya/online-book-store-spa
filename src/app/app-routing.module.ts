@@ -14,6 +14,7 @@ const routes: Routes = [
   {
     path: '',
     component: AppHomeComponent,
+    title: 'Online Book Store',
     children: [
       { path: '', component: AppBookListComponent },
       {
@@ -54,7 +55,8 @@ const routes: Routes = [
       {
         path: 'profile',
         component: AppProfileComponent,
-        canActivate: [LoginGuard]
+        canActivate: [LoginGuard],
+        title: 'profile'
       },
       {
         path: '**',
