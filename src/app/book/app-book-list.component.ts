@@ -108,8 +108,7 @@ export class AppBookListComponent implements OnInit, OnDestroy {
     return this.bookService
       .getBooks({
         currentPage: 1,
-        pageSize: 10,
-        searchText: 'c'
+        pageSize: 10
       })
       .pipe(
         tap((res) => {
