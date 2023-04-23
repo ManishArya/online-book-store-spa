@@ -1,9 +1,11 @@
 FROM node:18.14.2-alpine as build
+ARG build=dev
+ENV buildEnv=${build}
 WORKDIR /usr/src/app
 COPY ["package.json", "package-lock.json*", "./"]
 RUN npm ci && npm install -g @angular/cli
 COPY . .
-RUN npm run build 
+RUN npm run build-${buildEnv} 
 
 FROM nginx:1.17.1-alpine
 RUN rm /etc/nginx/nginx.conf /etc/nginx/conf.d/default.conf
