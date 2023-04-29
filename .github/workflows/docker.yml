@@ -24,4 +24,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{secrets.DOCKERHUB_USERNAME}}/my-repo:spa-v${{ github.run_attempt }}
+          tags: ${{secrets.DOCKERHUB_USERNAME}}/my-repo:spa-v2
