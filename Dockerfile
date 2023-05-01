@@ -1,6 +1,5 @@
 FROM node:18.14.2-alpine as build
-ARG build=dev
-ENV buildEnv=${build}
+ENV buildEnv=dev
 WORKDIR /usr/src/app
 COPY ["package.json", "package-lock.json*", "./"]
 RUN npm ci && npm install -g @angular/cli

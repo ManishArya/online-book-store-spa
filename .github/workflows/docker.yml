@@ -24,4 +24,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{secrets.DOCKERHUB_USERNAME}}/my-repo:spa-latest
+          tags: ${{secrets.DOCKERHUB_USERNAME}}/my-repo:spa-v3
